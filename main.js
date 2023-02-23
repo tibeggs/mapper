@@ -10,6 +10,7 @@ import Point from 'ol/geom/Point.js';
 import {Circle as CircleStyle, Fill, Stroke, Style, Icon, RegularShape} from 'ol/style.js';
 
 import {run} from './get_weather.js';
+
 // window.run = run;
 
 // import tranform from 'ol/proj.js'

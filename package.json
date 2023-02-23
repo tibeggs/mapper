@@ -7,9 +7,10 @@
     "serve": "vite preview"
   },
   "devDependencies": {
-    "vite": "^4.0.4"
+    "vite": "^4.1.4"
   },
   "dependencies": {
-    "ol": "latest"
+    "ol": "latest",
+    "xdg-utils": "^0.0.3"
   }
 }
