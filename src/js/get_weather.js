@@ -29,11 +29,12 @@ var wi = 0;
 // const lonlat = [-79.288, 38.785]
 // const latlong = [38.94656, -78.30231]
 
-async function fill_feature_map(coords){
+async function fill_feature(coords){
     return new Promise((resolve, reject) => {
         const FeatureMap = new Map()
-        var actions = coords.map(coordfn);
-        var result =  Promise.all(actions);
+        // var actions = coords.map(coordfn);
+        var result = coordfn(coords);
+        // var result =  Promise.all(actions);
         // console.log(result);
         result.then(data => resolve(data))
         
@@ -73,14 +74,14 @@ return {'lonlat':[c[0],c[1]],'Forecast': a, 'image_path': i, "TempF": f, 'AreaNa
 };
 
 export async function run(coords, w) {
-    // console.log(coords);
-    wi = w;
-    // console.log(wi);
-    return new Promise((resolve, reject) => {
-    // console.log("running")
-    var thing = fill_feature_map(coords).then(function(FeatureMap) {  
-    resolve(FeatureMap);
-    })
+  // console.log(coords);
+  wi = w;
+  // console.log(wi);
+  return new Promise((resolve, reject) => {
+  // console.log("running")
+  var thing = fill_feature(coords).then(function(Feature) {  
+  resolve(Feature);
+  })
 })
 };
 
@@ -110,10 +111,11 @@ async function get_weather(url){
     const response = await fetchRetry(url,1000,20);
     var data = await response.json();
     if (data.status){
-      console.log(data);
+      // console.log(data);
       return ["Unknown", 0, NoaaToLocal.get("NA"), "true"]
     }
     else{
+      // console.log(data);
       return [data.properties.periods[wi].shortForecast, data.properties.periods[wi].temperature, data.properties.periods[wi].icon, data.properties.periods[wi].isDaytime]
     }
   }
