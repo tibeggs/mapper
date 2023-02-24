@@ -4,8 +4,9 @@ NoaaToLocal.set('Partly Cloudy', "./Weather_Icons/White/Cloud.png")
 NoaaToLocal.set('Sunny', "./Weather_Icons/White/Lighter Heat.png")
 NoaaToLocal.set('Rain', "./Weather_Icons/White/Rain with Clouds.png")
 NoaaToLocal.set('Snow', "./Weather_Icons/White/Snow.png")
-NoaaToLocal.set('Clear', './/weather-icons-png/Clear.png')
-NoaaToLocal.set('NA', "./Weather_Icons/White/Question.png")
+NoaaToLocal.set('Clear', './weather-icons-png/Clear.png')
+NoaaToLocal.set('NA', "./weather-icons-png/Question.pn")
+// NoaaToLocal.set('NA', "https://api.weather.gov/icons/land/day/sct?size=medium")
 
 // const coords = [[38.94656, -78.30231], [38.81352, -79.28219]]
 const safe_coord  =[38.81352, -79.28219]
@@ -17,14 +18,14 @@ export async function get_current_periods(){
     console.log(wurl)
     get_weather_periods(wurl).then(
         function(data) {
-            console.log(data);
+            // console.log(data);
             resolve(data)
         });
 })
 }
 
 var wi = 0;
-console.log(wi);
+// console.log(wi);
 // const lonlat = [-79.288, 38.785]
 // const latlong = [38.94656, -78.30231]
 
@@ -40,27 +41,27 @@ async function fill_feature_map(coords){
 };
 
 var coordfn = function coordasync(coords){
-    console.log(coords);
+    // console.log(coords);
     const c = coords.value.lnglat;
-    const an = coords.value.area_name;
+    const an = coords.value.crag;
     const url = coords.value.url;
     return new Promise(resolve => {
     var wurl = base_url+c[1]+","+c[0]
     console.log(wurl)
     get_weather_url(wurl).then(
         function(data) {
-            // console.log(data)
-            resolve(matchForecast(c, data[0], data[1], data[2], an, url))
+            console.log(data)
+            resolve(matchForecast(c, data[0], data[1], data[2], data[3], an, url))
         }
     ); 
 });
 };
 
 
-function matchForecast(c,a,f,i,n,u){
-  console.log("here " + a);
+function matchForecast(c,a,f, i,d,n,u){
+  // console.log("here " + a);
 //   return {'lonlat':[c[1],c[0]],'Forecast': a, 'image_path': value}
-return {'lonlat':[c[0],c[1]],'Forecast': a, 'image_path': i, "TempF": f, 'AreaName':n, 'URL':u}
+return {'lonlat':[c[0],c[1]],'Forecast': a, 'image_path': i, "TempF": f, 'AreaName':n, 'URL':u, 'isDay':d}
   // for (var [key, value] of NoaaToLocal) {
   //   if (a.includes(key)) {
   //     var p = "a:" +a + " Key: " + key;
@@ -73,11 +74,11 @@ return {'lonlat':[c[0],c[1]],'Forecast': a, 'image_path': i, "TempF": f, 'AreaNa
 };
 
 export async function run(coords, w) {
-    console.log(coords);
+    // console.log(coords);
     wi = w;
-    console.log(wi);
+    // console.log(wi);
     return new Promise((resolve, reject) => {
-    console.log("running")
+    // console.log("running")
     var thing = fill_feature_map(coords).then(function(FeatureMap) {  
     resolve(FeatureMap);
     })
@@ -106,9 +107,34 @@ async function get_weather_url(url){
   }
 
 async function get_weather(url){
-  const response = await fetch(url);
-  var data = await response.json();
-//   console.log(data)
-//   console.log(wi);
-  return [data.properties.periods[wi].shortForecast, data.properties.periods[wi].temperature, data.properties.periods[wi].icon]
+  try{
+    const response = await fetchRetry(url,1000,20);
+    var data = await response.json();
+    if (data.status){
+      console.log(data);
+      return ["Unknown", 0, NoaaToLocal.get("NA"), "true"]
+    }
+    else{
+      return [data.properties.periods[wi].shortForecast, data.properties.periods[wi].temperature, data.properties.periods[wi].icon, data.properties.periods[wi].isDaytime]
+    }
   }
+  catch (error) {
+    console.error(`Could not get products: ${error}`);
+    return ["Unknown", 0, NoaaToLocal.get("NA"), "true"]
+  }
+}
+
+function fetchRetry(url, delay, tries, fetchOptions = {}) {
+  function onError(err){
+      triesLeft = tries - 1;
+      if(!triesLeft){
+          throw err;
+      }
+      return wait(delay).then(() => fetchRetry(url, delay, triesLeft, fetchOptions));
+  }
+  return fetch(url,fetchOptions).catch(onError);
+}
+
+function wait(delay){
+    return new Promise((resolve) => setTimeout(resolve, delay));
+}
