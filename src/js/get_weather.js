@@ -1,20 +1,14 @@
-import Feature from 'ol/Feature.js';
-import Point from 'ol/geom/Point.js';
-import {Circle as CircleStyle, Fill, Stroke, Style, Icon, RegularShape} from 'ol/style.js';
-import { transform ,fromLonLat} from 'ol/proj';
-
 const NoaaToLocal = new Map()
-NoaaToLocal.set('Mostly Cloudy', "Weather_Icons/White/Sun Behind Clouds.png")
-NoaaToLocal.set('Partly Cloudy', "Weather_Icons/White/Cloud.png")
-NoaaToLocal.set('Sunny', "Weather_Icons/White/Lighter Heat.png")
-NoaaToLocal.set('Rain', "Weather_Icons/White/Rain with Clouds.png")
-NoaaToLocal.set('Snow', "Weather_Icons/White/Snow.png")
-NoaaToLocal.set('Clear', '/weather-icons-png/Clear.png')
-NoaaToLocal.set('NA', "Weather_Icons/White/Question.png")
+NoaaToLocal.set('Mostly Cloudy', "./Weather_Icons/White/Sun Behind Clouds.png")
+NoaaToLocal.set('Partly Cloudy', "./Weather_Icons/White/Cloud.png")
+NoaaToLocal.set('Sunny', "./Weather_Icons/White/Lighter Heat.png")
+NoaaToLocal.set('Rain', "./Weather_Icons/White/Rain with Clouds.png")
+NoaaToLocal.set('Snow', "./Weather_Icons/White/Snow.png")
+NoaaToLocal.set('Clear', './/weather-icons-png/Clear.png')
+NoaaToLocal.set('NA', "./Weather_Icons/White/Question.png")
 
 // const coords = [[38.94656, -78.30231], [38.81352, -79.28219]]
 const safe_coord  =[38.81352, -79.28219]
-var def_image_path = "Weather_Icons/White/Snow.png";
 const base_url = 'https://api.weather.gov/points/';
 
 export async function get_current_periods(){
@@ -52,25 +46,26 @@ var coordfn = function coordasync(c){
     get_weather_url(wurl).then(
         function(data) {
             // console.log(data)
-            resolve(matchForecast(c, data))
+            resolve(matchForecast(c, data[0], data[1], data[2]))
         }
     ); 
 });
 };
 
 
-function matchForecast(c,a){
+function matchForecast(c,a,f,i){
   console.log("here " + a);
 //   return {'lonlat':[c[1],c[0]],'Forecast': a, 'image_path': value}
-  for (var [key, value] of NoaaToLocal) {
-    if (a.includes(key)) {
-      var p = "a:" +a + " Key: " + key;
-        return {'lonlat':[c[1],c[0]],'Forecast': a, 'image_path': value}
-        // return {'lonlat':[c[1],c[0]],'Forecast': a, 'image_path': value, 'feature': feature_maker(c)}
-    };
-  };
-  console.log(NoaaToLocal);
-  return {'lonlat':[c[1],c[0]],'Forecast': a, 'image_path': NoaaToLocal.get('NA')}
+return {'lonlat':[c[1],c[0]],'Forecast': a, 'image_path': i, "TempF": f}
+  // for (var [key, value] of NoaaToLocal) {
+  //   if (a.includes(key)) {
+  //     var p = "a:" +a + " Key: " + key;
+  //       return {'lonlat':[c[1],c[0]],'Forecast': a, 'image_path': i, "TempF": f}
+  //       // return {'lonlat':[c[1],c[0]],'Forecast': a, 'image_path': value, 'feature': feature_maker(c)}
+  //   };
+  // };
+  // // console.log(NoaaToLocal);
+  // return {'lonlat':[c[1],c[0]],'Forecast': a, 'image_path': NoaaToLocal.get('NA')}
 };
 
 export async function run(coords, w) {
@@ -112,5 +107,5 @@ async function get_weather(url){
   var data = await response.json();
 //   console.log(data)
 //   console.log(wi);
-  return data.properties.periods[wi].shortForecast
+  return [data.properties.periods[wi].shortForecast, data.properties.periods[wi].temperature, data.properties.periods[wi].icon]
   }

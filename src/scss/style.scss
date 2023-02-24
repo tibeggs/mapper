@@ -1,5 +1,5 @@
-@import "node_modules/ol/ol.css";
-
+@import "ol/ol.css";
+@import "../node_modules/bootstrap/scss/bootstrap";
 header{
   height: 5rem;
 }
@@ -7,7 +7,7 @@ html, body {
   /* margin: 0; */
   height: 100%;
 }
-#map {
+.map {
   /* position: absolute; */
   /* margin: 0; */
   width: 100%;

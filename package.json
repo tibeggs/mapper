@@ -7,9 +7,12 @@
     "serve": "vite preview"
   },
   "devDependencies": {
+    "sass": "^1.58.3",
     "vite": "^4.1.4"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^5.2.3",
     "ol": "latest",
     "xdg-utils": "^0.0.3"
   }
