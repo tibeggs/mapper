@@ -33,7 +33,7 @@ const arr = Array.from(cragsmap, ([key, value]) => ({
   key,
   value,
 }))
-// console.log(arr);
+console.log(Array.isArray(arr));
 
 
 const distanceInput = '40';
@@ -52,21 +52,51 @@ const feature = new Feature({'geometry': geom, 'size':'20'});
 // const feature2 = new Feature({'geometry': geom2, 'size':'20'});
 var features = [feature]
 
+
+var vectorSource = new VectorSource({
+  features: features
+})
+
 call_coords(arr, 0);
+var cMaps = function(wi) {
+  return function(x){
+    run
+  }
+}
 
 // var fmap = run(coords);
-export function call_coords(coords, wi){
-  run(coords, wi).then(function(fmap){
-    vectorSource.clear();
+function call_coords(coords, wi) {
+  vectorSource.clear();
+  
+  // console.log(Array.isArray(coords));
+  coords.map(x => run(x, wi)
+  .then(function(fmap){
     // console.log(fmap);
-    for(var i = 0, len = fmap.length; i < len; i++){
-      var feat = feature_maker(fmap[i]['lonlat'],fmap[i]['image_path'],fmap[i]['TempF'],fmap[i]['Forecast'],fmap[i]['AreaName'],fmap[i]['URL'],fmap[i]['isDay'])
-      feat.setStyle(feat.get('style'));
-      // console.log(feat);
-      vectorSource.addFeature(feat);
+    var feat = feature_maker(fmap['lonlat'],fmap['image_path'],fmap['TempF'],fmap['Forecast'],fmap['AreaName'],fmap['URL'],fmap['isDay'])
+    // console.log(feat.get('style'));
+    feat.setStyle(feat.get('style'));
+    try{vectorSource.addFeature(feat);
     }
-    });
-}
+    catch(error){
+      console.log(error);
+    }
+    
+    }
+    )
+  )
+  }
+// export function call_coords(coords, wi){
+//   run(coords, wi).then(function(fmap){
+//     vectorSource.clear();
+//     // console.log(fmap);
+//     for(var i = 0, len = fmap.length; i < len; i++){
+//       var feat = feature_maker(fmap[i]['lonlat'],fmap[i]['image_path'],fmap[i]['TempF'],fmap[i]['Forecast'],fmap[i]['AreaName'],fmap[i]['URL'],fmap[i]['isDay'])
+//       feat.setStyle(feat.get('style'));
+//       // console.log(feat);
+//       vectorSource.addFeature(feat);
+//     }
+//     });
+// }
 
 
 function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday){
@@ -116,13 +146,6 @@ function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday
   ]
     })
     };
-
-
-
-
-var vectorSource = new VectorSource({
-  features: features
-})
 
 // console.log(vectorSource);
 var clusterSource = new Cluster({
@@ -213,7 +236,7 @@ const map = new olMap({
 });
 
 get_current_periods().then(function(subjectObject) {
-  console.log(subjectObject[0]);
+  // console.log(subjectObject[0]);
   var subjectSel = document.getElementById("subject");
   for (var x in subjectObject) {
     subjectSel.options[subjectSel.options.length] = new Option(subjectObject[x],x);
