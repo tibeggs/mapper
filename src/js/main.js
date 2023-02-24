@@ -13,7 +13,7 @@ import Feature from 'ol/Feature.js';
 import Point from 'ol/geom/Point.js';
 import {Circle as CircleStyle, Fill, Stroke, Style, Icon, RegularShape, Text as olText} from 'ol/style.js';
 import {run} from './get_weather.js';
-import {coords, crags} from './coordinates';
+import {crags} from './coordinates';
 import Overlay from 'ol/Overlay.js';
 import {toStringHDMS} from 'ol/coordinate.js';
 import {get_current_periods} from "./get_weather.js"

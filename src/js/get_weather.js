@@ -50,7 +50,6 @@ var coordfn = function coordasync(coords){
     console.log(wurl)
     get_weather_url(wurl).then(
         function(data) {
-            console.log(data)
             resolve(matchForecast(c, data[0], data[1], data[2], data[3], an, url))
         }
     ); 
@@ -86,7 +85,7 @@ export async function run(coords, w) {
 };
 
 async function get_weather_periods(url){
-    const response = await fetch(url);
+    const response = await fetchRetry(url,10,100);
     var data = await response.json();
   //   console.log(data.properties.forecast);
     return get_periods(data.properties.forecast)
