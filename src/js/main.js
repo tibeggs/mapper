@@ -58,11 +58,7 @@ var vectorSource = new VectorSource({
 })
 
 call_coords(arr, 0);
-var cMaps = function(wi) {
-  return function(x){
-    run
-  }
-}
+
 
 // var fmap = run(coords);
 function call_coords(coords, wi) {

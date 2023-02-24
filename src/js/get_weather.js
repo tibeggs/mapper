@@ -100,7 +100,7 @@ async function get_periods(url){
 };
 
 async function get_weather_url(url){
-  const response = await fetch(url);
+  const response = await fetchRetry(url,5000,50);
   var data = await response.json();
 //   console.log(data.properties.forecast);
   return get_weather(data.properties.forecast)
