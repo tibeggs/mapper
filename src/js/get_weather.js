@@ -39,24 +39,28 @@ async function fill_feature_map(coords){
 });
 };
 
-var coordfn = function coordasync(c){
+var coordfn = function coordasync(coords){
+    console.log(coords);
+    const c = coords.value.lnglat;
+    const an = coords.value.area_name;
+    const url = coords.value.url;
     return new Promise(resolve => {
-    var wurl = base_url+c[0]+","+c[1]
+    var wurl = base_url+c[1]+","+c[0]
     console.log(wurl)
     get_weather_url(wurl).then(
         function(data) {
             // console.log(data)
-            resolve(matchForecast(c, data[0], data[1], data[2]))
+            resolve(matchForecast(c, data[0], data[1], data[2], an, url))
         }
     ); 
 });
 };
 
 
-function matchForecast(c,a,f,i){
+function matchForecast(c,a,f,i,n,u){
   console.log("here " + a);
 //   return {'lonlat':[c[1],c[0]],'Forecast': a, 'image_path': value}
-return {'lonlat':[c[1],c[0]],'Forecast': a, 'image_path': i, "TempF": f}
+return {'lonlat':[c[0],c[1]],'Forecast': a, 'image_path': i, "TempF": f, 'AreaName':n, 'URL':u}
   // for (var [key, value] of NoaaToLocal) {
   //   if (a.includes(key)) {
   //     var p = "a:" +a + " Key: " + key;
@@ -74,8 +78,7 @@ export async function run(coords, w) {
     console.log(wi);
     return new Promise((resolve, reject) => {
     console.log("running")
-    var thing = fill_feature_map(coords).then(function(FeatureMap) {
-    localStorage.setItem("FeatureMap", FeatureMap);  
+    var thing = fill_feature_map(coords).then(function(FeatureMap) {  
     resolve(FeatureMap);
     })
 })

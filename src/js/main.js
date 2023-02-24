@@ -51,7 +51,7 @@ const feature = new Feature({'geometry': geom, 'size':'20'});
 // const feature2 = new Feature({'geometry': geom2, 'size':'20'});
 var features = [feature]
 
-call_coords(coords, 0);
+call_coords(arr, 0);
 
 // var fmap = run(coords);
 export function call_coords(coords, wi){
@@ -59,18 +59,18 @@ export function call_coords(coords, wi){
     vectorSource.clear();
     // console.log(fmap);
     for(var i = 0, len = fmap.length; i < len; i++){
-      var feat = feature_maker(fmap[i]['lonlat'],fmap[i]['image_path'],fmap[i]['TempF'],fmap[i]['Forecast'])
+      var feat = feature_maker(fmap[i]['lonlat'],fmap[i]['image_path'],fmap[i]['TempF'],fmap[i]['Forecast'],fmap[i]['AreaName'],fmap[i]['URL'])
       feat.setStyle(feat.get('style'));
-      console.log(feat);
+      // console.log(feat);
       vectorSource.addFeature(feat);
     }
     });
 }
 
 
-function feature_maker(lonlat, image_path, tempf, forecast){
+function feature_maker(lonlat, image_path, tempf, forecast, areaname, url){
   var geom = new Point(fromLonLat(lonlat));
-  return new Feature({'geometry': geom, 'image_path':image_path, 'size':'20', 'Forecast':forecast, 'style':[
+  return new Feature({'geometry': geom, 'image_path':image_path, 'size':'20', 'Forecast':forecast, 'URL':url,'AreaName':areaname, "TempF": tempf, 'style':[
     new Style({
       image: new RegularShape({
         points: 6,
@@ -208,7 +208,7 @@ get_current_periods().then(function(subjectObject) {
   //   chapterSel.length = 1;
     //display correct values
       console.log(subjectSel.value);
-    call_coords(coords, subjectSel.value);
+    call_coords(arr, subjectSel.value);
   }
 });
 
@@ -244,7 +244,8 @@ map.on('click', function (evt) {
     placement: 'top',
     html: true,
     // content: "Hello",
-    content: feature.get('features')[0].get('Forecast'),
+    title: feature.get('features')[0].get('AreaName'),
+    content: feature.get('features')[0].get('TempF')+" F<br>"+feature.get('features')[0].get('Forecast')+"<br><a href="+feature.get('features')[0].get('URL')+">"+feature.get('features')[0].get('URL')+"</a>",
   });
   popover.show();
 });
