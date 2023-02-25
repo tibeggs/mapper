@@ -242,6 +242,7 @@ function call_coords(chunk, wi) {
       )
       }
       else{
+        FeatureMap.delete(item.value.lnglat.toString());
         resolve();
       }
       // console.log(item);
@@ -362,6 +363,24 @@ map.on('pointermove', function (e) {
 // Close the popup when the map is moved
 map.on('movestart', disposePopover);
 map.on('moveend', function(){
+  let FeaturesToRemove = new Array();
+  let KeysToRemove = new Array();
+  FeatureMap.forEach((value, key, map1)=>{
+    console.log(key);
+    let lnglat = key.split(',');
+    if (!containsXY(map.getView().calculateExtent(), fromLonLat(lnglat)[0],fromLonLat(lnglat)[1])){
+      FeaturesToRemove.push(value);
+      KeysToRemove.push(key);
+    }
+  }
+  )
+  FeaturesToRemove.forEach(function(x){
+    console.log(x);
+    vectorSource.removeFeature(x); 
+  })
+  KeysToRemove.map(function (x){
+    FeatureMap.delete(x)
+  })
   var subjectSel = document.getElementById("subject");
   let w
   if (subjectSel.value){
