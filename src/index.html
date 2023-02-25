@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ClimbingWeatherMap</title>
   </head>
-  <div class="header">
-    Climbing Weather Map
-  </div>
   <body>
+    <div class="box">
+    <div class="header">
+      Climbing Weather Map
+    </div>
     <form name="form1" id="form1" class="dayform" action="/action_page.php">
       Day: <select name="subject" id="subject" class="subjectbox">
         <option value="" selected="selected">Select Day</option>
       </select>
     </form>
       <div id="map" class="map"><div id="popup"></div></div>
+    </div>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script type="module" src="./js/main.js"></script>

@@ -32,7 +32,7 @@ const arr = Array.from(cragsmap, ([key, value]) => ({
 console.log(Array.isArray(arr));
 console.log(arr);
 
-const featureminzoom = 9
+const featureminzoom = 8
 const distanceInput = '40';
 const minDistanceInput = '10';
 
@@ -177,14 +177,19 @@ const map = new olMap({
 
 request_weather(arr, 0);
 
+function is_in_extent(item){
+  return containsXY(map.getView().calculateExtent(), fromLonLat(item.value.lnglat)[0], fromLonLat(item.value.lnglat)[1])
+}
+
 function chunkArray(a, s) { // a: array to chunk, s: size of chunks
   return Array.from({ length: Math.ceil(a.length / s) })
     .map((_, i) => Array.from({ length: s })
       .map((_, j) => a[i * s + j]));
 }
 
-async function request_weather(dataArray, wi) {
+async function request_weather(rawArray, wi) {
   // vectorSource.clear();
+  let dataArray = rawArray.filter(is_in_extent);
   try {
     console.log("called");
     const chunks = chunkArray(dataArray, 150);

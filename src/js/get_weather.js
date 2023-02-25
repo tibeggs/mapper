@@ -44,7 +44,7 @@ async function fill_feature(coords){
 var coordfn = function coordasync(coords){
     // console.log(coords);
     const c = coords.value.lnglat;
-    const an = coords.value.area_name;
+    const an = coords.value.crag;
     const url = coords.value.url;
     return new Promise(resolve => {
     var wurl = base_url+c[1]+","+c[0]
