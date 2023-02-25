@@ -44,11 +44,11 @@ async function fill_feature(coords){
 var coordfn = function coordasync(coords){
     // console.log(coords);
     const c = coords.value.lnglat;
-    const an = coords.value.crag;
+    const an = coords.value.area_name;
     const url = coords.value.url;
     return new Promise(resolve => {
     var wurl = base_url+c[1]+","+c[0]
-    console.log(wurl)
+    // console.log(wurl)
     get_weather_url(wurl).then(
         function(data) {
             resolve(matchForecast(c, data[0], data[1], data[2], data[3], an, url))
@@ -103,7 +103,13 @@ async function get_weather_url(url){
   const response = await fetchRetry(url,5000,50);
   var data = await response.json();
 //   console.log(data.properties.forecast);
-  return get_weather(data.properties.forecast)
+  if ('properties' in data){
+    return get_weather(data.properties.forecast)
+  }
+  else{
+    return ["Unknown", 0, NoaaToLocal.get("NA"), "true"]
+  }
+  
   }
 
 async function get_weather(url){
@@ -127,11 +133,10 @@ async function get_weather(url){
 
 function fetchRetry(url, delay, tries, fetchOptions = {}) {
   function onError(err){
-      triesLeft = tries - 1;
-      if(!triesLeft){
-          throw err;
+      if(tries <1){
+          return new JSON();
       }
-      return wait(delay).then(() => fetchRetry(url, delay, triesLeft, fetchOptions));
+      return wait(delay).then(() => fetchRetry(url, delay, tries-1, fetchOptions));
   }
   return fetch(url,fetchOptions).catch(onError);
 }

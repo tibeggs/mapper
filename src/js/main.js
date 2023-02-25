@@ -17,6 +17,9 @@ import {crags} from './coordinates';
 import Overlay from 'ol/Overlay.js';
 import {toStringHDMS} from 'ol/coordinate.js';
 import {get_current_periods} from "./get_weather.js"
+import ImageWMS from 'ol/source/ImageWMS.js';
+import ImageLayer from 'ol/layer/Image';
+import {containsXY} from 'ol/extent';
 
 // window.run = run;
 
@@ -34,6 +37,7 @@ const arr = Array.from(cragsmap, ([key, value]) => ({
   value,
 }))
 console.log(Array.isArray(arr));
+console.log(arr);
 
 
 const distanceInput = '40';
@@ -56,43 +60,6 @@ var features = [feature]
 var vectorSource = new VectorSource({
   features: features
 })
-
-call_coords(arr, 0);
-
-
-// var fmap = run(coords);
-function call_coords(coords, wi) {
-  vectorSource.clear();
-  
-  // console.log(Array.isArray(coords));
-  coords.map(x => run(x, wi)
-  .then(function(fmap){
-    // console.log(fmap);
-    var feat = feature_maker(fmap['lonlat'],fmap['image_path'],fmap['TempF'],fmap['Forecast'],fmap['AreaName'],fmap['URL'],fmap['isDay'])
-    // console.log(feat.get('style'));
-    feat.setStyle(feat.get('style'));
-    try{vectorSource.addFeature(feat);
-    }
-    catch(error){
-      console.log(error);
-    }
-    
-    }
-    )
-  )
-  }
-// export function call_coords(coords, wi){
-//   run(coords, wi).then(function(fmap){
-//     vectorSource.clear();
-//     // console.log(fmap);
-//     for(var i = 0, len = fmap.length; i < len; i++){
-//       var feat = feature_maker(fmap[i]['lonlat'],fmap[i]['image_path'],fmap[i]['TempF'],fmap[i]['Forecast'],fmap[i]['AreaName'],fmap[i]['URL'],fmap[i]['isDay'])
-//       feat.setStyle(feat.get('style'));
-//       // console.log(feat);
-//       vectorSource.addFeature(feat);
-//     }
-//     });
-// }
 
 
 function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday){
@@ -192,18 +159,6 @@ const clusters = new VectorLayer({
             }),
           }),
         }),
-        // new Style({
-        //   text: new olText({
-        //     textAlign: 'left',
-        //     offsetx: -50,
-        //     // offsetY: 12,
-        //     text: [size.toString(), "bold 20px serif"],
-        //     fill: new Fill({
-        //       color: 'black',
-        //       // font: "bold 48px serif",
-        //     }),
-        //   }),
-        // })
       );
         styleCache[size] = style;
       // }
@@ -230,6 +185,83 @@ const map = new olMap({
   }),
   
 });
+
+
+request_weather(arr, 0);
+
+function chunkArray(a,s){ // a: array to chunk, s: size of chunks
+  return Array.from({length: Math.ceil(a.length / s)})
+              .map((_,i) => Array.from({length: s})
+                                 .map((_,j) => a[i*s+j]));
+}
+
+async function request_weather(dataArray, wi) {
+  vectorSource.clear();
+  try {
+    console.log("called");
+      const chunks = chunkArray(dataArray, 50);
+      for (const chunk of chunks) {
+          // console.log(chunk);
+          await call_coords(chunk, wi);
+      }
+  } catch (error) {
+      console.log(error)
+      // Catch en error here
+  }
+}
+
+function call_coords(chunk, wi) {
+  return Promise.all(
+    chunk.map((item) => {
+      // console.log(map.getView().calculateExtent());
+      // console.log(containsXY(map.getView().calculateExtent(),fromLonLat(lonlat)[0], fromLonLat(lonlat)[1]));
+      // console.log(fromLonLat(item.value.lnglat)[0],fromLonLat(item.value.lnglat)[0])
+      // console.log(containsXY(map.getView().calculateExtent(), fromLonLat(item.value.lnglat)[0],fromLonLat(item.value.lnglat)[1]));
+      return new Promise((resolve, reject) => {
+      if (containsXY(map.getView().calculateExtent(), fromLonLat(item.value.lnglat)[0],fromLonLat(item.value.lnglat)[1]))
+      {
+      run(item, wi)
+      .then(function(fmap){
+        var feat = feature_maker(fmap['lonlat'],fmap['image_path'],fmap['TempF'],fmap['Forecast'],fmap['AreaName'],fmap['URL'],fmap['isDay'])
+        feat.setStyle(feat.get('style'));
+        try{vectorSource.addFeature(feat);
+          resolve();
+        }
+        catch(error){
+          console.log(error);
+          resolve();
+        }
+      }
+      )
+      }
+      else{
+        resolve();
+      }
+      // console.log(item);
+      
+    }
+    )}
+    )
+    )
+}
+
+var radarsource = new ImageWMS({
+  attributions: ['NOAA'],
+  url: 'https://nowcoast.noaa.gov/arcgis/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/WMSServer',
+  params: {'LAYERS': '1'},
+  projection: 'EPSG:3857'
+});
+
+var radar = new ImageLayer({
+  title: 'NOAA Radar',
+  zIndex: 1,
+  visible: true,
+  source: radarsource,
+  opacity: 0.7
+});
+
+map.addLayer(radar);
+
 
 get_current_periods().then(function(subjectObject) {
   // console.log(subjectObject[0]);
@@ -322,3 +354,12 @@ map.on('pointermove', function (e) {
 });
 // Close the popup when the map is moved
 map.on('movestart', disposePopover);
+map.on('moveend', function(){
+ console.log('moves');
+request_weather(arr, 0) 
+});
+// map.on('moveend', function(){
+//   if (map.getView().getZoom() > 10)
+//   {console.log('moves');
+//   request_weather(arr, 0) }
+// });
