@@ -274,7 +274,7 @@ get_current_periods().then(function(subjectObject) {
   //   chapterSel.length = 1;
     //display correct values
       console.log(subjectSel.value);
-    call_coords(arr, subjectSel.value);
+    request_weather(arr, subjectSel.value);
   }
 });
 
@@ -355,8 +355,16 @@ map.on('pointermove', function (e) {
 // Close the popup when the map is moved
 map.on('movestart', disposePopover);
 map.on('moveend', function(){
+  var subjectSel = document.getElementById("subject");
+  let w
+  if (subjectSel.value){
+    w = subjectSel.value
+  }
+  else{
+    w=0
+  }
  console.log('moves');
-request_weather(arr, 0) 
+request_weather(arr, w) 
 });
 // map.on('moveend', function(){
 //   if (map.getView().getZoom() > 10)
