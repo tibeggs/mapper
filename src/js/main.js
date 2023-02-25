@@ -43,8 +43,7 @@ console.log(arr);
 const distanceInput = '40';
 const minDistanceInput = '10';
 
-
-// var FeatureMap = localStorage.getItem("FeatureMap");
+var FeatureMap = new Map()
 // export const coords = [[38.94656, -78.30231], [38.81352, -79.28219], [38.8338, -79.3663], [36.13128, -115.42452]]
 const lonlat = [-76.87397, 39.1666]
 const lonlat2 = [-79.28219, 38.81352]
@@ -58,7 +57,7 @@ var features = [feature]
 
 
 var vectorSource = new VectorSource({
-  features: features
+  // features: features
 })
 
 
@@ -196,7 +195,7 @@ function chunkArray(a,s){ // a: array to chunk, s: size of chunks
 }
 
 async function request_weather(dataArray, wi) {
-  vectorSource.clear();
+  // vectorSource.clear();
   try {
     console.log("called");
       const chunks = chunkArray(dataArray, 50);
@@ -224,7 +223,15 @@ function call_coords(chunk, wi) {
       .then(function(fmap){
         var feat = feature_maker(fmap['lonlat'],fmap['image_path'],fmap['TempF'],fmap['Forecast'],fmap['AreaName'],fmap['URL'],fmap['isDay'])
         feat.setStyle(feat.get('style'));
-        try{vectorSource.addFeature(feat);
+        let lonlatstr = fmap['lonlat'].toString()
+        try{
+          if (FeatureMap.has(lonlatstr))
+          {
+            vectorSource.removeFeature(FeatureMap.get(lonlatstr))
+            FeatureMap.delete()
+          }
+          vectorSource.addFeature(feat);
+          FeatureMap.set(lonlatstr, feat);
           resolve();
         }
         catch(error){
