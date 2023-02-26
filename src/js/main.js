@@ -155,7 +155,23 @@ const clusters = new VectorLayer({
 
   },
 });
+function getLocation() {
+  return new Promise((resolve, reject) => 
+      navigator.geolocation.getCurrentPosition(resolve, reject)
+  );
+}
+async function set_default_location(){
+  try {
+    const position = await getLocation();
+    return [position.coords.longitude, position.coords.latitude]
+} catch (err) {
+    console.error(err.message);
 
+}
+}
+// let t = await set_default_location();
+set_default_location().then(function(t){
+console.log(t);
 
 const map = new olMap({
   // projection: 'EPSG:4326',
@@ -168,8 +184,8 @@ const map = new olMap({
   }), clusters
   ],
   view: new olView({
-    center: fromLonLat(lonlat),
-    zoom: 15
+    center: fromLonLat(t),
+    zoom: 12
   }),
 
 });
@@ -311,22 +327,6 @@ function disposePopover() {
 // map.on('click', popup_show(evt));
 map.on('click', function (evt) {
   popup_show(evt);
-  // const feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
-  //   return feature;
-  // });
-  // disposePopover();
-  // if (!feature) {
-  //   return;
-  // }
-  // popup.setPosition(evt.coordinate);
-  // popover = new bootstrap.Popover(element, {
-  //   placement: 'top',
-  //   html: true,
-  //   // content: "Hello",
-  //   title: feature.get('features')[0].get('AreaName'),
-  //   content: feature.get('features')[0].get('TempF')+" F<br>"+feature.get('features')[0].get('Forecast')+"<br><a href="+feature.get('features')[0].get('URL')+">"+feature.get('features')[0].get('URL')+"</a>",
-  // });
-  // popover.show();
 });
 
 function popup_show(evt) {
@@ -398,6 +398,7 @@ map.on('moveend', function () {
     console.log('clear ', map.getView().getZoom());
     vectorSource.clear();
   }
+});
 });
 // map.on('moveend', function(){
 //   if (map.getView().getZoom() > 14)

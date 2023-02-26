@@ -25,9 +25,6 @@ export async function get_current_periods(){
 }
 
 var wi = 0;
-// console.log(wi);
-// const lonlat = [-79.288, 38.785]
-// const latlong = [38.94656, -78.30231]
 
 async function fill_feature(coords){
     return new Promise((resolve, reject) => {
