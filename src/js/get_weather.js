@@ -1,11 +1,14 @@
 const NoaaToLocal = new Map()
+import imgUrl from '/Weather_Icons/White/Question.png'
+const img1 = new Image()
+img1.src="./weather-icons-png/Question.png",
 NoaaToLocal.set('Mostly Cloudy', "./Weather_Icons/White/Sun Behind Clouds.png")
 NoaaToLocal.set('Partly Cloudy', "./Weather_Icons/White/Cloud.png")
 NoaaToLocal.set('Sunny', "./Weather_Icons/White/Lighter Heat.png")
 NoaaToLocal.set('Rain', "./Weather_Icons/White/Rain with Clouds.png")
 NoaaToLocal.set('Snow', "./Weather_Icons/White/Snow.png")
 NoaaToLocal.set('Clear', './weather-icons-png/Clear.png')
-NoaaToLocal.set('NA', "./weather-icons-png/Question.pn")
+NoaaToLocal.set('NA', imgUrl)
 // NoaaToLocal.set('NA', "https://api.weather.gov/icons/land/day/sct?size=medium")
 
 // const coords = [[38.94656, -78.30231], [38.81352, -79.28219]]
@@ -93,7 +96,7 @@ async function get_periods(url){
   const response = await fetch(url);
   var data = await response.json();
   let names = data.properties.periods.map(({ name }) => name);
-  return names.slice(0, 5)
+  return names.slice(0, 8)
 };
 
 async function get_weather_url(url){
