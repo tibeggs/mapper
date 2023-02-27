@@ -11,6 +11,10 @@ html, body {
   /* margin: 0; */
   height: 100%;
 }
+form {
+  display: flex;
+  align-items: stretch;
+}
 .box {
   display: flex;
   flex-flow: column;
@@ -32,11 +36,24 @@ html, body {
   background-color: #3E85D6;
   border-radius: 5px;
   box-shadow: 2px 2px #ccc;
+  margin-left: 10px;
+}
+.cragjump {
+  width: 120px;
+  height: 25px;
+  border: 1px solid #999;
+  font-size: 18px;
+  color: #eee;
+  background-color: #3E85D6;
+  border-radius: 5px;
+  box-shadow: 2px 2px #ccc;
+  margin-left: 10px;
 }
 .dayform{
+  flex-direction: row;
   height: 27px;
   padding-left: 50px;
-  justify-content: center;
+  // justify-content: center;
   font-size: 18px;
   color: #eee;
   background-color: #3E85D6;
