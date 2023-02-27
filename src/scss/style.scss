@@ -1,25 +1,46 @@
 @import "ol/ol.css";
 @import "../node_modules/bootstrap/scss/bootstrap";
+
 .header {
+  display: flex;
   padding: 10px;
   text-align: left;
-  background: #1c87c9;
+  background: black;
   color: white;
   font-size: 30px;
 }
-html, body {
+
+html,
+body {
   /* margin: 0; */
   height: 100%;
 }
+
 form {
   display: flex;
   align-items: stretch;
 }
+
+.overlay {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0);
+  ;
+  z-index: 10;
+}
+
+.map-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  position: relative;
+}
+
 .box {
   display: flex;
   flex-flow: column;
   height: 100%;
 }
+
 .box .map {
   /* position: absolute; */
   /* margin: 0; */
@@ -27,70 +48,79 @@ form {
   // width: 100%;
   // height: 100%;
 }
+
 .subjectbox {
-  width: 120px;
-  height: 25px;
+  width: 100%;
+  height: 100%;
   border: 1px solid #999;
   font-size: 18px;
   color: #eee;
-  background-color: #3E85D6;
   border-radius: 5px;
   box-shadow: 2px 2px #ccc;
   margin-left: 10px;
 }
+
 .cragjump {
   width: 100%;
-  height: 25px;
+  height: 100%;
   border: 1px solid #999;
   font-size: 18px;
   color: #eee;
-  background-color: #3E85D6;
   border-radius: 5px;
   box-shadow: 2px 2px #ccc;
   margin-left: 10px;
 }
+
 .addcrag {
   width: 100%;
   height: 25px;
   border: 1px solid #999;
   font-size: 18px;
   color: #eee;
-  background-color: #3E85D6;
   border-radius: 5px;
   box-shadow: 2px 2px #ccc;
   margin-left: 10px;
 }
-.dayform{
+
+.dayform {
   flex-direction: row;
   // height: 27px;
-  padding-left: 50px;
-  padding-right: 15px;
-  // justify-content: center;
-  font-size: 18px;
-  color: #eee;
-  background-color: #3E85D6;
-}
-.addform{
-  flex-direction: row;
-  // height: 27px;
+  padding-top: 4px;
   padding-left: 50px;
   // padding-right: 15px;
   // justify-content: center;
   font-size: 18px;
   color: #eee;
-  background-color: #3E85D6;
 }
-.addformTitle {
+
+.addform {
   flex-direction: row;
   // height: 27px;
   padding-left: 50px;
-  padding-right: 15px;
+  padding-top: 4px;
+  // padding-right: 15px;
   // justify-content: center;
   font-size: 18px;
   color: #eee;
-  background-color: #3E85D6;
 }
-.addform .select2{
+
+.addform .select2 {
   color: black;
+  width:100%;
   // background-color: #3E85D6;
+}
+.dayform .select2 {
+  color: black;
+  padding-left:4px;
+  width:100%;
+  // background-color: #3E85D6;
+}
+
+.select2-container .select2-search--inline .select2-search__field {
+  height: 25px !important;
+}
+
+.ol-zoom {
+  top: calc(100% - .5em*2 - 1.375em*2);
+  // left: calc(100% - .5em*2 - 1.375em);
 }
