@@ -4,37 +4,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/images/climbweathersym.png">
   <title>ClimbingWeatherMap</title>
 </head>
 
 <body>
   <div class="box">
-    <image src = "climbweathersym.png"></image>
     <div class="header">
+      <image id="headimage"></image>
       Climbing Weather Map
     </div>
-    <form name="form1" id="form1" class="dayform">
-      <div>Select Day:</div>
-      <select name="weatherperiod" id="weatherperiod" class="weatherperiodbox">
-        <option value="" selected="selected">Select Day</option>
-      </select>
-      <div>Jump to Crag:</div>
-      <select name="cragjump" id="cragjump" class="cragjump" name="crags[]">
-        <option value="" selected="selected">Select Crag</option>
-      </select>
-      
-    </form>
-    <!-- <div class="addformTitle">Add a Crag:</div> -->
-    <form class="addform">
-      <div>Add Sub-Area:</div>
-      <select name="addcrag" id="addcrag" class="addcrag" name="subcrags[]" multiple="multiple">
-      <option value="1">Add a Crag</option>
-    </select>
-    <!-- <button type="button" id="addsubbut" class="addsubbut">Refresh</button> -->
-  </form>
-    
-    <div id="map" class="map">
-      <div id="popup"></div>
+    <div class="map-container">
+      <div class="overlay">
+        <form name="form1" id="form1" class="dayform">
+          <select name="weatherperiod" id="weatherperiod" class="weatherperiodbox">
+            <option></option>
+          </select>
+          <select name="cragjump" id="cragjump" class="cragjump" name="crags[]">
+            <option></option>
+          </select>
+        </form>
+        <form class="addform">
+          <select name="addcrag" id="addcrag" class="addcrag" name="subcrags[]" multiple="multiple">
+            <option value="1">Add a Crag</option>
+          </select>
+        </form>
+      </div>
+      <div id="map" class="map">
+        <div id="popup"></div>
+      </div>
     </div>
   </div>
 </body>
@@ -44,21 +42,31 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
-  $(document).ready(function() {
-    $('.subjectbox').select2();
-    
-});
-$(document).ready(function() {
+  $(document).ready(function () {
+    $('.subjectbox').select2({
+      placeholder: "Select Day",
+      allowClear: true
+    }
+
+    );
+
+  });
+  $(document).ready(function () {
     $('.cragjump').select2({
+      placeholder: "Jump to Crag",
+      allowClear: true,
       width: "resolve",
       height: "resolve"
     });
-});
-$(document).ready(function() {
+  });
+  $(document).ready(function () {
     $('.addcrag').select2({
+      placeholder: "Add a Sub Crag",
+      allowClear: true,
       width: "resolve",
       height: "resolve"
     });
-});
+  });
 </script>
+
 </html>

@@ -21,6 +21,13 @@ import ImageWMS from 'ol/source/ImageWMS.js';
 import ImageLayer from 'ol/layer/Image';
 import { containsXY } from 'ol/extent';
 
+
+import imgUrl from '../images/climbweathersym.png'
+var headerimg = document.getElementById('headimage')
+headerimg.src = imgUrl
+headerimg.style.height = '48px';
+headerimg.style.width = '48px';
+
 var cragsmap = new Map(Object.entries(crags));
 var subcragsmap = new Map(Object.entries(subcrags));
 
@@ -76,7 +83,7 @@ const map = new olMap({
 function fill_crags(subjectObject) {
   var subjectSel = document.getElementById("cragjump");
   subjectObject.forEach((value, key) => {
-    subjectSel.options[parseInt(key)] = new Option(value.crag, value.lnglat);
+    subjectSel.options[parseInt(key)+1] = new Option(value.crag, value.lnglat);
   })
   subjectSel.onchange = function () {
     //empty Chapters- and Topics- dropdowns
