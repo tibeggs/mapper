@@ -9,13 +9,16 @@
 
 <body>
   <div class="box">
+    <image src = "climbweathersym.png"></image>
     <div class="header">
       Climbing Weather Map
     </div>
     <form name="form1" id="form1" class="dayform">
-      Day: <select name="weatherperiod" id="weatherperiod" class="weatherperiodbox">
+      <div>Select Day:</div>
+      <select name="weatherperiod" id="weatherperiod" class="weatherperiodbox">
         <option value="" selected="selected">Select Day</option>
       </select>
+      <div>Jump to Crag:</div>
       <select name="cragjump" id="cragjump" class="cragjump" name="crags[]">
         <option value="" selected="selected">Select Crag</option>
       </select>
@@ -23,6 +26,7 @@
     </form>
     <!-- <div class="addformTitle">Add a Crag:</div> -->
     <form class="addform">
+      <div>Add Sub-Area:</div>
       <select name="addcrag" id="addcrag" class="addcrag" name="subcrags[]" multiple="multiple">
       <option value="1">Add a Crag</option>
     </select>
