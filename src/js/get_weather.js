@@ -78,7 +78,7 @@ async function get_weather_periods(url) {
 };
 
 async function get_periods(url) {
-  const response = await fetch(url);
+  const response = await fetchRetry(url, 10, 100);
   var data = await response.json();
   let names = data.properties.periods.map(({ name }) => name);
   return names.slice(0, 5)
@@ -111,10 +111,11 @@ async function get_weather(url) {
     }
   }
   catch (error) {
-    console.error(`Could not get products: ${error}`);
+    console.error(`Could not get products: ${error}`, url);
     return ["Unknown", 0, NoaaToLocal.get("NA"), "true"]
   }
 }
+
 
 var data = {foo: "bar"};
 var blob = new Blob([JSON.stringify(data, null, 2)], {type : 'application/json'});
@@ -130,6 +131,7 @@ async function fetchRetry(url, delay, tries, fetchOptions = {}) {
       var init = { "status" : 500 , "statusText" : "SuperSmashingGreat!" };
       return new Response(blob, init);
     }
+    console.log("tries: ", tries)
     return wait(delay).then(() => fetchRetry(url, delay, tries - 1, fetchOptions));
   }
   return new Promise((resolve, reject) => {
@@ -145,6 +147,8 @@ async function fetchRetry(url, delay, tries, fetchOptions = {}) {
     )
   })
 }
+
+
 
 function wait(delay) {
   return new Promise((resolve) => setTimeout(resolve, delay));

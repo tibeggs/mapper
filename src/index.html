@@ -1,34 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ClimbingWeatherMap</title>
-  </head>
-  <body>
-    <div class="box">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClimbingWeatherMap</title>
+</head>
+
+<body>
+  <div class="box">
     <div class="header">
       Climbing Weather Map
     </div>
     <form name="form1" id="form1" class="dayform">
-      Day: <select name="subject" id="subject" class="subjectbox" >
+      Day: <select name="weatherperiod" id="weatherperiod" class="weatherperiodbox">
         <option value="" selected="selected">Select Day</option>
       </select>
-      <!-- <select name="cragjump" id="cragjump" class="cragjump" multiple multiselect-select-all="true">
-        <option value="1">Audi</option>
-        <option selected value="2">BMW</option>
-        <option selected value="3">Mercedes</option>
-        <option value="4">Volvo</option>
-        <option value="5">Lexus</option>
-        <option value="6">Tesla</option>
-      </select> -->
+      <select name="cragjump" id="cragjump" class="cragjump" name="crags[]">
+        <option value="" selected="selected">Select Crag</option>
+      </select>
+      
     </form>
-      <div id="map" class="map"><div id="popup"></div></div>
+    <!-- <div class="addformTitle">Add a Crag:</div> -->
+    <form class="addform">
+      <select name="addcrag" id="addcrag" class="addcrag" name="subcrags[]" multiple="multiple">
+      <option value="1">Add a Crag</option>
+    </select>
+    <!-- <button type="button" id="addsubbut" class="addsubbut">Refresh</button> -->
+  </form>
+    
+    <div id="map" class="map">
+      <div id="popup"></div>
     </div>
-  </body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script type="module" src="./js/main.js"></script>
-  <script type="module" src="./js/coordinates.js"></script>
-  <script type="module" src="./js/get_weather.js"></script>
-  <script src="./js/multiselect-dropdown.js"></script>
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="module" src="./js/main.js"></script>
+<script type="module" src="./js/get_weather.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.subjectbox').select2();
+    
+});
+$(document).ready(function() {
+    $('.cragjump').select2({
+      width: "resolve",
+      height: "resolve"
+    });
+});
+$(document).ready(function() {
+    $('.addcrag').select2({
+      width: "resolve",
+      height: "resolve"
+    });
+});
+</script>
 </html>

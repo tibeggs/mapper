@@ -14,6 +14,7 @@
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
     "ol": "latest",
+    "select2": "^4.1.0-rc.0",
     "xdg-utils": "^0.0.3"
   }
 }

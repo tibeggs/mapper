@@ -13,15 +13,16 @@ import Feature from 'ol/Feature.js';
 import Point from 'ol/geom/Point.js';
 import { Circle as CircleStyle, Fill, Stroke, Style, Icon, RegularShape, Text as olText } from 'ol/style.js';
 import { run } from './get_weather.js';
-import { crags } from './coordinates';
+import crags from '../json/crags.json' assert { type: 'JSON' };;
+import subcrags from '../json/subcrag.json' assert { type: 'JSON' };;
 import Overlay from 'ol/Overlay.js';
-import { toStringHDMS } from 'ol/coordinate.js';
 import { get_current_periods } from "./get_weather.js"
 import ImageWMS from 'ol/source/ImageWMS.js';
 import ImageLayer from 'ol/layer/Image';
 import { containsXY } from 'ol/extent';
 
 var cragsmap = new Map(Object.entries(crags));
+var subcragsmap = new Map(Object.entries(subcrags));
 
 
 // cragsmap.forEach(mapper);
@@ -29,6 +30,13 @@ const arr = Array.from(cragsmap, ([key, value]) => ({
   key,
   value,
 }))
+console.log(arr);
+const subarr = Array.from(subcragsmap, ([key, value]) => ({
+  key,
+  value,
+}))
+var subarrtoget = new Array()
+
 console.log(Array.isArray(arr));
 console.log(arr);
 
@@ -64,6 +72,47 @@ const map = new olMap({
   }),
 
 });
+
+function fill_crags(subjectObject) {
+  var subjectSel = document.getElementById("cragjump");
+  subjectObject.forEach((value, key) => {
+    subjectSel.options[parseInt(key)] = new Option(value.crag, value.lnglat);
+  })
+  subjectSel.onchange = function () {
+    //empty Chapters- and Topics- dropdowns
+    //   chapterSel.length = 1;
+    //display correct values
+    change_map_view(subjectSel.value.split(","))
+    // request_weather(arr, subjectSel.value);
+  }
+}
+fill_crags(cragsmap);
+
+function fill_sub_crags(subjectObject) {
+  var subjectSel = document.getElementById("addcrag");
+  subjectObject.forEach((value, key) => {
+    let label = value.overcrag + " - " + value.crag;
+    subjectSel.options[parseInt(key)] = new Option(label, key);
+  })
+  subjectSel.onchange = function () {
+    console.log(subarrtoget);
+    subarrtoget.forEach(arr => {
+      console.log(arr.value.lnglat.toString());
+      remove_feature(arr.value.lnglat.toString())
+    })
+    let keys = $('.addcrag').val();
+    subarrtoget = subarr.filter(function (subcrag) {
+
+      let num = subcrag.key
+      return keys.includes(num.toString());
+    });
+    console.log(subarrtoget);
+    // request_weather(subarrtoget, subjectSel.value);
+  }
+}
+
+
+fill_sub_crags(subcragsmap);
 
 const element = document.getElementById('popup');
 
@@ -186,14 +235,18 @@ async function set_default_location() {
 // let t = await set_default_location();
 set_default_location().then(function (t) {
   console.log(t);
+  change_map_view(t)
+})
+
+function change_map_view(t) {
   map.setView(
     new olView({
       center: fromLonLat(t),
-      zoom:map.getView().getZoom()
-    })
+      zoom: map.getView().getZoom()
+    }
+    )
   )
-})
-
+}
 
 function is_in_extent(item) {
   return containsXY(map.getView().calculateExtent(), fromLonLat(item.value.lnglat)[0], fromLonLat(item.value.lnglat)[1])
@@ -212,13 +265,23 @@ async function request_weather(rawArray, wi) {
     console.log("called");
     const chunks = chunkArray(dataArray, 150);
     for (const chunk of chunks) {
-      // console.log(chunk);
       await call_coords(chunk, wi);
     }
   } catch (error) {
     console.log(error)
     // Catch en error here
   }
+}
+
+function remove_feature(lonlatstr) {
+  return new Promise((resolve, reject) => {
+    if (FeatureMap.has(lonlatstr)) {
+      vectorSource.removeFeature(FeatureMap.get(lonlatstr))
+      FeatureMap.delete(lonlatstr);
+      resolve();
+    }
+  }
+  )
 }
 
 function add_feature_safe(lonlatstr, feat) {
@@ -295,22 +358,16 @@ var radar = new ImageLayer({
 
 
 get_current_periods().then(function (subjectObject) {
-  var subjectSel = document.getElementById("subject");
-  subjectSel.innerHTML=subjectObject[0];
+  var subjectSel = document.getElementById("weatherperiod");
+  subjectSel.innerHTML = subjectObject[0];
   for (var x in subjectObject) {
     subjectSel.options[subjectSel.options.length] = new Option(subjectObject[x], x);
   }
   subjectSel.onchange = function () {
-    //empty Chapters- and Topics- dropdowns
-    //   chapterSel.length = 1;
-    //display correct values
     console.log(subjectSel.value);
-    request_weather(arr, subjectSel.value);
+    request_weather(arr.concat(subarrtoget), subjectSel.value);
   }
 });
-
-
-
 
 const popup = new Overlay({
   element: element,
@@ -346,7 +403,7 @@ function popup_show(evt) {
     html: true,
     // content: "Hello",
     title: feature.get('features')[0].get('AreaName'),
-    content: feature.get('features')[0].get('TempF') + " F<br>" + feature.get('features')[0].get('Forecast') + "<br><a href=" + feature.get('features')[0].get('URL') + ">" + feature.get('features')[0].get('URL') + "</a>",
+    content: feature.get('features')[0].get('TempF') + " F<br>" + feature.get('features')[0].get('Forecast') + "<br><a href=" + feature.get('features')[0].get('URL') + " target='blank'>" + feature.get('features')[0].get('URL') + "</a>",
   });
   popover.show();
 }
@@ -368,6 +425,16 @@ map.on('pointermove', function (e) {
   // popup_show(e)
 });
 // Close the popup when the map is moved
+function get_wi() {
+  var subjectSel = document.getElementById("weatherperiod");
+  let w
+  if (subjectSel.value) {
+    return subjectSel.value
+  }
+  else {
+    return 0
+  }
+}
 map.on('movestart', disposePopover);
 map.on('moveend', function () {
   if (map.getView().getZoom() > featureminzoom) {
@@ -387,15 +454,8 @@ map.on('moveend', function () {
     KeysToRemove.map(function (x) {
       FeatureMap.delete(x)
     })
-    var subjectSel = document.getElementById("subject");
-    let w
-    if (subjectSel.value) {
-      w = subjectSel.value
-    }
-    else {
-      w = 0
-    }
-    request_weather(arr, w)
+    var subjectSel = document.getElementById("weatherperiod");
+    request_weather(arr.concat(subarrtoget), get_wi())
   }
   else {
     console.log('clear ', map.getView().getZoom());
