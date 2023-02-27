@@ -89,14 +89,17 @@ function fill_crags(subjectObject) {
 fill_crags(cragsmap);
 
 function fill_sub_crags(subjectObject) {
-  subarrtoget = [];
   var subjectSel = document.getElementById("addcrag");
   subjectObject.forEach((value, key) => {
-    let label = value.overcrag+" - "+value.crag;
+    let label = value.overcrag + " - " + value.crag;
     subjectSel.options[parseInt(key)] = new Option(label, key);
   })
   subjectSel.onchange = function () {
-
+    console.log(subarrtoget);
+    subarrtoget.forEach(arr => {
+      console.log(arr.value.lnglat.toString());
+      remove_feature(arr.value.lnglat.toString())
+    })
     let keys = $('.addcrag').val();
     subarrtoget = subarr.filter(function (subcrag) {
 
@@ -270,6 +273,17 @@ async function request_weather(rawArray, wi) {
   }
 }
 
+function remove_feature(lonlatstr) {
+  return new Promise((resolve, reject) => {
+    if (FeatureMap.has(lonlatstr)) {
+      vectorSource.removeFeature(FeatureMap.get(lonlatstr))
+      FeatureMap.delete(lonlatstr);
+      resolve();
+    }
+  }
+  )
+}
+
 function add_feature_safe(lonlatstr, feat) {
   return new Promise((resolve, reject) => {
     if (map.getView().getZoom() < featureminzoom) {
@@ -411,15 +425,15 @@ map.on('pointermove', function (e) {
   // popup_show(e)
 });
 // Close the popup when the map is moved
-function get_wi(){
+function get_wi() {
   var subjectSel = document.getElementById("weatherperiod");
-    let w
-    if (subjectSel.value) {
-      return subjectSel.value
-    }
-    else {
-      return 0
-    }
+  let w
+  if (subjectSel.value) {
+    return subjectSel.value
+  }
+  else {
+    return 0
+  }
 }
 map.on('movestart', disposePopover);
 map.on('moveend', function () {
