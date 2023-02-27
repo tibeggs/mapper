@@ -13,20 +13,24 @@ import Feature from 'ol/Feature.js';
 import Point from 'ol/geom/Point.js';
 import { Circle as CircleStyle, Fill, Stroke, Style, Icon, RegularShape, Text as olText } from 'ol/style.js';
 import { run } from './get_weather.js';
-// import { crags } from './coordinates';
 import crags from '../json/crags.json' assert { type: 'JSON' };;
+import subcrags from '../json/subcrag.json' assert { type: 'JSON' };;
 import Overlay from 'ol/Overlay.js';
-import { toStringHDMS } from 'ol/coordinate.js';
 import { get_current_periods } from "./get_weather.js"
 import ImageWMS from 'ol/source/ImageWMS.js';
 import ImageLayer from 'ol/layer/Image';
 import { containsXY } from 'ol/extent';
 
 var cragsmap = new Map(Object.entries(crags));
+var subcragsmap = new Map(Object.entries(subcrags));
 
 
 // cragsmap.forEach(mapper);
 const arr = Array.from(cragsmap, ([key, value]) => ({
+  key,
+  value,
+}))
+const subarr = Array.from(subcragsmap, ([key, value]) => ({
   key,
   value,
 }))
@@ -40,12 +44,32 @@ function fill_crags(subjectObject) {
     //empty Chapters- and Topics- dropdowns
     //   chapterSel.length = 1;
     //display correct values
-    console.log(subjectSel.value);
     change_map_view(subjectSel.value.split(","))
     // request_weather(arr, subjectSel.value);
   }
 }
 fill_crags(cragsmap);
+function fill_sub_crags(subjectObject) {
+  var subjectSel = document.getElementById("addcrag");
+  subjectObject.forEach((value,key) => {
+    subjectSel.options[parseInt(key)] = new Option(value.crag, key);
+  })
+  subjectSel.onchange = function () {
+
+    let keys = $('.addcrag').val();
+    let subs = subarr.filter(function (subcrag) {
+      
+      let num = subcrag.key
+      return  keys.includes(num.toString());
+    });
+    let testnum = 0
+    request_weather(subs, subjectSel.value);
+  }
+}
+function get_sub_crag(key){
+  return subcragsmap.get(key);
+}
+fill_sub_crags(subcragsmap);
 
 console.log(Array.isArray(arr));
 console.log(arr);
@@ -235,7 +259,6 @@ async function request_weather(rawArray, wi) {
     console.log("called");
     const chunks = chunkArray(dataArray, 150);
     for (const chunk of chunks) {
-      // console.log(chunk);
       await call_coords(chunk, wi);
     }
   } catch (error) {
@@ -324,9 +347,6 @@ get_current_periods().then(function (subjectObject) {
     subjectSel.options[subjectSel.options.length] = new Option(subjectObject[x], x);
   }
   subjectSel.onchange = function () {
-    //empty Chapters- and Topics- dropdowns
-    //   chapterSel.length = 1;
-    //display correct values
     console.log(subjectSel.value);
     request_weather(arr, subjectSel.value);
   }
