@@ -35,24 +35,90 @@ console.log(arr);
 const featureminzoom = 8
 const distanceInput = '40';
 const minDistanceInput = '10';
-
-var FeatureMap = new Map()
-// export const coords = [[38.94656, -78.30231], [38.81352, -79.28219], [38.8338, -79.3663], [36.13128, -115.42452]]
-const lonlat = [-76.87397, 39.1666]
+const deflonlat = [-76.87397, 39.1666]
 const lonlat2 = [-79.28219, 38.81352]
 const latlong = [38.94656, -78.30231]
-
-const geom = new Point(fromLonLat(lonlat));
+const geom = new Point(fromLonLat(deflonlat));
 const feature = new Feature({ 'geometry': geom, 'size': '20' });
-// const geom2 = new Point(fromLonLat(lonlat2));
-// const feature2 = new Feature({'geometry': geom2, 'size':'20'});
+const styleCache = {};
+
+var FeatureMap = new Map()
 var features = [feature]
-
-
 var vectorSource = new VectorSource({
   // features: features
 })
 
+const map = new olMap({
+  // projection: 'EPSG:4326',
+  // overlays: [overlay],
+  target: 'map',
+  layers: [new TileLayer({
+    source: new Stamen({
+      layer: 'terrain',
+    })
+  }),
+  ],
+  view: new olView({
+    center: fromLonLat(deflonlat),
+    zoom: 12
+  }),
+
+});
+
+const element = document.getElementById('popup');
+
+var clusterSource = new Cluster({
+  distance: parseInt(distanceInput, 10),
+  minDistance: parseInt(minDistanceInput, 10),
+  source: vectorSource,
+});
+
+const clusters = new VectorLayer({
+  source: clusterSource,
+  style: function (feature) {
+    const size = feature.get('features').length;
+    // const img_path = feature.get('image_path');
+    let f1style = feature.get('features')[0].get('style');
+    if (size == 1) {
+      let style = f1style;
+      return style
+    }
+    else {
+      // let style = styleCache[size];
+      // if (!style) {
+      let style = f1style.concat(
+        new Style({
+          image: new CircleStyle({
+            // displacement: .1,
+            // anchor:[0.5,1],
+            displacement: [0, 17],
+            radius: 12,
+            stroke: new Stroke({
+              color: '#fff',
+            }),
+            fill: new Fill({
+              color: '#3399CC',
+            }),
+          }),
+          text: new olText({
+            // offsetx: 5,
+            offsetY: -17,
+            text: [size.toString(), "12px Sans-Serif"],
+            fill: new Fill({
+              color: 'white',
+              // font: "bold 48px serif",
+            }),
+          }),
+        }),
+      );
+      styleCache[size] = style;
+      // }
+      return style;
+    }
+
+  },
+});
+map.addLayer(clusters);
 
 function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday) {
   var geom = new Point(fromLonLat(lonlat));
@@ -103,97 +169,33 @@ function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday
   })
 };
 
-var clusterSource = new Cluster({
-  distance: parseInt(distanceInput, 10),
-  minDistance: parseInt(minDistanceInput, 10),
-  source: vectorSource,
-});
-
-const styleCache = {};
-const clusters = new VectorLayer({
-  source: clusterSource,
-  style: function (feature) {
-    const size = feature.get('features').length;
-    // const img_path = feature.get('image_path');
-    let f1style = feature.get('features')[0].get('style');
-    if (size == 1) {
-      let style = f1style;
-      return style
-    }
-    else {
-      // let style = styleCache[size];
-      // if (!style) {
-      let style = f1style.concat(
-        new Style({
-          image: new CircleStyle({
-            // displacement: .1,
-            // anchor:[0.5,1],
-            displacement: [0, 17],
-            radius: 12,
-            stroke: new Stroke({
-              color: '#fff',
-            }),
-            fill: new Fill({
-              color: '#3399CC',
-            }),
-          }),
-          text: new olText({
-            // offsetx: 5,
-            offsetY: -17,
-            text: [size.toString(), "12px Sans-Serif"],
-            fill: new Fill({
-              color: 'white',
-              // font: "bold 48px serif",
-            }),
-          }),
-        }),
-      );
-      styleCache[size] = style;
-      // }
-      return style;
-    }
-
-  },
-});
 function getLocation() {
-  return new Promise((resolve, reject) => 
-      navigator.geolocation.getCurrentPosition(resolve, reject)
+  return new Promise((resolve, reject) =>
+    navigator.geolocation.getCurrentPosition(resolve, reject)
   );
 }
-async function set_default_location(){
+async function set_default_location() {
   try {
     const position = await getLocation();
     return [position.coords.longitude, position.coords.latitude]
-} catch (err) {
+  } catch (err) {
     console.error(err.message);
 
-}
+  }
 }
 // let t = await set_default_location();
-set_default_location().then(function(t){
-console.log(t);
-
-const map = new olMap({
-  // projection: 'EPSG:4326',
-  // overlays: [overlay],
-  target: 'map',
-  layers: [new TileLayer({
-    source: new Stamen({
-      layer: 'terrain',
+set_default_location().then(function (t) {
+  console.log(t);
+  map.setView(
+    new olView({
+      center: fromLonLat(t),
+      zoom:map.getView().getZoom()
     })
-  }), clusters
-  ],
-  view: new olView({
-    center: fromLonLat(t),
-    zoom: 12
-  }),
-
-});
+  )
+})
 
 
-request_weather(arr, 0);
-
-function is_in_extent(item){
+function is_in_extent(item) {
   return containsXY(map.getView().calculateExtent(), fromLonLat(item.value.lnglat)[0], fromLonLat(item.value.lnglat)[1])
 }
 
@@ -229,15 +231,15 @@ function add_feature_safe(lonlatstr, feat) {
         vectorSource.removeFeature(FeatureMap.get(lonlatstr))
         FeatureMap.delete(lonlatstr);
         if (map.getView().getZoom() > featureminzoom) {
-        vectorSource.addFeature(feat);
-        FeatureMap.set(lonlatstr, feat);
+          vectorSource.addFeature(feat);
+          FeatureMap.set(lonlatstr, feat);
         }
         resolve();
       }
       else {
         if (map.getView().getZoom() > featureminzoom) {
-        vectorSource.addFeature(feat);
-        FeatureMap.set(lonlatstr, feat);
+          vectorSource.addFeature(feat);
+          FeatureMap.set(lonlatstr, feat);
         }
         resolve();
       }
@@ -294,6 +296,7 @@ var radar = new ImageLayer({
 
 get_current_periods().then(function (subjectObject) {
   var subjectSel = document.getElementById("subject");
+  subjectSel.innerHTML=subjectObject[0];
   for (var x in subjectObject) {
     subjectSel.options[subjectSel.options.length] = new Option(subjectObject[x], x);
   }
@@ -307,7 +310,7 @@ get_current_periods().then(function (subjectObject) {
 });
 
 
-const element = document.getElementById('popup');
+
 
 const popup = new Overlay({
   element: element,
@@ -399,14 +402,5 @@ map.on('moveend', function () {
     vectorSource.clear();
   }
 });
-});
-// map.on('moveend', function(){
-//   if (map.getView().getZoom() > 14)
-//   {
-//     console.log('moves ', map.getView().getZoom(), map.getView().getZoom() > 14);
-//   request_weather(arr, 0) }
-//   else{
-//     console.log('clear ', map.getView().getZoom());
-//     vectorSource.clear();
-//   }
-// });
+
+request_weather(arr, 0);

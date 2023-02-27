@@ -10,10 +10,18 @@
     <div class="header">
       Climbing Weather Map
     </div>
-    <form name="form1" id="form1" class="dayform" action="/action_page.php">
-      Day: <select name="subject" id="subject" class="subjectbox">
+    <form name="form1" id="form1" class="dayform">
+      Day: <select name="subject" id="subject" class="subjectbox" >
         <option value="" selected="selected">Select Day</option>
       </select>
+      <!-- <select name="cragjump" id="cragjump" class="cragjump" multiple multiselect-select-all="true">
+        <option value="1">Audi</option>
+        <option selected value="2">BMW</option>
+        <option selected value="3">Mercedes</option>
+        <option value="4">Volvo</option>
+        <option value="5">Lexus</option>
+        <option value="6">Tesla</option>
+      </select> -->
     </form>
       <div id="map" class="map"><div id="popup"></div></div>
     </div>
@@ -22,5 +30,5 @@
   <script type="module" src="./js/main.js"></script>
   <script type="module" src="./js/coordinates.js"></script>
   <script type="module" src="./js/get_weather.js"></script>
-  
+  <script src="./js/multiselect-dropdown.js"></script>
 </html>
