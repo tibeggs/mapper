@@ -85,7 +85,7 @@ async function get_periods(url) {
 };
 
 async function get_weather_url(url) {
-  const response = await fetchRetry(url, 5000, 50);
+  const response = await fetchRetry(url, 100, 5);
   var data = await response.json();
   //   console.log(data.properties.forecast);
   if ('properties' in data) {
@@ -99,7 +99,7 @@ async function get_weather_url(url) {
 
 async function get_weather(url) {
   try {
-    const response = await fetchRetry(url, 1000, 50);
+    const response = await fetchRetry(url, 100, 5);
     var data = await response.json();
     if (data.status) {
       // console.log(data);
@@ -116,12 +116,20 @@ async function get_weather(url) {
   }
 }
 
+
+var data = {foo: "bar"};
+var blob = new Blob([JSON.stringify(data, null, 2)], {type : 'application/json'});
+
+var init = { "status" : 200 , "statusText" : "SuperSmashingGreat!" };
+var myResponse = new Response(blob, init);
+
 async function fetchRetry(url, delay, tries, fetchOptions = {}) {
   function onError() {
-    console.log("caught")
     if (tries < 1) {
-      console.log("tries: ", tries)
-      return new JSON();
+      var data = {status:'badtimes'}
+      var blob = new Blob([JSON.stringify(data, null, 2)], {type : 'application/json'});
+      var init = { "status" : 500 , "statusText" : "SuperSmashingGreat!" };
+      return new Response(blob, init);
     }
     console.log("tries: ", tries)
     return wait(delay).then(() => fetchRetry(url, delay, tries - 1, fetchOptions));
