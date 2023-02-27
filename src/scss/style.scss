@@ -82,21 +82,12 @@ form {
   margin-left: 10px;
 }
 
-.fText {
-  // flex-direction: row;
-  // height: 27px;
-  padding-left: 2px;
-  padding-right: 2px;
-  // justify-content: center;
-  font-size: 16px;
-  color: #eee;
-}
-
 .dayform {
   flex-direction: row;
   // height: 27px;
+  padding-top: 4px;
   padding-left: 50px;
-  padding-right: 15px;
+  // padding-right: 15px;
   // justify-content: center;
   font-size: 18px;
   color: #eee;
@@ -106,25 +97,22 @@ form {
   flex-direction: row;
   // height: 27px;
   padding-left: 50px;
+  padding-top: 4px;
   // padding-right: 15px;
   // justify-content: center;
   font-size: 18px;
   color: #eee;
 }
 
-.addformTitle {
-  flex-direction: row;
-  // height: 27px;
-  padding-left: 50px;
-  padding-right: 15px;
-  // justify-content: center;
-  font-size: 18px;
-  color: #eee;
-}
-
 .addform .select2 {
-  fles-direction: row;
   color: black;
+  width:100%;
+  // background-color: #3E85D6;
+}
+.dayform .select2 {
+  color: black;
+  padding-left:4px;
+  width:100%;
   // background-color: #3E85D6;
 }
 
