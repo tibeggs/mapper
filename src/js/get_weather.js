@@ -111,7 +111,7 @@ async function get_weather(url) {
     }
   }
   catch (error) {
-    console.error(`Could not get products: ${error}`);
+    console.error(`Could not get products: ${error}`, url);
     return ["Unknown", 0, NoaaToLocal.get("NA"), "true"]
   }
 }

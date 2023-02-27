@@ -30,46 +30,12 @@ const arr = Array.from(cragsmap, ([key, value]) => ({
   key,
   value,
 }))
+console.log(arr);
 const subarr = Array.from(subcragsmap, ([key, value]) => ({
   key,
   value,
 }))
-
-function fill_crags(subjectObject) {
-  var subjectSel = document.getElementById("cragjump");
-  subjectObject.forEach((value,key) => {
-    subjectSel.options[parseInt(key)] = new Option(value.crag, value.lnglat);
-  })
-  subjectSel.onchange = function () {
-    //empty Chapters- and Topics- dropdowns
-    //   chapterSel.length = 1;
-    //display correct values
-    change_map_view(subjectSel.value.split(","))
-    // request_weather(arr, subjectSel.value);
-  }
-}
-fill_crags(cragsmap);
-function fill_sub_crags(subjectObject) {
-  var subjectSel = document.getElementById("addcrag");
-  subjectObject.forEach((value,key) => {
-    subjectSel.options[parseInt(key)] = new Option(value.crag, key);
-  })
-  subjectSel.onchange = function () {
-
-    let keys = $('.addcrag').val();
-    let subs = subarr.filter(function (subcrag) {
-      
-      let num = subcrag.key
-      return  keys.includes(num.toString());
-    });
-    let testnum = 0
-    request_weather(subs, subjectSel.value);
-  }
-}
-function get_sub_crag(key){
-  return subcragsmap.get(key);
-}
-fill_sub_crags(subcragsmap);
+var subarrtoget = new Array()
 
 console.log(Array.isArray(arr));
 console.log(arr);
@@ -106,6 +72,44 @@ const map = new olMap({
   }),
 
 });
+
+function fill_crags(subjectObject) {
+  var subjectSel = document.getElementById("cragjump");
+  subjectObject.forEach((value, key) => {
+    subjectSel.options[parseInt(key)] = new Option(value.crag, value.lnglat);
+  })
+  subjectSel.onchange = function () {
+    //empty Chapters- and Topics- dropdowns
+    //   chapterSel.length = 1;
+    //display correct values
+    change_map_view(subjectSel.value.split(","))
+    // request_weather(arr, subjectSel.value);
+  }
+}
+fill_crags(cragsmap);
+
+function fill_sub_crags(subjectObject) {
+  subarrtoget = [];
+  var subjectSel = document.getElementById("addcrag");
+  subjectObject.forEach((value, key) => {
+    let label = value.overcrag+" - "+value.crag;
+    subjectSel.options[parseInt(key)] = new Option(label, key);
+  })
+  subjectSel.onchange = function () {
+
+    let keys = $('.addcrag').val();
+    subarrtoget = subarr.filter(function (subcrag) {
+
+      let num = subcrag.key
+      return keys.includes(num.toString());
+    });
+    console.log(subarrtoget);
+    // request_weather(subarrtoget, subjectSel.value);
+  }
+}
+
+
+fill_sub_crags(subcragsmap);
 
 const element = document.getElementById('popup');
 
@@ -231,12 +235,11 @@ set_default_location().then(function (t) {
   change_map_view(t)
 })
 
-function change_map_view(t)
-{
+function change_map_view(t) {
   map.setView(
     new olView({
       center: fromLonLat(t),
-      zoom:map.getView().getZoom()
+      zoom: map.getView().getZoom()
     }
     )
   )
@@ -342,13 +345,13 @@ var radar = new ImageLayer({
 
 get_current_periods().then(function (subjectObject) {
   var subjectSel = document.getElementById("weatherperiod");
-  subjectSel.innerHTML=subjectObject[0];
+  subjectSel.innerHTML = subjectObject[0];
   for (var x in subjectObject) {
     subjectSel.options[subjectSel.options.length] = new Option(subjectObject[x], x);
   }
   subjectSel.onchange = function () {
     console.log(subjectSel.value);
-    request_weather(arr, subjectSel.value);
+    request_weather(arr.concat(subarrtoget), subjectSel.value);
   }
 });
 
@@ -408,6 +411,16 @@ map.on('pointermove', function (e) {
   // popup_show(e)
 });
 // Close the popup when the map is moved
+function get_wi(){
+  var subjectSel = document.getElementById("weatherperiod");
+    let w
+    if (subjectSel.value) {
+      return subjectSel.value
+    }
+    else {
+      return 0
+    }
+}
 map.on('movestart', disposePopover);
 map.on('moveend', function () {
   if (map.getView().getZoom() > featureminzoom) {
@@ -428,14 +441,7 @@ map.on('moveend', function () {
       FeatureMap.delete(x)
     })
     var subjectSel = document.getElementById("weatherperiod");
-    let w
-    if (subjectSel.value) {
-      w = subjectSel.value
-    }
-    else {
-      w = 0
-    }
-    request_weather(arr, w)
+    request_weather(arr.concat(subarrtoget), get_wi())
   }
   else {
     console.log('clear ', map.getView().getZoom());
