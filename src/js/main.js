@@ -386,7 +386,7 @@ function popup_show(evt) {
     html: true,
     // content: "Hello",
     title: feature.get('features')[0].get('AreaName'),
-    content: feature.get('features')[0].get('TempF') + " F<br>" + feature.get('features')[0].get('Forecast') + "<br><a href=" + feature.get('features')[0].get('URL') + ">" + feature.get('features')[0].get('URL') + "</a>",
+    content: feature.get('features')[0].get('TempF') + " F<br>" + feature.get('features')[0].get('Forecast') + "<br><a href=" + feature.get('features')[0].get('URL') + " target='blank'>" + feature.get('features')[0].get('URL') + "</a>",
   });
   popover.show();
 }
