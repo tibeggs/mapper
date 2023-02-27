@@ -35,6 +35,17 @@
       </div>
     </div>
   </div>
+  <div>
+    Enter name: <input id="apikey" type="text">
+    <input type="button" id='submit'>
+  </div>
+  <script>
+    var btn = document.getElementById('submit');
+    btn.addEventListener('click', myFunction);
+    function myFunction() {
+      console.log(document.getElementById("apikey").value)
+    }
+  </script>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="module" src="./js/main.js"></script>
