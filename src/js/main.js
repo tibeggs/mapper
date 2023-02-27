@@ -29,6 +29,25 @@ const arr = Array.from(cragsmap, ([key, value]) => ({
   key,
   value,
 }))
+
+function fill_crags(subjectObject) {
+  console.log(subjectObject);
+  var subjectSel = document.getElementById("cragjump");
+  subjectObject.forEach((value,key) => {
+    console.log(value, key);
+    subjectSel.options[parseInt(key)] = new Option(value.crag, value.lnglat);
+  })
+  subjectSel.onchange = function () {
+    //empty Chapters- and Topics- dropdowns
+    //   chapterSel.length = 1;
+    //display correct values
+    console.log(subjectSel.value);
+    change_map_view(subjectSel.value.split(","))
+    // request_weather(arr, subjectSel.value);
+  }
+}
+fill_crags(cragsmap);
+
 console.log(Array.isArray(arr));
 console.log(arr);
 
@@ -186,14 +205,19 @@ async function set_default_location() {
 // let t = await set_default_location();
 set_default_location().then(function (t) {
   console.log(t);
+  change_map_view(t)
+})
+
+function change_map_view(t)
+{
   map.setView(
     new olView({
       center: fromLonLat(t),
       zoom:map.getView().getZoom()
-    })
+    }
+    )
   )
-})
-
+}
 
 function is_in_extent(item) {
   return containsXY(map.getView().calculateExtent(), fromLonLat(item.value.lnglat)[0], fromLonLat(item.value.lnglat)[1])
@@ -295,7 +319,7 @@ var radar = new ImageLayer({
 
 
 get_current_periods().then(function (subjectObject) {
-  var subjectSel = document.getElementById("subject");
+  var subjectSel = document.getElementById("weatherperiod");
   subjectSel.innerHTML=subjectObject[0];
   for (var x in subjectObject) {
     subjectSel.options[subjectSel.options.length] = new Option(subjectObject[x], x);
@@ -308,9 +332,6 @@ get_current_periods().then(function (subjectObject) {
     request_weather(arr, subjectSel.value);
   }
 });
-
-
-
 
 const popup = new Overlay({
   element: element,
@@ -387,7 +408,7 @@ map.on('moveend', function () {
     KeysToRemove.map(function (x) {
       FeatureMap.delete(x)
     })
-    var subjectSel = document.getElementById("subject");
+    var subjectSel = document.getElementById("weatherperiod");
     let w
     if (subjectSel.value) {
       w = subjectSel.value
