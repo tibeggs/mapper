@@ -31,10 +31,8 @@ const arr = Array.from(cragsmap, ([key, value]) => ({
 }))
 
 function fill_crags(subjectObject) {
-  console.log(subjectObject);
   var subjectSel = document.getElementById("cragjump");
   subjectObject.forEach((value,key) => {
-    console.log(value, key);
     subjectSel.options[parseInt(key)] = new Option(value.crag, value.lnglat);
   })
   subjectSel.onchange = function () {

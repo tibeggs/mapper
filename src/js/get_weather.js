@@ -78,7 +78,7 @@ async function get_weather_periods(url) {
 };
 
 async function get_periods(url) {
-  const response = await fetch(url);
+  const response = await fetchRetry(url, 10, 100);
   var data = await response.json();
   let names = data.properties.periods.map(({ name }) => name);
   return names.slice(0, 5)
@@ -99,7 +99,7 @@ async function get_weather_url(url) {
 
 async function get_weather(url) {
   try {
-    const response = await fetchRetry(url, 1000, 20);
+    const response = await fetchRetry(url, 1000, 50);
     var data = await response.json();
     if (data.status) {
       // console.log(data);
@@ -116,15 +116,31 @@ async function get_weather(url) {
   }
 }
 
-function fetchRetry(url, delay, tries, fetchOptions = {}) {
-  function onError(err) {
+async function fetchRetry(url, delay, tries, fetchOptions = {}) {
+  function onError() {
+    console.log("caught")
     if (tries < 1) {
+      console.log("tries: ", tries)
       return new JSON();
     }
+    console.log("tries: ", tries)
     return wait(delay).then(() => fetchRetry(url, delay, tries - 1, fetchOptions));
   }
-  return fetch(url, fetchOptions).catch(onError);
+  return new Promise((resolve, reject) => {
+    var result = fetch(url, fetchOptions);
+    result.then(result => {
+      if (result.ok) {
+        resolve(result)
+      }
+      else {
+        resolve(onError())
+      }
+    }
+    )
+  })
 }
+
+
 
 function wait(delay) {
   return new Promise((resolve) => setTimeout(resolve, delay));
