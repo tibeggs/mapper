@@ -35,6 +35,8 @@ function call_worker(){
   try{
     fetch('https://billowing-silence-4201.cwmtb.workers.dev/')
     .then(result => {
+      // console.log(result);
+      console.log(result.json());
       return result
     })
   }
@@ -44,7 +46,7 @@ function call_worker(){
 }
 
 // let testkey = await fetch('https://billowing-silence-4201.cwmtb.workers.dev/').catch("No Good");
-console.log(call_worker());
+call_worker();
 // cragsmap.forEach(mapper);
 const arr = Array.from(cragsmap, ([key, value]) => ({
   key,
