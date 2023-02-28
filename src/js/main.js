@@ -31,8 +31,20 @@ headerimg.style.width = '48px';
 var cragsmap = new Map(Object.entries(crags));
 var subcragsmap = new Map(Object.entries(subcrags));
 
-let testkey = await billowing-silence-4201-cragweather.get('keytest');
-console.log(testkey);
+function call_worker(){
+  try{
+    fetch('https://billowing-silence-4201.cwmtb.workers.dev/')
+    .then(result => {
+      return result
+    })
+  }
+  catch(err){
+    return err
+  }
+}
+
+// let testkey = await fetch('https://billowing-silence-4201.cwmtb.workers.dev/').catch("No Good");
+console.log(call_worker());
 // cragsmap.forEach(mapper);
 const arr = Array.from(cragsmap, ([key, value]) => ({
   key,
