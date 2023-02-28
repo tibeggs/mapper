@@ -58,7 +58,6 @@ const feature = new Feature({ 'geometry': geom, 'size': '20' });
 const styleCache = {};
 
 var FeatureMap = new Map()
-var features = [feature]
 var vectorSource = new VectorSource({
   // features: features
 })
@@ -345,23 +344,6 @@ function call_coords(chunk, wi) {
     )
   )
 }
-
-var radarsource = new ImageWMS({
-  attributions: ['NOAA'],
-  url: 'https://nowcoast.noaa.gov/arcgis/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/WMSServer',
-  params: { 'LAYERS': '1' },
-  projection: 'EPSG:3857'
-});
-
-var radar = new ImageLayer({
-  title: 'NOAA Radar',
-  zIndex: 1,
-  visible: true,
-  source: radarsource,
-  opacity: 0.7
-});
-
-// map.addLayer(radar);
 
 
 get_current_periods().then(function (subjectObject) {
