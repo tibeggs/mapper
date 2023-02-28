@@ -20,7 +20,6 @@ export async function get_current_periods() {
     console.log(wurl)
     get_weather_periods(wurl).then(
       function (data) {
-        // console.log(data);
         resolve(data)
       });
   })
@@ -29,23 +28,18 @@ export async function get_current_periods() {
 async function fill_feature(coords) {
   return new Promise((resolve, reject) => {
     const FeatureMap = new Map()
-    // var actions = coords.map(coordfn);
     var result = coordfn(coords);
-    // var result =  Promise.all(actions);
-    // console.log(result);
     result.then(data => resolve(data))
 
   });
 };
 
 var coordfn = function coordasync(coords) {
-  // console.log(coords);
   const c = coords.value.lnglat;
   const an = coords.value.crag;
   const url = coords.value.url;
   return new Promise(resolve => {
     var wurl = base_url + c[1] + "," + c[0]
-    // console.log(wurl)
     get_weather_url(wurl).then(
       function (data) {
         resolve(matchForecast(c, data[0], data[1], data[2], data[3], an, url))
@@ -59,11 +53,8 @@ function matchForecast(c, a, f, i, d, n, u) {
 };
 
 export async function run(coords, w) {
-  // console.log(coords);
   wi = w;
-  // console.log(wi);
   return new Promise((resolve, reject) => {
-    // console.log("running")
     var thing = fill_feature(coords).then(function (Feature) {
       resolve(Feature);
     })
@@ -73,7 +64,6 @@ export async function run(coords, w) {
 async function get_weather_periods(url) {
   const response = await fetchRetry(url, 10, 100);
   var data = await response.json();
-  //   console.log(data.properties.forecast);
   return get_periods(data.properties.forecast)
 };
 
@@ -87,7 +77,6 @@ async function get_periods(url) {
 async function get_weather_url(url) {
   const response = await fetchRetry(url, 100, 5);
   var data = await response.json();
-  //   console.log(data.properties.forecast);
   if ('properties' in data) {
     return get_weather(data.properties.forecast)
   }
@@ -102,11 +91,9 @@ async function get_weather(url) {
     const response = await fetchRetry(url, 100, 5);
     var data = await response.json();
     if (data.status) {
-      // console.log(data);
       return ["Unknown", 0, NoaaToLocal.get("NA"), "true"]
     }
     else {
-      // console.log(data);
       return [data.properties.periods[wi].shortForecast, data.properties.periods[wi].temperature, data.properties.periods[wi].icon, data.properties.periods[wi].isDaytime]
     }
   }
@@ -131,7 +118,6 @@ async function fetchRetry(url, delay, tries, fetchOptions = {}) {
       var init = { "status" : 500 , "statusText" : "SuperSmashingGreat!" };
       return new Response(blob, init);
     }
-    console.log("tries: ", tries)
     return wait(delay).then(() => fetchRetry(url, delay, tries - 1, fetchOptions));
   }
   return new Promise((resolve, reject) => {
