@@ -31,7 +31,8 @@ headerimg.style.width = '48px';
 var cragsmap = new Map(Object.entries(crags));
 var subcragsmap = new Map(Object.entries(subcrags));
 
-
+let testkey = await billowing-silence-4201-cragweather.get('keytest');
+console.log(testkey);
 // cragsmap.forEach(mapper);
 const arr = Array.from(cragsmap, ([key, value]) => ({
   key,
