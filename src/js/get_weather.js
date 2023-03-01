@@ -61,7 +61,7 @@ function matchForecast(c, a, f, i, d, n, u) {
 export async function run(coords, w) {
   // console.log(coords);
   wi = w;
-  // console.log(wi);
+  console.log(wi);
   return new Promise((resolve, reject) => {
     // console.log("running")
     var thing = fill_feature(coords).then(function (Feature) {
@@ -80,8 +80,16 @@ async function get_weather_periods(url) {
 async function get_periods(url) {
   const response = await fetchRetry(url, 10, 100);
   var data = await response.json();
+  var startp = 0;
+
   let names = data.properties.periods.map(({ name }) => name);
-  return names.slice(0, 5)
+  if (data.properties.periods[0].isDaytime == false) {
+    names.shift();
+  }
+  let namesf = names.filter((element, index) => {
+    return index % 2 === 0;
+  })
+  return namesf.slice(0, 5)
 };
 
 async function get_weather_url(url) {
@@ -106,8 +114,15 @@ async function get_weather(url) {
       return ["Unknown", 0, NoaaToLocal.get("NA"), "true"]
     }
     else {
-      // console.log(data);
-      return [data.properties.periods[wi].shortForecast, data.properties.periods[wi].temperature, data.properties.periods[wi].icon, data.properties.periods[wi].isDaytime]
+      console.log(data.properties.periods[0].isDaytime);
+      let wiu = parseInt(wi);
+      if (!data.properties.periods[0].isDaytime) {
+        console.log(parseInt(wiu));
+        wiu = (parseInt(wiu) * 2) + 1;
+
+      }
+      console.log(wiu);
+      return [data.properties.periods[wiu].shortForecast, data.properties.periods[wiu].temperature, data.properties.periods[wiu].icon, data.properties.periods[wiu].isDaytime]
     }
   }
   catch (error) {
@@ -117,18 +132,18 @@ async function get_weather(url) {
 }
 
 
-var data = {foo: "bar"};
-var blob = new Blob([JSON.stringify(data, null, 2)], {type : 'application/json'});
+var data = { foo: "bar" };
+var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
 
-var init = { "status" : 200 , "statusText" : "SuperSmashingGreat!" };
+var init = { "status": 200, "statusText": "SuperSmashingGreat!" };
 var myResponse = new Response(blob, init);
 
 async function fetchRetry(url, delay, tries, fetchOptions = {}) {
   function onError() {
     if (tries < 1) {
-      var data = {status:'badtimes'}
-      var blob = new Blob([JSON.stringify(data, null, 2)], {type : 'application/json'});
-      var init = { "status" : 500 , "statusText" : "SuperSmashingGreat!" };
+      var data = { status: 'badtimes' }
+      var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      var init = { "status": 500, "statusText": "SuperSmashingGreat!" };
       return new Response(blob, init);
     }
     console.log("tries: ", tries)
