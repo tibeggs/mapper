@@ -90,8 +90,8 @@ console.log(Array.isArray(arr));
 console.log(arr);
 
 const featureminzoom = 5
-const distanceInput = '40';
-const minDistanceInput = '10';
+const distanceInput = '90';
+const minDistanceInput = '70';
 const deflonlat = [-76.87397, 39.1666]
 const lonlat2 = [-79.28219, 38.81352]
 const latlong = [38.94656, -78.30231]
@@ -194,7 +194,7 @@ const clusters = new VectorLayer({
           image: new CircleStyle({
             // displacement: .1,
             // anchor:[0.5,1],
-            displacement: [0, 17],
+            displacement: [30, 30],
             radius: 12,
             stroke: new Stroke({
               color: '#fff',
@@ -204,14 +204,29 @@ const clusters = new VectorLayer({
             }),
           }),
           text: new olText({
-            // offsetx: 5,
-            offsetY: -17,
-            text: [size.toString(), "12px Sans-Serif"],
+            textAlign: 'center',
+            textBaseline: 'center',
+            font: "12px Sans-Serif",
+            text: size.toString(),
             fill: new Fill({
-              color: 'white',
-              // font: "bold 48px serif",
-            }),
+                  color: 'white',
+              //     // font: "bold 48px serif",
+                }),
+            // stroke: new Stroke({color: outlineColor, width: outlineWidth}),
+            offsetX: 30,
+            offsetY: -30,
+            placement: 'point',
           }),
+          // text: new olText({
+            
+          //   offsetY: -30,
+          //   text: [size.toString(), "12px Sans-Serif"],
+          //   fill: new Fill({
+          //     color: 'white',
+          //     // font: "bold 48px serif",
+          //   }),
+          //   offsetx: 10,
+          // }),
         }),
       );
       styleCache[size] = style;
@@ -223,15 +238,30 @@ const clusters = new VectorLayer({
 });
 map.addLayer(clusters);
 
-function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday, pastrain) {
+function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday, maxwind, totalprecip,  pastrain) {
   var geom = new Point(fromLonLat(lonlat));
   const day_styles = {
     'true': new Style({
       text: new olText({
         text: tempf + ' F',
         fill: new Fill({
-          color: 'black',
+          color: 'white',
         }),
+        textAlign: 'center',
+        textBaseline: 'center',
+        // offsetX: -30,
+        offsetY: -30,
+      }),
+      image: new RegularShape({
+        fill: new Fill({ color: bgc }),
+        // stroke: new Stroke({ color: lc, width: 2 }),
+        points: 4,
+        radius: 28 / Math.SQRT2,
+        radius2: 28,
+        points: 4,
+        angle: 0,
+        scale: [1, 0.5],
+        displacement: [0, 30]
       }),
     },
     ),
@@ -260,8 +290,10 @@ function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday
         // color: 'yellow'
       }),
       text: new olText({
-        text: pastrain.toString(),
-        offsetY: 31,
+        text: pastrain.toString() + ' in',
+        offsetY: 36,
+        textAlign: 'center',
+        textBaseline: 'center',
         fill: new Fill({
           color: 'white',
         }),
@@ -287,21 +319,22 @@ function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday
   var lc = '#00000000';
   if (!isNaN(pastrain)){
     bgc =  '#006ddf'
-    lc = 'black'
+    // lc = 'black'
   }
   return new Feature({
-    'geometry': geom, 'image_path': image_path, 'size': '20', 'Forecast': forecast, 'URL': url, 'AreaName': areaname, 'isday': isday, "TempF": tempf, 'style': [
+    'geometry': geom, 'image_path': image_path, 'size': '20', 'Forecast': forecast, 'URL': url, 'AreaName': areaname, 'isday': isday, "TempF": tempf,  'MaxWind':maxwind,
+     'TotalPrecip': totalprecip,'style': [
       rain_styles[!isNaN(pastrain)],
       new Style({image: new RegularShape({
         fill: new Fill({ color: bgc }),
         stroke: new Stroke({ color: lc, width: 2 }),
         points: 4,
-        radius: 20 / Math.SQRT2,
-        radius2: 20,
+        radius: 28 / Math.SQRT2,
+        radius2: 28,
         points: 4,
         angle: 0,
         scale: [1, 0.5],
-        displacement: [0, -30],
+        displacement: [0, -36],
       }),
       }),
       // new Style({
@@ -440,7 +473,8 @@ function call_coords(chunk, wi) {
             pastrain = fmap.totalPrecipPast
           }
           console.log(pastrain);
-          var feat = feature_maker(fmap['lonlat'], fmap['image_path'], fmap['TempF'], fmap['Forecast'], fmap['AreaName'], fmap['URL'], fmap['isDay'], pastrain)
+          var feat = feature_maker(fmap['lonlat'], fmap['image_path'], fmap['TempF'], fmap['Forecast'], fmap['AreaName'], fmap['URL'], fmap['isDay'], fmap['maxWind'],
+          fmap['totalPrecip'], pastrain)
           feat.setStyle(feat.get('style'));
           let lonlatstr = fmap['lonlat'].toString()
           resolve(add_feature_safe(lonlatstr, feat));
@@ -508,7 +542,10 @@ function popup_show(evt) {
     html: true,
     // content: "Hello",
     title: feature.get('features')[0].get('AreaName'),
-    content: feature.get('features')[0].get('TempF') + " F<br>" + feature.get('features')[0].get('Forecast') + "<br><a href=" + feature.get('features')[0].get('URL') + " target='blank'>" + feature.get('features')[0].get('URL') + "</a>",
+    content: feature.get('features')[0].get('TempF') + " F<br>" + feature.get('features')[0].get('Forecast') +
+    "<br> Max Wind: " + feature.get('features')[0].get('MaxWind') + "mph" +
+    "<br> Tot. Precip: " + feature.get('features')[0].get('TotalPrecip') + "in" +
+     "<br><a href=" + feature.get('features')[0].get('URL') + " target='blank'>" + feature.get('features')[0].get('URL') + "</a>",
   });
   popover.show();
 }

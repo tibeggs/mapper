@@ -16,15 +16,15 @@ var_map.set('rain_chance', 'daily_chance_of_rain');
 var_map.set('snow_chance', 'daily_chance_of_snow');
 
 const past_map = new Map();
-var_map.set('ForecastPast', 'condition.text');
-var_map.set('image_pathPast', 'condition.icon');
-var_map.set('TempFPast', 'avgtemp_f');
-var_map.set('minTempFPast', 'mintemp_f');
-var_map.set('maxTempFPast', 'maxtemp_f');
-var_map.set('maxWindPast', 'maxwind_mph');
-var_map.set('totalPrecipPast', 'totalprecip_in');
-var_map.set('rain_chancePast', 'daily_chance_of_rain');
-var_map.set('snow_chancePast', 'daily_chance_of_snow');
+past_map.set('ForecastPast', 'condition.text');
+past_map.set('image_pathPast', 'condition.icon');
+past_map.set('TempFPast', 'avgtemp_f');
+past_map.set('minTempFPast', 'mintemp_f');
+past_map.set('maxTempFPast', 'maxtemp_f');
+past_map.set('maxWindPast', 'maxwind_mph');
+past_map.set('totalPrecipPast', 'totalprecip_in');
+past_map.set('rain_chancePast', 'daily_chance_of_rain');
+past_map.set('snow_chancePast', 'daily_chance_of_snow');
 
 // var day = 0
 
@@ -38,10 +38,11 @@ export function prun(item, day) {
         console.log(eval(`v.forecast.forecastday[${day}].day.${value}`));
         ret_json[key] = eval(`v.forecast.forecastday[${day}].day.${value}`)
     })
-    if (past_day!=0){
+    if (day!=0){
+        console.log(past_day);
         past_map.forEach((value, key) => {
-            console.log(eval(`v.forecast.forecastday[${day}].day.${value}`));
-            ret_json[key] = eval(`v.forecast.forecastday[${day}].day.${value}`)
+            console.log(eval(`v.forecast.forecastday[${past_day}].day.${value}`));
+            ret_json[key] = eval(`v.forecast.forecastday[${past_day}].day.${value}`)
         })
     }
     // console.log(ret_json);
