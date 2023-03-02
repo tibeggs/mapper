@@ -24,11 +24,11 @@
             <option></option>
           </select>
         </form>
-        <form class="addform">
+        <!-- <form class="addform">
           <select name="addcrag" id="addcrag" class="addcrag" name="subcrags[]" multiple="multiple">
             <option value="1">Add a Crag</option>
           </select>
-        </form>
+        </form> -->
       </div>
       <div id="map" class="map">
         <div id="popup"></div>
@@ -37,6 +37,7 @@
   </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="module" src="./js/parsewapi.js"></script>
 <script type="module" src="./js/main.js"></script>
 <script type="module" src="./js/get_weather.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -51,22 +52,14 @@
     );
 
   });
-  $(document).ready(function () {
-    $('.cragjump').select2({
-      placeholder: "Jump to Crag",
-      allowClear: true,
-      width: "resolve",
-      height: "resolve"
-    });
-  });
-  $(document).ready(function () {
-    $('.addcrag').select2({
-      placeholder: "Add a Sub Crag",
-      allowClear: true,
-      width: "resolve",
-      height: "resolve"
-    });
-  });
+  // $(document).ready(function () {
+  //   $('.addcrag').select2({
+  //     placeholder: "Add a Sub Crag",
+  //     allowClear: true,
+  //     width: "resolve",
+  //     height: "resolve"
+  //   });
+  // });
 </script>
 
 </html>

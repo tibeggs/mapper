@@ -1,0 +1,51 @@
+import wjson from '../json/wapitest.json' assert { type: 'JSON' };;
+
+// { 'lonlat': [c[0], c[1]], 'Forecast': a, 'image_path': i, "TempF": f, 'AreaName': n, 'URL': u, 'isDay': d }
+// Forecast: condition.text image_path:condition.icon avgTempF:avgtemp_f minTempF: mintemp_f maxTempF: maxtemp_f maxWind : maxwind_mph totalPrecip: totalprecip_in
+// rain_chance: daily_chance_of_rain snow_chance: daily_chance_of_snow 
+
+const var_map = new Map();
+var_map.set('Forecast', 'condition.text');
+var_map.set('image_path', 'condition.icon');
+var_map.set('TempF', 'avgtemp_f');
+var_map.set('minTempF', 'mintemp_f');
+var_map.set('maxTempF', 'maxtemp_f');
+var_map.set('maxWind', 'maxwind_mph');
+var_map.set('totalPrecip', 'totalprecip_in');
+var_map.set('rain_chance', 'daily_chance_of_rain');
+var_map.set('snow_chance', 'daily_chance_of_snow');
+
+const past_map = new Map();
+var_map.set('ForecastPast', 'condition.text');
+var_map.set('image_pathPast', 'condition.icon');
+var_map.set('TempFPast', 'avgtemp_f');
+var_map.set('minTempFPast', 'mintemp_f');
+var_map.set('maxTempFPast', 'maxtemp_f');
+var_map.set('maxWindPast', 'maxwind_mph');
+var_map.set('totalPrecipPast', 'totalprecip_in');
+var_map.set('rain_chancePast', 'daily_chance_of_rain');
+var_map.set('snow_chancePast', 'daily_chance_of_snow');
+
+// var day = 0
+
+export function prun(item, day) {
+    console.log(day);
+    let past_day = day-1
+    let v = item.value;
+    let ret_json = { 'lonlat': [v.lnglat[0],v.lnglat[1],], 'AreaName': v.crag, 'URL': v.url, 'isDay': "true" }
+    // console.log(v)
+    var_map.forEach((value, key) => {
+        console.log(eval(`v.forecast.forecastday[${day}].day.${value}`));
+        ret_json[key] = eval(`v.forecast.forecastday[${day}].day.${value}`)
+    })
+    if (past_day!=0){
+        past_map.forEach((value, key) => {
+            console.log(eval(`v.forecast.forecastday[${day}].day.${value}`));
+            ret_json[key] = eval(`v.forecast.forecastday[${day}].day.${value}`)
+        })
+    }
+    // console.log(ret_json);
+    return ret_json
+
+    return
+}

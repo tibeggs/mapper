@@ -12,24 +12,65 @@ import { transform, fromLonLat, toLonLat } from 'ol/proj';
 import Feature from 'ol/Feature.js';
 import Point from 'ol/geom/Point.js';
 import { Circle as CircleStyle, Fill, Stroke, Style, Icon, RegularShape, Text as olText } from 'ol/style.js';
-import { run } from './get_weather.js';
+// import { run } from './get_weather.js';
 import crags from '../json/crags.json' assert { type: 'JSON' };;
-import subcrags from '../json/subcrag.json' assert { type: 'JSON' };;
+// import subcrags from '../json/subcrag.json' assert { type: 'JSON' };;
 import Overlay from 'ol/Overlay.js';
 import { get_current_periods } from "./get_weather.js"
 import ImageWMS from 'ol/source/ImageWMS.js';
 import ImageLayer from 'ol/layer/Image';
 import { containsXY } from 'ol/extent';
+import { prun } from './parsewapi.js'
 
 
 import imgUrl from '../images/climbweathersym.png'
+
+
+// let cragjson = await fetch('https://rapid-poetry-328e.cwmtb.workers.dev/').catch("No Good");
+async function call_worker() {
+  return new Promise((resolve, reject) => {
+    try {
+      fetch('https://rapid-poetry-328e.cwmtb.workers.dev/')
+        .then(result => {
+          // console.log(result);
+          // console.log(result.json());
+          let res = result.json();
+          resolve(res);
+        })
+    }
+    catch (err) {
+      resolve(err);
+    }
+  })
+
+}
 var headerimg = document.getElementById('headimage')
 headerimg.src = imgUrl
 headerimg.style.height = '48px';
 headerimg.style.width = '48px';
 
-var cragsmap = new Map(Object.entries(crags));
-var subcragsmap = new Map(Object.entries(subcrags));
+const cragjson = await call_worker()
+console.log(cragjson[0].forecast.forecastday);
+
+function getDayName(dateStr, locale)
+{
+    var date = new Date(dateStr);
+    return date.toLocaleDateString(locale, { weekday: 'long' });        
+}
+var periods = []
+for(var i in cragjson[0].forecast.forecastday){
+  periods.push([getDayName(cragjson[0].forecast.forecastday[i].date, 'en-US')]);
+}
+console.log(periods);
+
+// const periods = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+var cragsmap = new Map(Object.entries(cragjson));
+
+
+
+
+// var subcragsmap = new Map(Object.entries(subcrags));
 
 
 // cragsmap.forEach(mapper);
@@ -37,17 +78,17 @@ const arr = Array.from(cragsmap, ([key, value]) => ({
   key,
   value,
 }))
-console.log(arr);
-const subarr = Array.from(subcragsmap, ([key, value]) => ({
-  key,
-  value,
-}))
-var subarrtoget = new Array()
+// console.log(arr);
+// const subarr = Array.from(subcragsmap, ([key, value]) => ({
+//   key,
+//   value,
+// }))
+// var subarrtoget = new Array()
 
 console.log(Array.isArray(arr));
 console.log(arr);
 
-const featureminzoom = 8
+const featureminzoom = 5
 const distanceInput = '40';
 const minDistanceInput = '10';
 const deflonlat = [-76.87397, 39.1666]
@@ -82,7 +123,7 @@ const map = new olMap({
 function fill_crags(subjectObject) {
   var subjectSel = document.getElementById("cragjump");
   subjectObject.forEach((value, key) => {
-    subjectSel.options[parseInt(key)+1] = new Option(value.crag, value.lnglat);
+    subjectSel.options[parseInt(key) + 1] = new Option(value.crag, value.lnglat);
   })
   subjectSel.onchange = function () {
     //empty Chapters- and Topics- dropdowns
@@ -91,34 +132,40 @@ function fill_crags(subjectObject) {
     change_map_view(subjectSel.value.split(","))
     // request_weather(arr, subjectSel.value);
   }
+  $('.cragjump').select2({
+    placeholder: "Jump to Crag",
+    allowClear: true,
+    width: "resolve",
+    height: "resolve"
+  });
 }
 fill_crags(cragsmap);
 
-function fill_sub_crags(subjectObject) {
-  var subjectSel = document.getElementById("addcrag");
-  subjectObject.forEach((value, key) => {
-    let label = value.overcrag + " - " + value.crag;
-    subjectSel.options[parseInt(key)] = new Option(label, key);
-  })
-  subjectSel.onchange = function () {
-    console.log(subarrtoget);
-    subarrtoget.forEach(arr => {
-      console.log(arr.value.lnglat.toString());
-      remove_feature(arr.value.lnglat.toString())
-    })
-    let keys = $('.addcrag').val();
-    subarrtoget = subarr.filter(function (subcrag) {
+// function fill_sub_crags(subjectObject) {
+//   var subjectSel = document.getElementById("addcrag");
+//   subjectObject.forEach((value, key) => {
+//     let label = value.overcrag + " - " + value.crag;
+//     subjectSel.options[parseInt(key)] = new Option(label, key);
+//   })
+//   subjectSel.onchange = function () {
+//     console.log(subarrtoget);
+//     subarrtoget.forEach(arr => {
+//       console.log(arr.value.lnglat.toString());
+//       remove_feature(arr.value.lnglat.toString())
+//     })
+//     let keys = $('.addcrag').val();
+//     subarrtoget = subarr.filter(function (subcrag) {
 
-      let num = subcrag.key
-      return keys.includes(num.toString());
-    });
-    console.log(subarrtoget);
-    // request_weather(subarrtoget, subjectSel.value);
-  }
-}
+//       let num = subcrag.key
+//       return keys.includes(num.toString());
+//     });
+//     console.log(subarrtoget);
+//     // request_weather(subarrtoget, subjectSel.value);
+//   }
+// }
 
 
-fill_sub_crags(subcragsmap);
+// fill_sub_crags(subcragsmap);
 
 const element = document.getElementById('popup');
 
@@ -175,7 +222,7 @@ const clusters = new VectorLayer({
 });
 map.addLayer(clusters);
 
-function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday) {
+function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday, pastrain) {
   var geom = new Point(fromLonLat(lonlat));
   const day_styles = {
     'true': new Style({
@@ -195,6 +242,19 @@ function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday
       }),
     }),
   };
+  const rain_styles = {
+    'true': new Style({
+      text: new olText({
+        text: pastrain.toString(),
+        offsetY: 17,
+        fill: new Fill({
+          color: 'black',
+        }),
+      }),
+    }),
+    'false': new Style({
+    }),
+  };
 
   return new Feature({
     'geometry': geom, 'image_path': image_path, 'size': '20', 'Forecast': forecast, 'URL': url, 'AreaName': areaname, 'isday': isday, "TempF": tempf, 'style': [
@@ -212,14 +272,17 @@ function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday
           anchor: [.5, .5],
           // anchorOrigin: 'top-right',
           // scale: .10,
-          scale: .5,
+          // scale: .5,
+          width:48,
+          height:48,
           // anchorXUnits: 'frac',
           // anchorYUnits: 'pixel',
           src: image_path,
           // color: 'yellow'
         }),
       }),
-      day_styles[isday]
+      day_styles[isday],
+      rain_styles[!isNaN(pastrain)]
     ]
   })
 };
@@ -324,19 +387,26 @@ function call_coords(chunk, wi) {
   return Promise.all(
     chunk.map((item) => {
       return new Promise((resolve, reject) => {
-        if (containsXY(map.getView().calculateExtent(), fromLonLat(item.value.lnglat)[0], fromLonLat(item.value.lnglat)[1])) {
-          run(item, wi)
-            .then(function (fmap) {
-              var feat = feature_maker(fmap['lonlat'], fmap['image_path'], fmap['TempF'], fmap['Forecast'], fmap['AreaName'], fmap['URL'], fmap['isDay'])
-              feat.setStyle(feat.get('style'));
-              let lonlatstr = fmap['lonlat'].toString()
-              resolve(add_feature_safe(lonlatstr, feat));
-            }
-            )
+        if (typeof item != "undefined" && containsXY(map.getView().calculateExtent(), fromLonLat(item.value.lnglat)[0], fromLonLat(item.value.lnglat)[1])) {
+
+          let fmap = prun(item, wi)
+          let pastrain = 'none';
+          if (fmap.totalPrecipPast){
+            pastrain = fmap.totalPrecipPast
+          }
+          console.log(pastrain);
+          var feat = feature_maker(fmap['lonlat'], fmap['image_path'], fmap['TempF'], fmap['Forecast'], fmap['AreaName'], fmap['URL'], fmap['isDay'], pastrain)
+          feat.setStyle(feat.get('style'));
+          let lonlatstr = fmap['lonlat'].toString()
+          resolve(add_feature_safe(lonlatstr, feat));
+
         }
-        else {
+        else if (typeof item != "undefined") {
           FeatureMap.delete(item.value.lnglat.toString());
           resolve();
+        }
+        else {
+          resolve()
         }
       }
       )
@@ -346,17 +416,18 @@ function call_coords(chunk, wi) {
 }
 
 
-get_current_periods().then(function (subjectObject) {
+function set_periods(subjectObject) {
   var subjectSel = document.getElementById("weatherperiod");
   subjectSel.innerHTML = subjectObject[0];
   for (var x in subjectObject) {
-    subjectSel.options[subjectSel.options.length] = new Option(subjectObject[x], x);
+    subjectSel.options[x] = new Option(subjectObject[x], x);
   }
   subjectSel.onchange = function () {
     console.log(subjectSel.value);
-    request_weather(arr.concat(subarrtoget), subjectSel.value);
+    request_weather(arr, subjectSel.value);
   }
-});
+};
+set_periods(periods);
 
 const popup = new Overlay({
   element: element,
@@ -444,7 +515,7 @@ map.on('moveend', function () {
       FeatureMap.delete(x)
     })
     var subjectSel = document.getElementById("weatherperiod");
-    request_weather(arr.concat(subarrtoget), get_wi())
+    request_weather(arr, get_wi())
   }
   else {
     console.log('clear ', map.getView().getZoom());
