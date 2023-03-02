@@ -24,7 +24,9 @@ import { prun } from './parsewapi.js'
 
 
 import imgUrl from '../images/climbweathersym.png'
+import blackback from '../images/black_rounded_square_flat64x64.png'
 
+import blueback from '../images/blue_rounded_square_flat64x64.png'
 
 // let cragjson = await fetch('https://rapid-poetry-328e.cwmtb.workers.dev/').catch("No Good");
 async function call_worker() {
@@ -52,13 +54,12 @@ headerimg.style.width = '48px';
 const cragjson = await call_worker()
 console.log(cragjson[0].forecast.forecastday);
 
-function getDayName(dateStr, locale)
-{
-    var date = new Date(dateStr);
-    return date.toLocaleDateString(locale, { weekday: 'long' });        
+function getDayName(dateStr, locale) {
+  var date = new Date(dateStr);
+  return date.toLocaleDateString(locale, { weekday: 'long' });
 }
 var periods = []
-for(var i in cragjson[0].forecast.forecastday){
+for (var i in cragjson[0].forecast.forecastday) {
   periods.push([getDayName(cragjson[0].forecast.forecastday[i].date, 'en-US')]);
 }
 console.log(periods);
@@ -232,7 +233,8 @@ function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday
           color: 'black',
         }),
       }),
-    }),
+    },
+    ),
     'false': new Style({
       text: new olText({
         text: tempf + ' F',
@@ -242,39 +244,83 @@ function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday
       }),
     }),
   };
+  // #006ddf
   const rain_styles = {
     'true': new Style({
+      image: new Icon({
+        // anchor: [.5, .5],
+        // anchorOrigin: 'top-right',
+        // scale: .10,
+        // scale: .5,
+        width: 64,
+        height: 64,
+        // anchorXUnits: 'frac',
+        // anchorYUnits: 'pixel',
+        src: blueback,
+        // color: 'yellow'
+      }),
       text: new olText({
         text: pastrain.toString(),
-        offsetY: 17,
+        offsetY: 31,
         fill: new Fill({
-          color: 'black',
+          color: 'white',
         }),
       }),
+
     }),
     'false': new Style({
+      image: new Icon({
+        // anchor: [.5, .5],
+        // anchorOrigin: 'top-right',
+        // scale: .10,
+        // scale: .5,
+        width: 64,
+        height: 64,
+        // anchorXUnits: 'frac',
+        // anchorYUnits: 'pixel',
+        src: blackback,
+        // color: 'yellow'
+      }),
     }),
   };
-
+  var bgc = '#00000000';
+  var lc = '#00000000';
+  if (!isNaN(pastrain)){
+    bgc =  '#006ddf'
+    lc = 'black'
+  }
   return new Feature({
     'geometry': geom, 'image_path': image_path, 'size': '20', 'Forecast': forecast, 'URL': url, 'AreaName': areaname, 'isday': isday, "TempF": tempf, 'style': [
-      new Style({
-        image: new RegularShape({
-          points: 6,
-          radius: 20,
-          fill: new Fill({
-            color: 'grey'
-          })
-        })
+      rain_styles[!isNaN(pastrain)],
+      new Style({image: new RegularShape({
+        fill: new Fill({ color: bgc }),
+        stroke: new Stroke({ color: lc, width: 2 }),
+        points: 4,
+        radius: 20 / Math.SQRT2,
+        radius2: 20,
+        points: 4,
+        angle: 0,
+        scale: [1, 0.5],
+        displacement: [0, -30],
       }),
+      }),
+      // new Style({
+      //   image: new RegularShape({
+      //     points: 6,
+      //     radius: 20,
+      //     fill: new Fill({
+      //       color: 'grey'
+      //     })
+      //   })
+      // }),
       new Style({
         image: new Icon({
           anchor: [.5, .5],
           // anchorOrigin: 'top-right',
           // scale: .10,
           // scale: .5,
-          width:48,
-          height:48,
+          width: 48,
+          height: 48,
           // anchorXUnits: 'frac',
           // anchorYUnits: 'pixel',
           src: image_path,
@@ -282,7 +328,6 @@ function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday
         }),
       }),
       day_styles[isday],
-      rain_styles[!isNaN(pastrain)]
     ]
   })
 };
@@ -391,7 +436,7 @@ function call_coords(chunk, wi) {
 
           let fmap = prun(item, wi)
           let pastrain = 'none';
-          if (fmap.totalPrecipPast){
+          if (fmap.totalPrecipPast) {
             pastrain = fmap.totalPrecipPast
           }
           console.log(pastrain);
