@@ -41,9 +41,13 @@ export function prun(item, day) {
     if (day!=0){
         console.log(past_day);
         past_map.forEach((value, key) => {
-            console.log(eval(`v.forecast.forecastday[${past_day}].day.${value}`));
+            console.log(eval(ret_json[key]));
             ret_json[key] = eval(`v.forecast.forecastday[${past_day}].day.${value}`)
         })
+    }
+    else{
+        console.log(v);
+        ret_json['totalPrecipPast'] = v.history.forecastday[day].day.totalprecip_in;
     }
     // console.log(ret_json);
     return ret_json
