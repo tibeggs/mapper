@@ -20,7 +20,6 @@ export async function get_current_periods() {
     console.log(wurl)
     get_weather_periods(wurl).then(
       function (data) {
-        // console.log(data);
         resolve(data)
       });
   })
@@ -32,20 +31,17 @@ async function fill_feature(coords) {
     // var actions = coords.map(coordfn);
     var result = coordfn(coords);
     // var result =  Promise.all(actions);
-    // console.log(result);
     result.then(data => resolve(data))
 
   });
 };
 
 var coordfn = function coordasync(coords) {
-  // console.log(coords);
   const c = coords.value.lnglat;
   const an = coords.value.crag;
   const url = coords.value.url;
   return new Promise(resolve => {
     var wurl = base_url + c[1] + "," + c[0]
-    // console.log(wurl)
     get_weather_url(wurl).then(
       function (data) {
         resolve(matchForecast(c, data[0], data[1], data[2], data[3], an, url))
@@ -59,11 +55,9 @@ function matchForecast(c, a, f, i, d, n, u) {
 };
 
 export async function run(coords, w) {
-  // console.log(coords);
   wi = w;
   console.log(wi);
   return new Promise((resolve, reject) => {
-    // console.log("running")
     var thing = fill_feature(coords).then(function (Feature) {
       resolve(Feature);
     })
@@ -73,7 +67,6 @@ export async function run(coords, w) {
 async function get_weather_periods(url) {
   const response = await fetchRetry(url, 10, 100);
   var data = await response.json();
-  //   console.log(data.properties.forecast);
   return get_periods(data.properties.forecast)
 };
 
@@ -95,7 +88,6 @@ async function get_periods(url) {
 async function get_weather_url(url) {
   const response = await fetchRetry(url, 100, 5);
   var data = await response.json();
-  //   console.log(data.properties.forecast);
   if ('properties' in data) {
     return get_weather(data.properties.forecast)
   }
@@ -110,18 +102,14 @@ async function get_weather(url) {
     const response = await fetchRetry(url, 100, 5);
     var data = await response.json();
     if (data.status) {
-      // console.log(data);
       return ["Unknown", 0, NoaaToLocal.get("NA"), "true"]
     }
     else {
-      console.log(data.properties.periods[0].isDaytime);
       let wiu = parseInt(wi);
       if (!data.properties.periods[0].isDaytime) {
-        console.log(parseInt(wiu));
         wiu = (parseInt(wiu) * 2) + 1;
 
       }
-      console.log(wiu);
       return [data.properties.periods[wiu].shortForecast, data.properties.periods[wiu].temperature, data.properties.periods[wiu].icon, data.properties.periods[wiu].isDaytime]
     }
   }
