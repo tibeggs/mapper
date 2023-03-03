@@ -4,11 +4,10 @@ This is mostly a learning tool for myself but I also wanted this feature from a 
 To be built via vite. The code relies on cloudflare r2 to pull in the data. <br>
 The database gets updated daily in the morning so values may be out of sync until 5 am EST or so. (side effect of cloudflare subrequest limits);<br>
 Data is based off of 
-</P> [OpenBeta/climbing-data](https://github.com/OpenBeta/climbing-data)
-<p>
- date grabbed: (2023-02-23)<br>
-</p>
+</P> 
 
+[OpenBeta/climbing-data](https://github.com/OpenBeta/climbing-data)
+ date grabbed: (2023-02-23)
 
 
 
