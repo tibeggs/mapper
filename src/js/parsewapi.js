@@ -30,25 +30,24 @@ past_map.set('snow_chancePast', 'daily_chance_of_snow');
 // var day = 0
 
 export function prun(item, day) {
-    console.log(day);
+    // console.log(day);
     let past_day = day-1
     let v = item.value;
     let ret_json = { 'lonlat': [v.lnglat[0],v.lnglat[1],], 'AreaName': v.crag, 'URL': v.url, 'isDay': "true" }
-    // console.log(v)
-    ret_json['date'] = v.history.forecastday[day].date;
+    // console.log(v.history.forecastday[day].date)
+    ret_json['date'] = v.forecast.forecastday[day].date;
     var_map.forEach((value, key) => {
-        console.log(eval(`v.forecast.forecastday[${day}].day.${value}`));
+        // console.log(eval(`v.forecast.forecastday[${day}].day.${value}`));
         ret_json[key] = eval(`v.forecast.forecastday[${day}].day.${value}`)
     })
     if (day!=0){
-        console.log(past_day);
         past_map.forEach((value, key) => {
-            console.log(eval(ret_json[key]));
+            // console.log(eval(ret_json[key]));
             ret_json[key] = eval(`v.forecast.forecastday[${past_day}].day.${value}`)
         })
     }
     else{
-        console.log(v);
+        // console.log(v);
         ret_json['totalPrecipPast'] = v.history.forecastday[day].day.totalprecip_in;
     }
     // console.log(ret_json);

@@ -210,7 +210,7 @@ map.addLayer(clusters);
 
 
 set_default_location().then(function (t) {
-  console.log(t);
+  // console.log(t);
   change_map_view(t)
 })
 
@@ -478,7 +478,7 @@ async function request_weather(rawArray, wi) {
   // vectorSource.clear();
   let dataArray = rawArray.filter(is_in_extent);
   try {
-    console.log("called");
+    // console.log("called");
     const chunks = chunkArray(dataArray, 150);
     for (const chunk of chunks) {
       await call_coords(chunk, wi);
@@ -541,7 +541,7 @@ function call_coords(chunk, wi) {
           if (fmap.totalPrecipPast) {
             pastrain = fmap.totalPrecipPast
           }
-          console.log(pastrain);
+          // console.log(pastrain);
           var feat = feature_maker(fmap['lonlat'], fmap['image_path'],  fmap['date'], fmap['TempF'], fmap['Forecast'], fmap['AreaName'], fmap['URL'], fmap['isDay'], fmap['maxWind'],
             fmap['totalPrecip'], pastrain)
           feat.setStyle(feat.get('style'));
