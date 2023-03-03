@@ -57,9 +57,17 @@ for (var i in cragjson[0].forecast.forecastday) {
 
 var cragsmap = new Map(Object.entries(cragjson));
 
+
+
+
 function getDayName(dateStr, locale) {
+  let formatter = new Intl.DateTimeFormat(locale, {
+    timeZone: "America/New_York",
+    weekday: 'long',
+  });
   var date = new Date(dateStr);
-  return date.toLocaleDateString(locale, { weekday: 'long' });
+  return formatter.format(date)
+  // return date.toLocaleDateString(locale, { weekday: 'long' });
 }
 
 const arr = Array.from(cragsmap, ([key, value]) => ({
@@ -303,7 +311,7 @@ function fill_crags(subjectObject) {
     height: "resolve"
   });
 }
-function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday, maxwind, totalprecip, pastrain) {
+function feature_maker(lonlat, image_path, date, tempf, forecast, areaname, url, isday, maxwind, totalprecip, pastrain) {
   var geom = new Point(fromLonLat(lonlat));
   const day_styles = {
     'true': new Style({
@@ -387,7 +395,7 @@ function feature_maker(lonlat, image_path, tempf, forecast, areaname, url, isday
     // lc = 'black'
   }
   return new Feature({
-    'geometry': geom, 'image_path': image_path, 'size': '20', 'Forecast': forecast, 'URL': url, 'AreaName': areaname, 'isday': isday, "TempF": tempf, 'MaxWind': maxwind,
+    'geometry': geom, 'image_path': image_path, 'date':date, 'size': '20', 'Forecast': forecast, 'URL': url, 'AreaName': areaname, 'isday': isday, "TempF": tempf, 'MaxWind': maxwind,
     'TotalPrecip': totalprecip, 'style': [
       rain_styles[!isNaN(pastrain)],
       new Style({
@@ -534,7 +542,7 @@ function call_coords(chunk, wi) {
             pastrain = fmap.totalPrecipPast
           }
           console.log(pastrain);
-          var feat = feature_maker(fmap['lonlat'], fmap['image_path'], fmap['TempF'], fmap['Forecast'], fmap['AreaName'], fmap['URL'], fmap['isDay'], fmap['maxWind'],
+          var feat = feature_maker(fmap['lonlat'], fmap['image_path'],  fmap['date'], fmap['TempF'], fmap['Forecast'], fmap['AreaName'], fmap['URL'], fmap['isDay'], fmap['maxWind'],
             fmap['totalPrecip'], pastrain)
           feat.setStyle(feat.get('style'));
           let lonlatstr = fmap['lonlat'].toString()
@@ -587,7 +595,10 @@ function popup_show(evt) {
     html: true,
     // content: "Hello",
     title: feature.get('features')[0].get('AreaName'),
-    content: feature.get('features')[0].get('TempF') + " F<br>" + feature.get('features')[0].get('Forecast') +
+    content: 
+    '<b>' + feature.get('features')[0].get('date') + '</b><br>' +
+      feature.get('features')[0].get('TempF') + " F<br>" +
+       feature.get('features')[0].get('Forecast') +
       "<br> Max Wind: " + feature.get('features')[0].get('MaxWind') + "mph" +
       "<br> Tot. Precip: " + feature.get('features')[0].get('TotalPrecip') + "in" +
       "<br><a href=" + feature.get('features')[0].get('URL') + " target='blank'>" + feature.get('features')[0].get('URL') + "</a>",

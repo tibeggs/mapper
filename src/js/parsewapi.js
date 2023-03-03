@@ -6,6 +6,7 @@ import wjson from '../json/wapitest.json' assert { type: 'JSON' };;
 
 const var_map = new Map();
 var_map.set('Forecast', 'condition.text');
+var_map.set('Forecast', 'condition.text');
 var_map.set('image_path', 'condition.icon');
 var_map.set('TempF', 'avgtemp_f');
 var_map.set('minTempF', 'mintemp_f');
@@ -34,6 +35,7 @@ export function prun(item, day) {
     let v = item.value;
     let ret_json = { 'lonlat': [v.lnglat[0],v.lnglat[1],], 'AreaName': v.crag, 'URL': v.url, 'isDay': "true" }
     // console.log(v)
+    ret_json['date'] = v.history.forecastday[day].date;
     var_map.forEach((value, key) => {
         console.log(eval(`v.forecast.forecastday[${day}].day.${value}`));
         ret_json[key] = eval(`v.forecast.forecastday[${day}].day.${value}`)
@@ -41,9 +43,13 @@ export function prun(item, day) {
     if (day!=0){
         console.log(past_day);
         past_map.forEach((value, key) => {
-            console.log(eval(`v.forecast.forecastday[${past_day}].day.${value}`));
+            console.log(eval(ret_json[key]));
             ret_json[key] = eval(`v.forecast.forecastday[${past_day}].day.${value}`)
         })
+    }
+    else{
+        console.log(v);
+        ret_json['totalPrecipPast'] = v.history.forecastday[day].day.totalprecip_in;
     }
     // console.log(ret_json);
     return ret_json
