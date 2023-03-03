@@ -1,12 +1,19 @@
-# OpenLayers + Vite
+# Climb Weather Map
+<p>
+This is mostly a learning tool for myself but I also wanted this feature from a few better built crag weather sites so here it is
+To be built via vite. The code relies on cloudflare r2 to pull in the data. <br>
+The database gets updated daily in the morning so values may be out of sync until 5 am EST or so. (side effect of cloudflare subrequest limits);<br>
+Data is based off of 
+</P> [OpenBeta/climbing-data](https://github.com/OpenBeta/climbing-data)
+<p>
+ date grabbed: (2023-02-23)<br>
+</p>
 
-This example demonstrates how the `ol` package can be used with [Vite](https://vitejs.dev/).
 
-To get started, run the following (requires Node 14+):
 
-    npx create-ol-app my-app --template vite
 
-Then change into your new `my-app` directory and start a development server (available at http://localhost:5173):
+## OpenLayers + Vite (doc)
+Then change into your directory and start a development server:
 
     cd my-app
     npm start
