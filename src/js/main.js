@@ -22,6 +22,7 @@ import { prun } from './parsewapi.js'
 import imgUrl from '../images/climbweathersym.png'
 import blackback from '../images/black_rounded_square_flat64x64.png'
 import blueback from '../images/blue_rounded_square_flat64x64.png'
+import { DateTime } from "luxon";
 
 var headerimg = document.getElementById('headimage')
 headerimg.src = imgUrl
@@ -51,6 +52,7 @@ async function call_worker() {
 const cragjson = await call_worker()
 
 var periods = []
+periods.push('Yesterday, '+ DateTime.now().plus({ days: -1 }).toLocaleString({month: 'short', day: 'numeric'}))
 for (var i in cragjson[0].forecast.forecastday) {
   periods.push([getDayName(cragjson[0].forecast.forecastday[i].date, 'en-US')]);
 }
@@ -61,12 +63,12 @@ var cragsmap = new Map(Object.entries(cragjson));
 
 
 function getDayName(dateStr, locale) {
-  let formatter = new Intl.DateTimeFormat(locale, {
-    timeZone: "America/New_York",
-    weekday: 'long',
-  });
-  var date = new Date(dateStr);
-  return formatter.format(date)
+  var today =  DateTime.now( { zone: "America/New_York" });
+  var date = DateTime.fromISO(dateStr, { zone: "America/New_York" });
+  if (date.toLocaleString(DateTime.DATE_SHORT) == today.toLocaleString(DateTime.DATE_SHORT)){
+    return 'Today, ' + date.toLocaleString({month: 'short', day: 'numeric'})
+  }
+  return date.toLocaleString({ weekday: 'long',   month: 'short', day: 'numeric'});
   // return date.toLocaleDateString(locale, { weekday: 'long' });
 }
 
@@ -565,13 +567,15 @@ function call_coords(chunk, wi) {
 
 function set_periods(subjectObject) {
   var subjectSel = document.getElementById("weatherperiod");
-  subjectSel.innerHTML = subjectObject[0];
+  // subjectSel.innerHTML = subjectObject[0];
   for (var x in subjectObject) {
     subjectSel.options[x] = new Option(subjectObject[x], x);
   }
+  subjectSel.value = 1;
   subjectSel.onchange = function () {
     console.log(subjectSel.value);
     request_weather(arr, subjectSel.value);
+    disposePopover()
   }
 };
 

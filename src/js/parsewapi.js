@@ -29,29 +29,42 @@ past_map.set('snow_chancePast', 'daily_chance_of_snow');
 
 // var day = 0
 
-export function prun(item, day) {
+export function prun(item, wi) {
+    var day = wi-1
     // console.log(day);
     let past_day = day-1
     let v = item.value;
     let ret_json = { 'lonlat': [v.lnglat[0],v.lnglat[1],], 'AreaName': v.crag, 'URL': v.url, 'isDay': "true" }
     // console.log(v.history.forecastday[day].date)
-    ret_json['date'] = v.forecast.forecastday[day].date;
-    var_map.forEach((value, key) => {
-        // console.log(eval(`v.forecast.forecastday[${day}].day.${value}`));
-        ret_json[key] = eval(`v.forecast.forecastday[${day}].day.${value}`)
-    })
-    if (day!=0){
-        past_map.forEach((value, key) => {
-            // console.log(eval(ret_json[key]));
-            ret_json[key] = eval(`v.forecast.forecastday[${past_day}].day.${value}`)
+    if (day >=0){
+        ret_json['date'] = v.forecast.forecastday[day].date;
+        var_map.forEach((value, key) => {
+            // console.log(eval(`v.forecast.forecastday[${day}].day.${value}`));
+            ret_json[key] = eval(`v.forecast.forecastday[${day}].day.${value}`)
         })
+        if (day>0){
+            past_map.forEach((value, key) => {
+                // console.log(eval(ret_json[key]));
+                ret_json[key] = eval(`v.forecast.forecastday[${past_day}].day.${value}`)
+            })
+        }
+        else{
+            // console.log(v);
+            ret_json['totalPrecipPast'] = v.history.forecastday[day].day.totalprecip_in;
+        }
+        // console.log(ret_json);
+        return ret_json
     }
-    else{
-        // console.log(v);
-        ret_json['totalPrecipPast'] = v.history.forecastday[day].day.totalprecip_in;
+    else if (day = -1) {
+        ret_json['date'] = v.history.forecastday[0].date;
+        var_map.forEach((value, key) => {
+            // console.log(eval(`v.history.forecastday[0].day.${value}`));
+            ret_json[key] = eval(`v.history.forecastday[0].day.${value}`)
+        })
+        // console.log(ret_json);
+        return ret_json
     }
-    // console.log(ret_json);
-    return ret_json
+    
 
     return
 }
