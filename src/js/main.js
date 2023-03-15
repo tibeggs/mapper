@@ -313,7 +313,12 @@ function fill_crags(subjectObject) {
     height: "resolve"
   });
 }
-function feature_maker(lonlat, image_path, date, tempf, forecast, areaname, url, isday, maxwind, totalprecip, pastrain) {
+function feature_maker(lonlat, image_path, date, tempf, forecast, areaname, url, isday, maxwind, totalprecip, pastrain, is_per) {
+  var precip_unit = " in."
+  if (is_per=='true')
+  {
+    precip_unit = " %"
+  }
   var geom = new Point(fromLonLat(lonlat));
   const day_styles = {
     'true': new Style({
@@ -365,7 +370,7 @@ function feature_maker(lonlat, image_path, date, tempf, forecast, areaname, url,
         // color: 'yellow'
       }),
       text: new olText({
-        text: pastrain.toString() + ' in',
+        text: pastrain.toString() + precip_unit,
         offsetY: 36,
         textAlign: 'center',
         textBaseline: 'center',
@@ -545,7 +550,7 @@ function call_coords(chunk, wi) {
           }
           // console.log(pastrain);
           var feat = feature_maker(fmap['lonlat'], fmap['image_path'],  fmap['date'], fmap['TempF'], fmap['Forecast'], fmap['AreaName'], fmap['URL'], fmap['isDay'], fmap['maxWind'],
-            fmap['totalPrecip'], pastrain)
+            fmap['totalPrecip'], pastrain, fmap['precip_is_per'])
           feat.setStyle(feat.get('style'));
           let lonlatstr = fmap['lonlat'].toString()
           resolve(add_feature_safe(lonlatstr, feat));
@@ -593,6 +598,14 @@ function popup_show(evt) {
   if (!feature) {
     return;
   }
+  let per_unit = ' in.'
+  let TotalPrecip = '0';
+  if(feature.get('features')[0].get('per_is_per')){
+    per_unit = 0
+  }
+  if (feature.get('features')[0].get('TotalPrecip')!=null){
+    TotalPrecip = feature.get('features')[0].get('TotalPrecip');
+  }
   popup.setPosition(evt.coordinate);
   popover = new bootstrap.Popover(element, {
     placement: 'top',
@@ -604,7 +617,7 @@ function popup_show(evt) {
       feature.get('features')[0].get('TempF') + " F<br>" +
        feature.get('features')[0].get('Forecast') +
       "<br> Max Wind: " + feature.get('features')[0].get('MaxWind') + "mph" +
-      "<br> Tot. Precip: " + feature.get('features')[0].get('TotalPrecip') + "in" +
+      "<br> Tot. Precip: " + TotalPrecip + per_unit +
       "<br><a href=" + feature.get('features')[0].get('URL') + " target='blank'>" + feature.get('features')[0].get('URL') + "</a>",
   });
   popover.show();
