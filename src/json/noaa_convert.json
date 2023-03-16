@@ -5,6 +5,18 @@
         "night": "Clear",
         "icon": "113"
     },
+    "Partly Sunny": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Mostly Sunny": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
     "Fair": {
         "code": "1000",
         "day": "Sunny",

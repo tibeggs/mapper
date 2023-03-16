@@ -52,10 +52,33 @@ async function call_worker() {
 const cragjson = await call_worker()
 
 var periods = []
-periods.push('Yesterday, '+ DateTime.now().plus({ days: -1 }).toLocaleString({month: 'short', day: 'numeric'}))
-for (var i in cragjson[0].forecast.forecastday) {
-  periods.push([getDayName(cragjson[0].forecast.forecastday[i].date, 'en-US')]);
+periods.push('Yesterday, ' + DateTime.now().plus({ days: -1 }).toLocaleString({ month: 'short', day: 'numeric' }))
+if (cragjson[0].forecast.forecastday) {
+  for (var i in cragjson[0].forecast.forecastday) {
+    periods.push([getDayName(cragjson[0].forecast.forecastday[i].date, 'en-US')]);
+  }
 }
+else {
+  console.log(cragjson[0]);
+  for (var i in cragjson[0].forecast) {
+    if (i < cragjson[0].forecast.length / 2) {
+      let wiu = i;
+      if (!cragjson[0].forecast[0].isDaytime && wiu != -1) {
+        wiu = (parseInt(wiu) * 2) + 1;
+
+      }
+      else if (wiu != -1) {
+        wiu = (parseInt(wiu) * 2);
+      }
+      console.log(wiu);
+      var luxonDate = DateTime.fromISO(cragjson[0].forecast[wiu].startTime);
+      const date = luxonDate.toFormat('yyyy-MM-dd')
+      periods.push([getDayName(date)]);
+    }
+  }
+
+}
+
 
 var cragsmap = new Map(Object.entries(cragjson));
 
@@ -63,12 +86,12 @@ var cragsmap = new Map(Object.entries(cragjson));
 
 
 function getDayName(dateStr, locale) {
-  var today =  DateTime.now( { zone: "America/New_York" });
+  var today = DateTime.now({ zone: "America/New_York" });
   var date = DateTime.fromISO(dateStr, { zone: "America/New_York" });
-  if (date.toLocaleString(DateTime.DATE_SHORT) == today.toLocaleString(DateTime.DATE_SHORT)){
-    return 'Today, ' + date.toLocaleString({month: 'short', day: 'numeric'})
+  if (date.toLocaleString(DateTime.DATE_SHORT) == today.toLocaleString(DateTime.DATE_SHORT)) {
+    return 'Today, ' + date.toLocaleString({ month: 'short', day: 'numeric' })
   }
-  return date.toLocaleString({ weekday: 'long',   month: 'short', day: 'numeric'});
+  return date.toLocaleString({ weekday: 'long', month: 'short', day: 'numeric' });
   // return date.toLocaleDateString(locale, { weekday: 'long' });
 }
 
@@ -315,8 +338,7 @@ function fill_crags(subjectObject) {
 }
 function feature_maker(lonlat, image_path, date, tempf, forecast, areaname, url, isday, maxwind, totalprecip, pastrain, is_per) {
   var precip_unit = " in."
-  if (is_per=='true')
-  {
+  if (is_per == 'true') {
     precip_unit = " %"
   }
   var geom = new Point(fromLonLat(lonlat));
@@ -402,7 +424,7 @@ function feature_maker(lonlat, image_path, date, tempf, forecast, areaname, url,
     // lc = 'black'
   }
   return new Feature({
-    'geometry': geom, 'image_path': image_path, 'date':date, 'size': '20', 'Forecast': forecast, 'URL': url, 'AreaName': areaname, 'isday': isday, "TempF": tempf, 'MaxWind': maxwind,
+    'geometry': geom, 'image_path': image_path, 'date': date, 'size': '20', 'Forecast': forecast, 'URL': url, 'AreaName': areaname, 'isday': isday, "TempF": tempf, 'MaxWind': maxwind,
     'TotalPrecip': totalprecip, 'style': [
       rain_styles[!isNaN(pastrain)],
       new Style({
@@ -549,7 +571,7 @@ function call_coords(chunk, wi) {
             pastrain = fmap.totalPrecipPast
           }
           // console.log(pastrain);
-          var feat = feature_maker(fmap['lonlat'], fmap['image_path'],  fmap['date'], fmap['TempF'], fmap['Forecast'], fmap['AreaName'], fmap['URL'], fmap['isDay'], fmap['maxWind'],
+          var feat = feature_maker(fmap['lonlat'], fmap['image_path'], fmap['date'], fmap['TempF'], fmap['Forecast'], fmap['AreaName'], fmap['URL'], fmap['isDay'], fmap['maxWind'],
             fmap['totalPrecip'], pastrain, fmap['precip_is_per'])
           feat.setStyle(feat.get('style'));
           let lonlatstr = fmap['lonlat'].toString()
@@ -600,10 +622,10 @@ function popup_show(evt) {
   }
   let per_unit = ' in.'
   let TotalPrecip = '0';
-  if(feature.get('features')[0].get('per_is_per')){
+  if (feature.get('features')[0].get('per_is_per')) {
     per_unit = 0
   }
-  if (feature.get('features')[0].get('TotalPrecip')!=null){
+  if (feature.get('features')[0].get('TotalPrecip') != null) {
     TotalPrecip = feature.get('features')[0].get('TotalPrecip');
   }
   popup.setPosition(evt.coordinate);
@@ -612,10 +634,10 @@ function popup_show(evt) {
     html: true,
     // content: "Hello",
     title: feature.get('features')[0].get('AreaName'),
-    content: 
-    '<b>' + feature.get('features')[0].get('date') + '</b><br>' +
+    content:
+      '<b>' + feature.get('features')[0].get('date') + '</b><br>' +
       feature.get('features')[0].get('TempF') + " F<br>" +
-       feature.get('features')[0].get('Forecast') +
+      feature.get('features')[0].get('Forecast') +
       "<br> Max Wind: " + feature.get('features')[0].get('MaxWind') + "mph" +
       "<br> Tot. Precip: " + TotalPrecip + per_unit +
       "<br><a href=" + feature.get('features')[0].get('URL') + " target='blank'>" + feature.get('features')[0].get('URL') + "</a>",

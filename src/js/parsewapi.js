@@ -181,7 +181,8 @@ function parse_noaa(day,  past_day, v, ret_json){
             console.log(eval(`v.forecast[${wiu}].${value}`));
             ret_json[key] = eval(`v.forecast[${wiu}].${value}`)
         })
-        if(typeof noaa_convert[ret_json['Forecast']] !== "undefinded"){
+        if(ret_json['Forecast'] in noaa_convert){
+            console.log(noaa_convert[ret_json['Forecast']]);
             const img_path = eval(`img${noaa_convert[ret_json['Forecast']].icon}`);
             ret_json['image_path'] = img_path;
         }
