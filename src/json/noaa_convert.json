@@ -1,0 +1,1610 @@
+{
+    "Sunny": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Partly Sunny": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Mostly Sunny": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Fair": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Clear": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Fair with Haze": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Clear with Haze": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Fair and Breezy": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Clear and Breezy": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "A Few Clouds": {
+        "code": "1003",
+        "day": "Partly cloudy",
+        "night": "Partly cloudy",
+        "icon": "116"
+    },
+    "A Few Clouds with Haze": {
+        "code": "1003",
+        "day": "Partly cloudy",
+        "night": "Partly cloudy",
+        "icon": "116"
+    },
+    "A Few Clouds and Breezy": {
+        "code": "1003",
+        "day": "Partly cloudy",
+        "night": "Partly cloudy",
+        "icon": "116"
+    },
+    "Partly Cloudy": {
+        "code": "1003",
+        "day": "Partly cloudy",
+        "night": "Partly cloudy",
+        "icon": "116"
+    },
+    "Partly Cloudy with Haze": {
+        "code": "1003",
+        "day": "Partly cloudy",
+        "night": "Partly cloudy",
+        "icon": "116"
+    },
+    "Partly Cloudy and Breezy": {
+        "code": "1003",
+        "day": "Partly cloudy",
+        "night": "Partly cloudy",
+        "icon": "116"
+    },
+    "Mostly Cloudy": {
+        "code": "1006",
+        "day": "Cloudy",
+        "night": "Cloudy",
+        "icon": "119"
+    },
+    "Mostly Cloudy with Haze": {
+        "code": "1006",
+        "day": "Cloudy",
+        "night": "Cloudy",
+        "icon": "119"
+    },
+    "Mostly Cloudy and Breezy": {
+        "code": "1006",
+        "day": "Cloudy",
+        "night": "Cloudy",
+        "icon": "119"
+    },
+    "Overcast": {
+        "code": "1009",
+        "day": "Overcast",
+        "night": "Overcast",
+        "icon": "122"
+    },
+    "Overcast with Haze": {
+        "code": "1009",
+        "day": "Overcast",
+        "night": "Overcast",
+        "icon": "122"
+    },
+    "Overcast and Breezy": {
+        "code": "1009",
+        "day": "Overcast",
+        "night": "Overcast",
+        "icon": "122"
+    },
+    "Snow": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Light Snow": {
+        "code": "1213",
+        "day": "Light snow",
+        "night": "Light snow",
+        "icon": "326"
+    },
+    "Heavy Snow": {
+        "code": "1225",
+        "day": "Heavy snow",
+        "night": "Heavy snow",
+        "icon": "338"
+    },
+    "Snow Showers": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Light Snow Showers": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Heavy Snow Showers": {
+        "code": "1207",
+        "day": "Moderate or heavy sleet",
+        "night": "Moderate or heavy sleet",
+        "icon": "320"
+    },
+    "Showers Snow": {
+        "code": "1207",
+        "day": "Moderate or heavy sleet",
+        "night": "Moderate or heavy sleet",
+        "icon": "320"
+    },
+    "Light Showers Snow": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Heavy Showers Snow": {
+        "code": "1207",
+        "day": "Moderate or heavy sleet",
+        "night": "Moderate or heavy sleet",
+        "icon": "320"
+    },
+    "Snow Fog/Mist": {
+        "code": "1072",
+        "day": "Patchy freezing drizzle possible",
+        "night": "Patchy freezing drizzle possible",
+        "icon": "185"
+    },
+    "Light Snow Fog/Mist": {
+        "code": "1072",
+        "day": "Patchy freezing drizzle possible",
+        "night": "Patchy freezing drizzle possible",
+        "icon": "185"
+    },
+    "Heavy Snow Fog/Mist": {
+        "code": "1072",
+        "day": "Patchy freezing drizzle possible",
+        "night": "Patchy freezing drizzle possible",
+        "icon": "185"
+    },
+    "Snow Showers Fog/Mist": {
+        "code": "1072",
+        "day": "Patchy freezing drizzle possible",
+        "night": "Patchy freezing drizzle possible",
+        "icon": "185"
+    },
+    "Light Snow Showers Fog/Mist": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Heavy Snow Showers Fog/Mist": {
+        "code": "1171",
+        "day": "Heavy freezing drizzle",
+        "night": "Heavy freezing drizzle",
+        "icon": "284"
+    },
+    "Showers Snow Fog/Mist": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Light Showers Snow Fog/Mist": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Heavy Showers Snow Fog/Mist": {
+        "code": "1171",
+        "day": "Heavy freezing drizzle",
+        "night": "Heavy freezing drizzle",
+        "icon": "284"
+    },
+    "Snow Fog": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Light Snow Fog": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Heavy Snow Fog": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Snow Showers Fog": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Light Snow Showers Fog": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Heavy Snow Showers Fog": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Showers in Vicinity Snow": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Snow Showers in Vicinity": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Snow Showers in Vicinity Fog/Mist": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Snow Showers in Vicinity Fog": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Low Drifting Snow": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Blowing Snow": {
+        "code": "1114",
+        "day": "Blowing snow",
+        "night": "Blowing snow",
+        "icon": "227"
+    },
+    "Snow Low Drifting Snow": {
+        "code": "1114",
+        "day": "Blowing snow",
+        "night": "Blowing snow",
+        "icon": "227"
+    },
+    "Snow Blowing Snow": {
+        "code": "1114",
+        "day": "Blowing snow",
+        "night": "Blowing snow",
+        "icon": "227"
+    },
+    "Light Snow Low Drifting Snow": {
+        "code": "1114",
+        "day": "Blowing snow",
+        "night": "Blowing snow",
+        "icon": "227"
+    },
+    "Light Snow Blowing Snow": {
+        "code": "1114",
+        "day": "Blowing snow",
+        "night": "Blowing snow",
+        "icon": "227"
+    },
+    "Light Snow Blowing Snow Fog/Mist": {
+        "code": "1114",
+        "day": "Blowing snow",
+        "night": "Blowing snow",
+        "icon": "227"
+    },
+    "Heavy Snow Low Drifting Snow": {
+        "code": "1114",
+        "day": "Blowing snow",
+        "night": "Blowing snow",
+        "icon": "227"
+    },
+    "Heavy Snow Blowing Snow": {
+        "code": "1114",
+        "day": "Blowing snow",
+        "night": "Blowing snow",
+        "icon": "227"
+    },
+    "Thunderstorm Snow": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Light Thunderstorm Snow": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Heavy Thunderstorm Snow": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Snow Grains": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Light Snow Grains": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Heavy Snow Grains": {
+        "code": "1219",
+        "day": "Moderate snow",
+        "night": "Moderate snow",
+        "icon": "332"
+    },
+    "Heavy Blowing Snow": {
+        "code": "1114",
+        "day": "Blowing snow",
+        "night": "Blowing snow",
+        "icon": "227"
+    },
+    "Blowing Snow in Vicinity": {
+        "code": "1114",
+        "day": "Blowing snow",
+        "night": "Blowing snow",
+        "icon": "227"
+    },
+    "Rain Snow": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Light Rain Snow": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Heavy Rain Snow": {
+        "code": "1207",
+        "day": "Moderate or heavy sleet",
+        "night": "Moderate or heavy sleet",
+        "icon": "320"
+    },
+    "Snow Rain": {
+        "code": "1207",
+        "day": "Moderate or heavy sleet",
+        "night": "Moderate or heavy sleet",
+        "icon": "320"
+    },
+    "Light Snow Rain": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Heavy Snow Rain": {
+        "code": "1207",
+        "day": "Moderate or heavy sleet",
+        "night": "Moderate or heavy sleet",
+        "icon": "320"
+    },
+    "Drizzle Snow": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Light Drizzle Snow": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Snow Drizzle": {
+        "code": "1207",
+        "day": "Moderate or heavy sleet",
+        "night": "Moderate or heavy sleet",
+        "icon": "320"
+    },
+    "Light Snow Drizzle": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Heavy Drizzle Snow": {
+        "code": "1207",
+        "day": "Moderate or heavy sleet",
+        "night": "Moderate or heavy sleet",
+        "icon": "320"
+    },
+    "Rain Ice Pellets": {
+        "code": "1237",
+        "day": "Ice pellets",
+        "night": "Ice pellets",
+        "icon": "350"
+    },
+    "Light Rain Ice Pellets": {
+        "code": "1237",
+        "day": "Ice pellets",
+        "night": "Ice pellets",
+        "icon": "350"
+    },
+    "Heavy Rain Ice Pellets": {
+        "code": "1264",
+        "day": "Moderate or heavy showers of ice pellets",
+        "night": "Moderate or heavy showers of ice pellets",
+        "icon": "377"
+    },
+    "Drizzle Ice Pellets": {
+        "code": "1237",
+        "day": "Ice pellets",
+        "night": "Ice pellets",
+        "icon": "350"
+    },
+    "Light Drizzle Ice Pellets": {
+        "code": "1237",
+        "day": "Ice pellets",
+        "night": "Ice pellets",
+        "icon": "350"
+    },
+    "Heavy Drizzle Ice Pellets": {
+        "code": "1264",
+        "day": "Moderate or heavy showers of ice pellets",
+        "night": "Moderate or heavy showers of ice pellets",
+        "icon": "377"
+    },
+    "Ice Pellets Rain": {
+        "code": "1237",
+        "day": "Ice pellets",
+        "night": "Ice pellets",
+        "icon": "350"
+    },
+    "Light Ice Pellets Rain": {
+        "code": "1237",
+        "day": "Ice pellets",
+        "night": "Ice pellets",
+        "icon": "350"
+    },
+    "Heavy Ice Pellets Rain": {
+        "code": "1264",
+        "day": "Moderate or heavy showers of ice pellets",
+        "night": "Moderate or heavy showers of ice pellets",
+        "icon": "377"
+    },
+    "Ice Pellets Drizzle": {
+        "code": "1237",
+        "day": "Ice pellets",
+        "night": "Ice pellets",
+        "icon": "350"
+    },
+    "Light Ice Pellets Drizzle": {
+        "code": "1237",
+        "day": "Ice pellets",
+        "night": "Ice pellets",
+        "icon": "350"
+    },
+    "Heavy Ice Pellets Drizzle": {
+        "code": "1264",
+        "day": "Moderate or heavy showers of ice pellets",
+        "night": "Moderate or heavy showers of ice pellets",
+        "icon": "377"
+    },
+    "Freezing Rain": {
+        "code": "",
+        "day": "",
+        "night": "",
+        "icon": "311"
+    },
+    "Freezing Drizzle": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Light Freezing Rain": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Light Freezing Drizzle": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Heavy Freezing Rain": {
+        "code": "",
+        "day": "",
+        "night": "",
+        "icon": "311"
+    },
+    "Heavy Freezing Drizzle": {
+        "code": "",
+        "day": "",
+        "night": "",
+        "icon": "311"
+    },
+    "Freezing Rain in Vicinity": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Freezing Drizzle in Vicinity": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Freezing Rain Rain": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Light Freezing Rain Rain": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Heavy Freezing Rain Rain": {
+        "code": "",
+        "day": "",
+        "night": "",
+        "icon": "311"
+    },
+    "Rain Freezing Rain": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Light Rain Freezing Rain": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Heavy Rain Freezing Rain": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "311"
+    },
+    "Freezing Drizzle Rain": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Light Freezing Drizzle Rain": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Heavy Freezing Drizzle Rain": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "311"
+    },
+    "Rain Freezing Drizzle": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Light Rain Freezing Drizzle": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "281"
+    },
+    "Heavy Rain Freezing Drizzle": {
+        "code": "1168",
+        "day": "Freezing drizzle",
+        "night": "Freezing drizzle",
+        "icon": "311"
+    },
+    "Freezing Rain Snow": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Light Freezing Rain Snow": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Heavy Freezing Rain Snow": {
+        "code": "1207",
+        "day": "Moderate or heavy sleet",
+        "night": "Moderate or heavy sleet",
+        "icon": "320"
+    },
+    "Freezing Drizzle Snow": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Light Freezing Drizzle Snow": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Heavy Freezing Drizzle Snow": {
+        "code": "1207",
+        "day": "Moderate or heavy sleet",
+        "night": "Moderate or heavy sleet",
+        "icon": "320"
+    },
+    "Snow Freezing Rain": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Light Snow Freezing Rain": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Heavy Snow Freezing Rain": {
+        "code": "1207",
+        "day": "Moderate or heavy sleet",
+        "night": "Moderate or heavy sleet",
+        "icon": "320"
+    },
+    "Snow Freezing Drizzle": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Light Snow Freezing Drizzle": {
+        "code": "1204",
+        "day": "Light sleet",
+        "night": "Light sleet",
+        "icon": "317"
+    },
+    "Heavy Snow Freezing Drizzle": {
+        "code": "1207",
+        "day": "Moderate or heavy sleet",
+        "night": "Moderate or heavy sleet",
+        "icon": "320"
+    },
+    "Ice Pellets": {
+        "code": "1237",
+        "day": "Ice pellets",
+        "night": "Ice pellets",
+        "icon": "350"
+    },
+    "Light Ice Pellets": {
+        "code": "1261",
+        "day": "Light showers of ice pellets",
+        "night": "Light showers of ice pellets",
+        "icon": "374"
+    },
+    "Heavy Ice Pellets": {
+        "code": "1264",
+        "day": "Moderate or heavy showers of ice pellets",
+        "night": "Moderate or heavy showers of ice pellets",
+        "icon": "377"
+    },
+    "Ice Pellets in Vicinity": {
+        "code": "1237",
+        "day": "Ice pellets",
+        "night": "Ice pellets",
+        "icon": "350"
+    },
+    "Showers Ice Pellets": {
+        "code": "1237",
+        "day": "Ice pellets",
+        "night": "Ice pellets",
+        "icon": "350"
+    },
+    "Thunderstorm Ice Pellets": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Ice Crystals": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Hail": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Small Hail/Snow Pellets": {
+        "code": "1261",
+        "day": "Light showers of ice pellets",
+        "night": "Light showers of ice pellets",
+        "icon": "374"
+    },
+    "Light Small Hail/Snow Pellets": {
+        "code": "1261",
+        "day": "Light showers of ice pellets",
+        "night": "Light showers of ice pellets",
+        "icon": "374"
+    },
+    "Heavy small Hail/Snow Pellets": {
+        "code": "1264",
+        "day": "Moderate or heavy showers of ice pellets",
+        "night": "Moderate or heavy showers of ice pellets",
+        "icon": "377"
+    },
+    "Showers Hail": {
+        "code": "1261",
+        "day": "Light showers of ice pellets",
+        "night": "Light showers of ice pellets",
+        "icon": "374"
+    },
+    "Hail Showers": {
+        "code": "1264",
+        "day": "Moderate or heavy showers of ice pellets",
+        "night": "Moderate or heavy showers of ice pellets",
+        "icon": "377"
+    },
+    "Snow Ice Pellets": {
+        "code": "1264",
+        "day": "Moderate or heavy showers of ice pellets",
+        "night": "Moderate or heavy showers of ice pellets",
+        "icon": "377"
+    },
+    "Light Rain": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Drizzle": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Light Drizzle": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Heavy Drizzle": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Light Rain Fog/Mist": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Drizzle Fog/Mist": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Light Drizzle Fog/Mist": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Heavy Drizzle Fog/Mist": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Light Rain Fog": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Drizzle Fog": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Light Drizzle Fog": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Heavy Drizzle Fog": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Rain": {
+        "code": "1189",
+        "day": "Moderate rain",
+        "night": "Moderate rain",
+        "icon": "302"
+    },
+    "Heavy Rain": {
+        "code": "1195",
+        "day": "Heavy rain",
+        "night": "Heavy rain",
+        "icon": "308"
+    },
+    "Rain Fog/Mist": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Heavy Rain Fog/Mist": {
+        "code": "1195",
+        "day": "Heavy rain",
+        "night": "Heavy rain",
+        "icon": "308"
+    },
+    "Rain Fog": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Heavy Rain Fog": {
+        "code": "1195",
+        "day": "Heavy rain",
+        "night": "Heavy rain",
+        "icon": "308"
+    },
+    "Rain Showers": {
+        "code": "1195",
+        "day": "Heavy rain",
+        "night": "Heavy rain",
+        "icon": "308"
+    },
+    "Light Rain Showers": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Light Rain and Breezy": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Heavy Rain Showers": {
+        "code": "1195",
+        "day": "Heavy rain",
+        "night": "Heavy rain",
+        "icon": "308"
+    },
+    "Rain Showers in Vicinity": {
+        "code": "1063",
+        "day": "Patchy rain possible",
+        "night": "Patchy rain possible",
+        "icon": "176"
+    },
+    "Light Showers Rain": {
+        "code": "1183",
+        "day": "Light rain",
+        "night": "Light rain",
+        "icon": "296"
+    },
+    "Heavy Showers Rain": {
+        "code": "1195",
+        "day": "Heavy rain",
+        "night": "Heavy rain",
+        "icon": "308"
+    },
+    "Showers Rain": {
+        "code": "1189",
+        "day": "Moderate rain",
+        "night": "Moderate rain",
+        "icon": "302"
+    },
+    "Showers Rain in Vicinity": {
+        "code": "1186",
+        "day": "Moderate rain at times",
+        "night": "Moderate rain at times",
+        "icon": "299"
+    },
+    "Rain Showers Fog/Mist": {
+        "code": "1189",
+        "day": "Moderate rain",
+        "night": "Moderate rain",
+        "icon": "302"
+    },
+    "Light Rain Showers Fog/Mist": {
+        "code": "1189",
+        "day": "Moderate rain",
+        "night": "Moderate rain",
+        "icon": "302"
+    },
+    "Heavy Rain Showers Fog/Mist": {
+        "code": "1195",
+        "day": "Heavy rain",
+        "night": "Heavy rain",
+        "icon": "308"
+    },
+    "Rain Showers in Vicinity Fog/Mist": {
+        "code": "1186",
+        "day": "Moderate rain at times",
+        "night": "Moderate rain at times",
+        "icon": "299"
+    },
+    "Light Showers Rain Fog/Mist": {
+        "code": "1189",
+        "day": "Moderate rain",
+        "night": "Moderate rain",
+        "icon": "302"
+    },
+    "Heavy Showers Rain Fog/Mist": {
+        "code": "1195",
+        "day": "Heavy rain",
+        "night": "Heavy rain",
+        "icon": "308"
+    },
+    "Showers Rain Fog/Mist": {
+        "code": "1189",
+        "day": "Moderate rain",
+        "night": "Moderate rain",
+        "icon": "302"
+    },
+    "Showers Rain in Vicinity Fog/Mist": {
+        "code": "1186",
+        "day": "Moderate rain at times",
+        "night": "Moderate rain at times",
+        "icon": "299"
+    },
+    "Showers in Vicinity": {
+        "code": "1186",
+        "day": "Moderate rain at times",
+        "night": "Moderate rain at times",
+        "icon": "299"
+    },
+    "Showers in Vicinity Fog/Mist": {
+        "code": "1186",
+        "day": "Moderate rain at times",
+        "night": "Moderate rain at times",
+        "icon": "299"
+    },
+    "Showers in Vicinity Haze": {
+        "code": "1186",
+        "day": "Moderate rain at times",
+        "night": "Moderate rain at times",
+        "icon": "299"
+    },
+    "Thunderstorm": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Thunderstorm Rain": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Light Thunderstorm Rain": {
+        "code": "1273",
+        "day": "Patchy light rain with thunder",
+        "night": "Patchy light rain with thunder",
+        "icon": "386"
+    },
+    "Heavy Thunderstorm Rain": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Light Thunderstorm Rain Fog/Mist": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Heavy Thunderstorm Rain Fog and Windy": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Heavy Thunderstorm Rain Fog/Mist": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Light Thunderstorm Rain Haze": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Heavy Thunderstorm Rain Haze": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Light Thunderstorm Rain Fog": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Heavy Thunderstorm Rain Fog": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Thunderstorm Light Rain": {
+        "code": "1273",
+        "day": "Patchy light rain with thunder",
+        "night": "Patchy light rain with thunder",
+        "icon": "386"
+    },
+    "Thunderstorm Heavy Rain": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Thunderstorm Light Rain Fog/Mist": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Thunderstorm Heavy Rain Fog/Mist": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Thunderstorm in Vicinity Fog/Mist": {
+        "code": "1087",
+        "day": "Thundery outbreaks possible",
+        "night": "Thundery outbreaks possible",
+        "icon": "200"
+    },
+    "Thunderstorm Haze in Vicinity": {
+        "code": "1279",
+        "day": "Patchy light snow with thunder",
+        "night": "Patchy light snow with thunder",
+        "icon": "392"
+    },
+    "Thunderstorm Light Rain Haze": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Thunderstorm Heavy Rain Haze": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Thunderstorm Light Rain Fog": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Thunderstorm Heavy Rain Fog": {
+        "code": "1276",
+        "day": "Moderate or heavy rain with thunder",
+        "night": "Moderate or heavy rain with thunder",
+        "icon": "389"
+    },
+    "Thunderstorm Hail": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Light Thunderstorm Rain Hail": {
+        "code": "1279",
+        "day": "Patchy light snow with thunder",
+        "night": "Patchy light snow with thunder",
+        "icon": "392"
+    },
+    "Heavy Thunderstorm Rain Hail": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Light Thunderstorm Rain Hail Fog/Mist": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Heavy Thunderstorm Rain Hail Fog/Hail": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Thunderstorm Showers in Vicinity Hail": {
+        "code": "1264",
+        "day": "Moderate or heavy showers of ice pellets",
+        "night": "Moderate or heavy showers of ice pellets",
+        "icon": "377"
+    },
+    "Light Thunderstorm Rain Hail Haze": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Heavy Thunderstorm Rain Hail Haze": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Light Thunderstorm Rain Hail Fog": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Heavy Thunderstorm Rain Hail Fog": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Thunderstorm Light Rain Hail": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Thunderstorm Heavy Rain Hail": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Thunderstorm Light Rain Hail Fog/Mist": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Thunderstorm Heavy Rain Hail Fog/Mist": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Thunderstorm in Vicinity Hail": {
+        "code": "1264",
+        "day": "Moderate or heavy showers of ice pellets",
+        "night": "Moderate or heavy showers of ice pellets",
+        "icon": "377"
+    },
+    "Thunderstorm in Vicinity Hail Haze": {
+        "code": "1264",
+        "day": "Moderate or heavy showers of ice pellets",
+        "night": "Moderate or heavy showers of ice pellets",
+        "icon": "377"
+    },
+    "Thunderstorm Haze in Vicinity Hail": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Thunderstorm Light Rain Hail Haze": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Thunderstorm Heavy Rain Hail Haze": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Thunderstorm Light Rain Hail Fog": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Thunderstorm Heavy Rain Hail Fog": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Thunderstorm Small Hail/Snow Pellets": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Thunderstorm Rain Small Hail/Snow Pellets": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Light Thunderstorm Rain Small Hail/Snow Pellets": {
+        "code": "1279",
+        "day": "Patchy light snow with thunder",
+        "night": "Patchy light snow with thunder",
+        "icon": "392"
+    },
+    "Heavy Thunderstorm Rain Small Hail/Snow Pellets": {
+        "code": "1282",
+        "day": "Moderate or heavy snow with thunder",
+        "night": "Moderate or heavy snow with thunder",
+        "icon": "395"
+    },
+    "Thunderstorm in Vicinity Fog": {
+        "code": "1279",
+        "day": "Patchy light snow with thunder",
+        "night": "Patchy light snow with thunder",
+        "icon": "392"
+    },
+    "Funnel Cloud": {
+        "code": "1087",
+        "day": "Thundery outbreaks possible",
+        "night": "Thundery outbreaks possible",
+        "icon": "200"
+    },
+    "Funnel Cloud in Vicinity": {
+        "code": "1087",
+        "day": "Thundery outbreaks possible",
+        "night": "Thundery outbreaks possible",
+        "icon": "200"
+    },
+    "Tornado/Water Spout": {
+        "code": "1246",
+        "day": "Torrential rain shower",
+        "night": "Torrential rain shower",
+        "icon": "359"
+    },
+    "Tornado": {
+        "code": "1246",
+        "day": "Torrential rain shower",
+        "night": "Torrential rain shower",
+        "icon": "359"
+    },
+    "Hurricane Warning": {
+        "code": "1246",
+        "day": "Torrential rain shower",
+        "night": "Torrential rain shower",
+        "icon": "359"
+    },
+    "Hurricane Watch": {
+        "code": "1246",
+        "day": "Torrential rain shower",
+        "night": "Torrential rain shower",
+        "icon": "359"
+    },
+    "Tropical Storm Warning": {
+        "code": "1246",
+        "day": "Torrential rain shower",
+        "night": "Torrential rain shower",
+        "icon": "359"
+    },
+    "Tropical Storm Watch": {
+        "code": "1246",
+        "day": "Torrential rain shower",
+        "night": "Torrential rain shower",
+        "icon": "359"
+    },
+    "Tropical Storm Conditions presently exist w/Hurricane Warning in effect": {
+        "code": "1246",
+        "day": "Torrential rain shower",
+        "night": "Torrential rain shower",
+        "icon": "359"
+    },
+    "Windy": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Breezy": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Fair and Windy": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "A Few Clouds and Windy": {
+        "code": "1003",
+        "day": "Partly cloudy",
+        "night": "Partly cloudy",
+        "icon": "116"
+    },
+    "Partly Cloudy and Windy": {
+        "code": "1003",
+        "day": "Partly cloudy",
+        "night": "Partly cloudy",
+        "icon": "116"
+    },
+    "Mostly Cloudy and Windy": {
+        "code": "1006",
+        "day": "Cloudy",
+        "night": "Cloudy",
+        "icon": "119"
+    },
+    "Overcast and Windy": {
+        "code": "1009",
+        "day": "Overcast",
+        "night": "Overcast",
+        "icon": "122"
+    },
+    "Dust": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Low Drifting Dust": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Blowing Dust": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Sand": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Blowing Sand": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Low Drifting Sand": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Dust/Sand Whirls": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Dust/Sand Whirls in Vicinity": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Dust Storm": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Heavy Dust Storm": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Dust Storm in Vicinity": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Sand Storm": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Heavy Sand Storm": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Sand Storm in Vicinity": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Smoke": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Haze": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Hot": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Cold": {
+        "code": "1000",
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": "113"
+    },
+    "Blizzard": {
+        "code": "1117",
+        "day": "Blizzard",
+        "night": "Blizzard",
+        "icon": "230"
+    },
+    "Fog/Mist": {
+        "code": "1030",
+        "day": "Mist",
+        "night": "Mist",
+        "icon": "143"
+    },
+    "Freezing Fog": {
+        "code": "1147",
+        "day": "Freezing fog",
+        "night": "Freezing fog",
+        "icon": "260"
+    },
+    "Shallow Fog": {
+        "code": "1030",
+        "day": "Mist",
+        "night": "Mist",
+        "icon": "143"
+    },
+    "Partial Fog": {
+        "code": "1030",
+        "day": "Mist",
+        "night": "Mist",
+        "icon": "143"
+    },
+    "Patches of Fog": {
+        "code": "1030",
+        "day": "Mist",
+        "night": "Mist",
+        "icon": "143"
+    },
+    "Fog in Vicinity": {
+        "code": "1135",
+        "day": "Fog",
+        "night": "Fog",
+        "icon": "248"
+    },
+    "Freezing Fog in Vicinity": {
+        "code": "1147",
+        "day": "Freezing fog",
+        "night": "Freezing fog",
+        "icon": "260"
+    },
+    "Shallow Fog in Vicinity": {
+        "code": "1135",
+        "day": "Fog",
+        "night": "Fog",
+        "icon": "248"
+    },
+    "Partial Fog in Vicinity": {
+        "code": "1135",
+        "day": "Fog",
+        "night": "Fog",
+        "icon": "248"
+    },
+    "Patches of Fog in Vicinity": {
+        "code": "1003",
+        "day": "Partly cloudy",
+        "night": "Partly cloudy",
+        "icon": "116"
+    },
+    "Showers in Vicinity Fog": {
+        "code": "1063",
+        "day": "Patchy rain possible",
+        "night": "Patchy rain possible",
+        "icon": "176"
+    },
+    "Light Freezing Fog": {
+        "code": "1147",
+        "day": "Freezing fog",
+        "night": "Freezing fog",
+        "icon": "260"
+    },
+    "Heavy Freezing Fog": {
+        "code": "1147",
+        "day": "Freezing fog",
+        "night": "Freezing fog",
+        "icon": "260"
+    }
+}
