@@ -50,6 +50,55 @@ import	img389	from	'../images/day/389.png';
 import	img392	from	'../images/day/392.png';
 import	img395	from	'../images/day/395.png';
 
+const img_map = new Map();
+img_map.set(	"img113", 	img113	);
+img_map.set(	"img116", 	img116	);
+img_map.set(	"img119", 	img119	);
+img_map.set(	"img122", 	img122	);
+img_map.set(	"img143", 	img143	);
+img_map.set(	"img176", 	img176	);
+img_map.set(	"img179", 	img179	);
+img_map.set(	"img182", 	img182	);
+img_map.set(	"img185", 	img185	);
+img_map.set(	"img200", 	img200	);
+img_map.set(	"img227", 	img227	);
+img_map.set(	"img230", 	img230	);
+img_map.set(	"img248", 	img248	);
+img_map.set(	"img260", 	img260	);
+img_map.set(	"img263", 	img263	);
+img_map.set(	"img266", 	img266	);
+img_map.set(	"img281", 	img281	);
+img_map.set(	"img284", 	img284	);
+img_map.set(	"img293", 	img293	);
+img_map.set(	"img296", 	img296	);
+img_map.set(	"img299", 	img299	);
+img_map.set(	"img302", 	img302	);
+img_map.set(	"img305", 	img305	);
+img_map.set(	"img308", 	img308	);
+img_map.set(	"img311", 	img311	);
+img_map.set(	"img314", 	img314	);
+img_map.set(	"img317", 	img317	);
+img_map.set(	"img320", 	img320	);
+img_map.set(	"img323", 	img323	);
+img_map.set(	"img326", 	img326	);
+img_map.set(	"img329", 	img329	);
+img_map.set(	"img332", 	img332	);
+img_map.set(	"img335", 	img335	);
+img_map.set(	"img338", 	img338	);
+img_map.set(	"img350", 	img350	);
+img_map.set(	"img353", 	img353	);
+img_map.set(	"img356", 	img356	);
+img_map.set(	"img359", 	img359	);
+img_map.set(	"img362", 	img362	);
+img_map.set(	"img365", 	img365	);
+img_map.set(	"img368", 	img368	);
+img_map.set(	"img371", 	img371	);
+img_map.set(	"img374", 	img374	);
+img_map.set(	"img377", 	img377	);
+img_map.set(	"img386", 	img386	);
+img_map.set(	"img389", 	img389	);
+img_map.set(	"img392", 	img392	);
+img_map.set(	"img395", 	img395	);
 
 
 // { 'lonlat': [c[0], c[1]], 'Forecast': a, 'image_path': i, "TempF": f, 'AreaName': n, 'URL': u, 'isDay': d }
@@ -183,12 +232,13 @@ function parse_noaa(day,  past_day, v, ret_json){
         })
         if(ret_json['Forecast'] in noaa_convert){
             console.log(noaa_convert[ret_json['Forecast']]);
-            const img_path = eval(`img${noaa_convert[ret_json['Forecast']].icon}`);
+            const img_path = eval(`img${noaa_convert[ret_json['Forecast']].icon}.png`);
             ret_json['image_path'] = img_path;
         }
         else{
-            ret_json['image_path'] = ret_json['image_pathn'];
+            ret_json['image_path'] = ret_json['image_pathN'];
         }
+        console.log( ret_json['image_path']);
         if (wiu>0){
             past_noaa_map.forEach((value, key) => {
                 // console.log(eval(ret_json[key]));
