@@ -54,7 +54,7 @@ export function prun(item, wi) {
     var day = wi - 1
     let past_day = day - 1
     let v = item.value;
-    console.log(v);
+    // console.log(v);
     let ret_json = { 'lonlat': [v.lnglat[0], v.lnglat[1],], 'AreaName': v.crag, 'URL': v.url, 'isDay': "true" }
     // console.log(v.history.forecastday[day].date)
     ret_json = parse_weather(day, past_day, v, ret_json)
@@ -63,7 +63,7 @@ export function prun(item, wi) {
 
 
 function parse_weather(day, past_day, v, ret_json) {
-    console.log(v);
+    // console.log(v);
     if (v.forecast.forecastday) {
         return parse_w_api(day, past_day, v, ret_json);
     }
@@ -117,7 +117,7 @@ function parse_noaa(day, past_day, v, ret_json) {
     else if (wiu != -1) {
         wiu = (parseInt(wiu) * 2);
     }
-    console.log(wiu);
+    // console.log(wiu);
     if (wiu >= 0) {
         var luxonDate = DateTime.fromISO(v.forecast[wiu].startTime);
         const date = luxonDate.toFormat('yyyy-MM-dd')
@@ -134,7 +134,7 @@ function parse_noaa(day, past_day, v, ret_json) {
         else {
             ret_json['image_path'] = ret_json['image_pathN'];
         }
-        console.log(ret_json['image_path']);
+        // console.log(ret_json['image_path']);
         if (wiu > 0) {
             past_noaa_map.forEach((value, key) => {
                 // console.log(eval(ret_json[key]));
@@ -163,56 +163,55 @@ function parse_noaa(day, past_day, v, ret_json) {
     }
 }
 
-function match_wi_to_day(v, wi, noaa){
+function match_wi_to_day(v, wi, noaa) {
     console.log("Match_to_day ", v, noaa)
-    v.forecast.forEach(function (item, index) {
-        console.log(index);
-        if (noaa){
-            console.log(is_today(v, index));
-            console.log(v.forecast[item].isDaytime);
-            console.log(Math.floor((parseInst(index)-1)/2)+wi);
-            if (is_today(v, index) && v.forecast[item].isDaytime){
-                console.log(Math.floor((parseInst(index)-1)/2)+wi)
-                return Math.floor((parseInst(index)-1)/2)+parseInt(wi)
+    var arrayLength = v.forecast.length
+    for (var i = 0; i < arrayLength; i++) {
+        console.log(i);
+        if (noaa) {
+            console.log(is_today(v, i));
+            console.log(v.forecast[i].isDaytime);
+            console.log(Math.floor((parseInst(i) - 1) / 2) + wi);
+            if (is_today(v, i) && v.forecast[i].isDaytime) {
+                console.log(Math.floor((parseInst(index) - 1) / 2) + wi)
+                return Math.floor((parseInst(i) - 1) / 2) + parseInt(wi)
             }
-            console.log("None Found")
-            return -2
         }
-        else{
-            if (is_today(v, index, noaa)){
-                return parseInt(index)+parseInt(wi)
+        else {
+            if (is_today(v, i, noaa)) {
+                return parseInt(index) + parseInt(wi)
             }
-            return -2
+
         }
 
     }
-    )
+    return -2
 }
 
-function handle_off_day(v, wi, noaa=true){
-    if(is_today(v, 0, noaa)){
+function handle_off_day(v, wi, noaa = true) {
+    if (is_today(v, 0, noaa)) {
         return wi
     }
-    else{
+    else {
         return match_wi_to_day(v, wi, noaa)
     }
 }
 
 function is_today(v, wi, noaa) {
     var today = DateTime.now().toFormat('yyyy-MM-dd')
-    if (noaa){
+    if (noaa) {
         var luxonDate = DateTime.fromISO(v.forecast[wi].startTime);
         var date = luxonDate.toFormat('yyyy-MM-dd')
     }
-    else{
+    else {
         var date = v.history.forecastday[0].date
     }
-    
-    
-    if (date != today){
+
+
+    if (date != today) {
         return false
     }
-    else{
+    else {
         return true
     }
 }
