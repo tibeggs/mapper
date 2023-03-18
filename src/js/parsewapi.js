@@ -74,7 +74,8 @@ function parse_weather(day, past_day, v, ret_json) {
 
 }
 
-function parse_w_api(day, past_day, v, ret_json) {
+function parse_w_api(d, past_day, v, ret_json) {
+    var day = handle_off_day(d);
     if (day >= 0) {
         ret_json['date'] = v.forecast.forecastday[day].date;
         var_map.forEach((value, key) => {
@@ -163,28 +164,45 @@ function parse_noaa(day, past_day, v, ret_json) {
 }
 
 function match_wi_to_day(v, wi){
-    array.forEach(function (item, index) {
-        if (is_today(v, index) && v.forecast[item].isDaytime){
-            return Math.floor((parseInst(index)-1)/2)+wi
+
+    array.forEach(function (item, index, noaa) {
+        if (noaa){
+            if (is_today(v, index) && v.forecast[item].isDaytime){
+                return Math.floor((parseInst(index)-1)/2)+wi
+            }
+            return -2
         }
-        return -2
+        else{
+            if (is_today(v, index, noaa)){
+                return index
+            }
+            return -2
+        }
+
     }
     )
 }
 
-function handle_off_day(v, wi){
-    if(is_today(v, 0)){
+function handle_off_day(v, wi, noaa=true){
+    if(is_today(v, 0, noaa)){
         return wi
     }
     else{
-        return match_wi_to_day(v)
+        return match_wi_to_day(v, noaa)
     }
 }
 
-function is_today(v, wi) {
+function is_today(v, wi, noaa) {
     var today = DateTime.now().toFormat('yyyy-MM-dd')
-    var luxonDate = DateTime.fromISO(v.forecast[wi].startTime);
-    const date = luxonDate.toFormat('yyyy-MM-dd')
+    if (noaa){
+        var luxonDate = DateTime.fromISO(v.forecast[wi].startTime);
+        var date = luxonDate.toFormat('yyyy-MM-dd')
+    }
+    else{
+        var date = v.history.forecastday[0].date
+    }
+    
+    
     if (date != today){
         return false
     }
