@@ -207,7 +207,7 @@ function is_today(v, wi, noaa) {
         var date = v.history.forecastday[0].date
     }
 
-
+    console.log("today: ", today, " | comp: ", date);
     if (date != today) {
         return false
     }
