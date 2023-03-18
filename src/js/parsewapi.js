@@ -174,7 +174,7 @@ function match_wi_to_day(v, wi, noaa) {
             console.log(Math.floor((parseInst(i) - 1) / 2) + wi);
             if (is_today(v, i) && v.forecast[i].isDaytime) {
                 console.log(Math.floor((parseInst(index) - 1) / 2) + wi)
-                return Math.floor((parseInst(i) - 1) / 2) + parseInt(wi)
+                return Math.floor((parseInt(i) - 1) / 2) + parseInt(wi)
             }
         }
         else {
