@@ -51,44 +51,43 @@ past_noaa_map.set('snow_chancePast', 'probabilityOfPrecipitation.value');
 
 export function prun(item, wi) {
     // item over
-    var day = wi-1
-    let past_day = day-1
+    var day = wi - 1
+    let past_day = day - 1
     let v = item.value;
     console.log(v);
-    let ret_json = { 'lonlat': [v.lnglat[0],v.lnglat[1],], 'AreaName': v.crag, 'URL': v.url, 'isDay': "true" }
+    let ret_json = { 'lonlat': [v.lnglat[0], v.lnglat[1],], 'AreaName': v.crag, 'URL': v.url, 'isDay': "true" }
     // console.log(v.history.forecastday[day].date)
     ret_json = parse_weather(day, past_day, v, ret_json)
     return ret_json
 }
 
 
-function parse_weather(day,  past_day, v, ret_json){
+function parse_weather(day, past_day, v, ret_json) {
     console.log(v);
-    if (v.forecast.forecastday){
-        return parse_w_api(day,  past_day, v, ret_json);
+    if (v.forecast.forecastday) {
+        return parse_w_api(day, past_day, v, ret_json);
     }
-    else
-    {
-        return parse_noaa(day,  past_day, v, ret_json);
+    else {
+        return parse_noaa(day, past_day, v, ret_json);
     }
-    
-    
+
+
 }
 
-function parse_w_api(day,  past_day, v, ret_json){
-    if (day >=0){
+function parse_w_api(day, past_day, v, ret_json) {
+    if (day >= 0) {
         ret_json['date'] = v.forecast.forecastday[day].date;
         var_map.forEach((value, key) => {
             // console.log(eval(`v.forecast.forecastday[${day}].day.${value}`));
             ret_json[key] = eval(`v.forecast.forecastday[${day}].day.${value}`)
         })
-        if (day>0){
+        if (day > 0) {
             past_map.forEach((value, key) => {
                 // console.log(eval(ret_json[key]));
                 ret_json[key] = eval(`v.forecast.forecastday[${past_day}].day.${value}`)
             })
         }
-        else{
+        else {
             // console.log(v);
             ret_json['totalPrecipPast'] = v.history.forecastday[day].day.totalprecip_in;
         }
@@ -107,17 +106,18 @@ function parse_w_api(day,  past_day, v, ret_json){
     }
 }
 
-function parse_noaa(day,  past_day, v, ret_json){
-    let wiu = parseInt(day);
-    if (!v.forecast[0].isDaytime && wiu !=-1) {
+function parse_noaa(day, past_day, v, ret_json) {
+    // let wiu = parseInt(day);
+    let wiu = handle_off_day(v, parseInt(day));
+    if (!v.forecast[0].isDaytime && wiu != -1) {
         wiu = (parseInt(wiu) * 2) + 1;
 
     }
-    else if (wiu !=-1){
+    else if (wiu != -1) {
         wiu = (parseInt(wiu) * 2);
     }
     console.log(wiu);
-    if (wiu >=0){
+    if (wiu >= 0) {
         var luxonDate = DateTime.fromISO(v.forecast[wiu].startTime);
         const date = luxonDate.toFormat('yyyy-MM-dd')
         ret_json['date'] = date;
@@ -125,22 +125,22 @@ function parse_noaa(day,  past_day, v, ret_json){
             console.log(eval(`v.forecast[${wiu}].${value}`));
             ret_json[key] = eval(`v.forecast[${wiu}].${value}`)
         })
-        if(false && ret_json['Forecast'] in noaa_convert){
+        if (false && ret_json['Forecast'] in noaa_convert) {
             console.log(`img${noaa_convert[ret_json['Forecast']].icon}`);
             const img_path = eval(`img${noaa_convert[ret_json['Forecast']].icon}`);
             ret_json['image_path'] = img_path;
         }
-        else{
+        else {
             ret_json['image_path'] = ret_json['image_pathN'];
         }
-        console.log( ret_json['image_path']);
-        if (wiu>0){
+        console.log(ret_json['image_path']);
+        if (wiu > 0) {
             past_noaa_map.forEach((value, key) => {
                 // console.log(eval(ret_json[key]));
-                ret_json[key] = eval(`v.forecast[${wiu-1}].${value}`)
+                ret_json[key] = eval(`v.forecast[${wiu - 1}].${value}`)
             })
         }
-        else{
+        else {
             // console.log(v);
             ret_json['totalPrecipPast'] = v.history.forecastday[day].day.totalprecip_in;
         }
@@ -156,5 +156,39 @@ function parse_noaa(day,  past_day, v, ret_json){
         // console.log(ret_json);
         ret_json['precip_is_per'] = 'true'
         return ret_json
+    }
+    else if (wiu = -2) {
+        return ret_json
+    }
+}
+
+function match_wi_to_day(v, wi){
+    array.forEach(function (item, index) {
+        if (is_today(v, index) && v.forecast[item].isDaytime){
+            return Math.floor((parseInst(index)-1)/2)+wi
+        }
+        return -2
+    }
+    )
+}
+
+function handle_off_day(v, wi){
+    if(is_today(v, 0)){
+        return wi
+    }
+    else{
+        return match_wi_to_day(v)
+    }
+}
+
+function is_today(v, wi) {
+    var today = DateTime.now().toFormat('yyyy-MM-dd')
+    var luxonDate = DateTime.fromISO(v.forecast[wiu].startTime);
+    const date = luxonDate.toFormat('yyyy-MM-dd')
+    if (date != date){
+        return false
+    }
+    else{
+        return true
     }
 }
