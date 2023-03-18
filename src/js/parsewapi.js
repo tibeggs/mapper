@@ -183,9 +183,9 @@ function handle_off_day(v, wi){
 
 function is_today(v, wi) {
     var today = DateTime.now().toFormat('yyyy-MM-dd')
-    var luxonDate = DateTime.fromISO(v.forecast[wiu].startTime);
+    var luxonDate = DateTime.fromISO(v.forecast[wi].startTime);
     const date = luxonDate.toFormat('yyyy-MM-dd')
-    if (date != date){
+    if (date != today){
         return false
     }
     else{
