@@ -164,9 +164,11 @@ function parse_noaa(day, past_day, v, ret_json) {
 }
 
 function match_wi_to_day(v, wi, noaa){
-    console.log("Match_to_day ", v)
+    console.log("Match_to_day ", v, noaa)
     v.forecast.forEach(function (item, index) {
+        console.log(index);
         if (noaa){
+            console.log("In Noaa ", index)
             if (is_today(v, index) && v.forecast[item].isDaytime){
                 console.log(Math.floor((parseInst(index)-1)/2)+wi)
                 return Math.floor((parseInst(index)-1)/2)+wi
