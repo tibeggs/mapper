@@ -174,7 +174,7 @@ function match_wi_to_day(v, wi){
         }
         else{
             if (is_today(v, index, noaa)){
-                return index
+                return index+wi
             }
             return -2
         }
