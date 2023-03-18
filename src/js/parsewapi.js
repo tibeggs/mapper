@@ -168,16 +168,19 @@ function match_wi_to_day(v, wi, noaa){
     v.forecast.forEach(function (item, index) {
         console.log(index);
         if (noaa){
-            console.log("In Noaa ", index)
+            console.log(is_today(v, index));
+            console.log(is_today(v.forecast[item].isDaytime));
+            console.log(Math.floor((parseInst(index)-1)/2)+wi);
             if (is_today(v, index) && v.forecast[item].isDaytime){
                 console.log(Math.floor((parseInst(index)-1)/2)+wi)
-                return Math.floor((parseInst(index)-1)/2)+wi
+                return Math.floor((parseInst(index)-1)/2)+parseInt(wi)
             }
+            console.log("None Found")
             return -2
         }
         else{
             if (is_today(v, index, noaa)){
-                return index+wi
+                return parseInt(index)+parseInt(wi)
             }
             return -2
         }
