@@ -136,24 +136,27 @@ function parse_noaa(day, past_day, v, ret_json) {
                 ret_json['image_path'] = ret_json['image_pathN'];
             }
             // console.log(ret_json['image_path']);
-            if (wiu > 0) {
+            if (wiu > -1) {
                 past_noaa_map.forEach((value, key) => {
                     // console.log(eval(ret_json[key]));
                     ret_json[key] = eval(`v.forecast[${wiu - 1}].${value}`)
                 })
             }
-            else {
-                // console.log(v);
-                ret_json['totalPrecipPast'] = v.history.forecastday[day].day.totalprecip_in;
-            }
+            // else {
+            //     // console.log(v);
+            //     ret_json['totalPrecipPast'] = v.history.forecastday[day].day.totalprecip_in;
+            // }
             // console.log(ret_json);
             ret_json['precip_is_per'] = 'true'
             return ret_json
         }
         else if (wiu = -1) {
-            ret_json['date'] = v.history.forecastday[0].date;
-            var_map.forEach((value, key) => {
-                ret_json[key] = eval(`v.history.forecastday[0].day.${value}`)
+            var luxonDate = DateTime.fromISO(v.history.startTime);
+            const date = luxonDate.toFormat('yyyy-MM-dd')
+            ret_json['date'] = date;
+            past_noaa_map.forEach((value, key) => {
+                // console.log(eval(ret_json[key]));
+                ret_json[key] = eval(`v.history.${value}`)
             })
             // console.log(ret_json);
             ret_json['precip_is_per'] = 'true'
