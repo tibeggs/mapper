@@ -690,7 +690,7 @@ function popup_show(evt) {
       '<b>' + feature.get('features')[0].get('date') + '</b><br>' +
       feature.get('features')[0].get('TempF') + " F<br>" +
       feature.get('features')[0].get('Forecast') +
-      "<br> Max Wind: " + feature.get('features')[0].get('MaxWind') + "mph" +
+      "<br> Max Wind: " + feature.get('features')[0].get('MaxWind') +
       "<br> Tot. Precip: " + TotalPrecip + per_unit +
       "<br><a href=" + feature.get('features')[0].get('URL') + " target='blank'>" + feature.get('features')[0].get('URL') + "</a>",
   });
