@@ -22,6 +22,8 @@ import { prun } from './parsewapi.js'
 import imgUrl from '../images/climbweathersym.png'
 import blackback from '../images/black_rounded_square_flat64x64.png'
 import blueback from '../images/blue_rounded_square_flat64x64.png'
+import blackborder from '../images/black_rounded_border_flat64x64.png'
+import blueborder from '../images/blue_rounded_border_flat64x64.png'
 import { DateTime } from "luxon";
 
 var headerimg = document.getElementById('headimage')
@@ -87,6 +89,9 @@ var cragsmap = new Map(Object.entries(cragjson));
 
 function getDayName(dateStr, locale) {
   var today = DateTime.now({ zone: "America/New_York" });
+  if (parseInt(today.toFormat('HH'))<4){
+    today = DateTime.now().plus({ days: -1, zone: "America/New_York" }) 
+  }
   var date = DateTime.fromISO(dateStr, { zone: "America/New_York" });
   if (date.toLocaleString(DateTime.DATE_SHORT) == today.toLocaleString(DateTime.DATE_SHORT)) {
     return 'Today, ' + date.toLocaleString({ month: 'short', day: 'numeric' })
@@ -417,6 +422,46 @@ function feature_maker(lonlat, image_path, date, tempf, forecast, areaname, url,
       }),
     }),
   };
+  const rain_b_styles = {
+    'true': new Style({
+      image: new Icon({
+        // anchor: [.5, .5],
+        // anchorOrigin: 'top-right',
+        // scale: .10,
+        // scale: .5,
+        width: 64,
+        height: 64,
+        // anchorXUnits: 'frac',
+        // anchorYUnits: 'pixel',
+        src: blueborder,
+        // color: 'yellow'
+      }),
+      text: new olText({
+        text: pastrain.toString() + precip_unit,
+        offsetY: 36,
+        textAlign: 'center',
+        textBaseline: 'center',
+        fill: new Fill({
+          color: 'white',
+        }),
+      }),
+
+    }),
+    'false': new Style({
+      image: new Icon({
+        // anchor: [.5, .5],
+        // anchorOrigin: 'top-right',
+        // scale: .10,
+        // scale: .5,
+        width: 64,
+        height: 64,
+        // anchorXUnits: 'frac',
+        // anchorYUnits: 'pixel',
+        src: blackborder,
+        // color: 'yellow'
+      }),
+    }),
+  };
   var bgc = '#00000000';
   var lc = '#00000000';
   if (!isNaN(pastrain)) {
@@ -455,14 +500,15 @@ function feature_maker(lonlat, image_path, date, tempf, forecast, areaname, url,
           // anchorOrigin: 'top-right',
           // scale: .10,
           // scale: .5,
-          width: 48,
-          height: 48,
+          width: 50,
+          height: 50,
           // anchorXUnits: 'frac',
           // anchorYUnits: 'pixel',
           src: image_path,
           // color: 'yellow'
         }),
       }),
+      rain_b_styles[!isNaN(pastrain)],
       day_styles[isday],
     ]
   })
