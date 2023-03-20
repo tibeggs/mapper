@@ -89,8 +89,8 @@ var cragsmap = new Map(Object.entries(cragjson));
 
 function getDayName(dateStr, locale) {
   var today = DateTime.now({ zone: "America/New_York" });
-  if (parseInt(today.toFormat('HH'))<4){
-    today = DateTime.now().plus({ days: -1, zone: "America/New_York" }) 
+  if (parseInt(today.toFormat('HH')) < 4) {
+    today = DateTime.now().plus({ days: -1, zone: "America/New_York" })
   }
   var date = DateTime.fromISO(dateStr, { zone: "America/New_York" });
   if (date.toLocaleString(DateTime.DATE_SHORT) == today.toLocaleString(DateTime.DATE_SHORT)) {
@@ -616,12 +616,18 @@ function call_coords(chunk, wi) {
           if (fmap.totalPrecipPast) {
             pastrain = fmap.totalPrecipPast
           }
-          // console.log(pastrain);
-          var feat = feature_maker(fmap['lonlat'], fmap['image_path'], fmap['date'], fmap['TempF'], fmap['Forecast'], fmap['AreaName'], fmap['URL'], fmap['isDay'], fmap['maxWind'],
-            fmap['totalPrecip'], pastrain, fmap['precip_is_per'])
-          feat.setStyle(feat.get('style'));
-          let lonlatstr = fmap['lonlat'].toString()
-          resolve(add_feature_safe(lonlatstr, feat));
+          if (fmap.image_path) {
+            // console.log(pastrain);
+            var feat = feature_maker(fmap['lonlat'], fmap['image_path'], fmap['date'], fmap['TempF'], fmap['Forecast'], fmap['AreaName'], fmap['URL'], fmap['isDay'], fmap['maxWind'],
+              fmap['totalPrecip'], pastrain, fmap['precip_is_per'])
+            feat.setStyle(feat.get('style'));
+            let lonlatstr = fmap['lonlat'].toString()
+            resolve(add_feature_safe(lonlatstr, feat));
+          }
+          else if (typeof item != "undefined") {
+            remove_feature(item.value.lnglat.toString());
+            resolve();
+          }
 
         }
         else if (typeof item != "undefined") {
