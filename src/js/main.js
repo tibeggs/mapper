@@ -53,39 +53,51 @@ async function call_worker() {
 
 const cragjson = await call_worker()
 
+var noaa_days = [0,1,2,3,4,5,6]
 var periods = []
 periods.push('Yesterday, ' + DateTime.now().plus({ days: -1 }).toLocaleString({ month: 'short', day: 'numeric' }))
-if (cragjson[0].forecast.forecastday) {
-  for (var i in cragjson[0].forecast.forecastday) {
-    periods.push([getDayName(cragjson[0].forecast.forecastday[i].date, 'en-US')]);
-  }
+for (var i in noaa_days) {
+  gen_day(i);
 }
-else {
-  console.log(cragjson[0]);
-  for (var i in cragjson[0].forecast) {
-    if (i < cragjson[0].forecast.length / 2) {
-      let wiu = i;
-      if (!cragjson[0].forecast[0].isDaytime && wiu != -1) {
-        wiu = (parseInt(wiu) * 2) + 1;
+// if (cragjson[0].forecast.forecastday) {
+//   for (var i in cragjson[0].forecast.forecastday) {
+//     periods.push([getDayName(cragjson[0].forecast.forecastday[i].date, 'en-US')]);
+//   }
+// }
+// else {
+//   console.log(cragjson[0]);
+//   for (var i in cragjson[0].forecast) {
+//     if (i < cragjson[0].forecast.length / 2) {
+//       let wiu = i;
+//       if (!cragjson[0].forecast[0].isDaytime && wiu != -1) {
+//         wiu = (parseInt(wiu) * 2) + 1;
 
-      }
-      else if (wiu != -1) {
-        wiu = (parseInt(wiu) * 2);
-      }
-      console.log(wiu);
-      var luxonDate = DateTime.fromISO(cragjson[0].forecast[wiu].startTime);
-      const date = luxonDate.toFormat('yyyy-MM-dd')
-      periods.push([getDayName(date)]);
-    }
-  }
+//       }
+//       else if (wiu != -1) {
+//         wiu = (parseInt(wiu) * 2);
+//       }
+//       console.log(wiu);
+//       var luxonDate = DateTime.fromISO(cragjson[0].forecast[wiu].startTime);
+//       const date = luxonDate.toFormat('yyyy-MM-dd')
+//       periods.push([getDayName(date)]);
+//     }
+//   }
 
-}
+// }
 
 
 var cragsmap = new Map(Object.entries(cragjson));
 
 
-
+function gen_day(n){
+  if (n == 0){
+    periods.push('Today, ' +DateTime.now().plus({ days: parseInt(n) }).toLocaleString({ month: 'short', day: 'numeric' }))
+  }
+  else{
+    periods.push(DateTime.now().plus({ days: parseInt(n) }).toLocaleString({ weekday: 'long', month: 'short', day: 'numeric' }))
+  }
+  
+}
 
 function getDayName(dateStr, locale) {
   var today = DateTime.now({ zone: "America/New_York" });
