@@ -6,7 +6,7 @@ import VectorLayer from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
 import { Cluster } from 'ol/source.js';
 import OSM from 'ol/source/OSM';
-import Stamen from 'ol/source/Stamen.js';
+import OSM from 'ol/source/OSM.js';
 import XYZ from 'ol/source/XYZ.js';
 import { transform, fromLonLat, toLonLat } from 'ol/proj';
 import Feature from 'ol/Feature.js';
@@ -137,7 +137,7 @@ const map = new olMap({
   // overlays: [overlay],
   target: 'map',
   layers: [new TileLayer({
-    source: new Stamen({
+    source: new OSM({
       layer: 'terrain',
     })
   }),
