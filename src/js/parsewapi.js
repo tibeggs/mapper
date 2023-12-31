@@ -58,6 +58,7 @@ export function prun(item, wi) {
     let ret_json = { 'lonlat': [v.lnglat[0], v.lnglat[1],], 'AreaName': v.crag, 'URL': v.url, 'isDay': "true" }
     // console.log(v.history.forecastday[day].date)
     ret_json = parse_weather(day, past_day, v, ret_json)
+    console.log(ret_json);
     return ret_json
 }
 
@@ -176,11 +177,11 @@ function match_wi_to_day(v, wi, noaa) {
     console.log("Match_to_day ", v, noaa)
     var arrayLength = v.forecast.length
     for (var i = 0; i < arrayLength; i++) {
-        console.log(i);
+        //console.log(i);
         if (noaa) {
-            console.log(is_today(v, i, noaa));
-            console.log(v.forecast[i].isDaytime);
-            console.log(Math.floor((parseInt(i) - 1) / 2) + wi);
+            //console.log(is_today(v, i, noaa));
+            //console.log(v.forecast[i].isDaytime);
+            //console.log(Math.floor((parseInt(i) - 1) / 2) + wi);
             if (is_today(v, i, noaa) && v.forecast[i].isDaytime) {
                 console.log(Math.floor((parseInt(i) - 1) / 2) + wi)
                 return Math.floor((parseInt(i) - 1) / 2) + parseInt(wi)
@@ -218,7 +219,7 @@ function is_today(v, i, noaa) {
             var date = v.forecast.forecastday[wi].date
         }
     
-        console.log("today: ", today, " | comp: ", date);
+        //console.log("today: ", today, " | comp: ", date);
         if (date != today) {
             return false
         }
