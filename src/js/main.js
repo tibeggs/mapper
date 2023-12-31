@@ -353,6 +353,7 @@ function fill_crags(subjectObject) {
   });
 }
 function feature_maker(lonlat, image_path, date, tempf, forecast, areaname, url, isday, maxwind, totalprecip, pastrain, is_per) {
+  console.log("Feature Maker Running")
   var precip_unit = " in."
   if (is_per == 'true') {
     precip_unit = " %"
