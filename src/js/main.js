@@ -562,6 +562,7 @@ function chunkArray(a, s) { // a: array to chunk, s: size of chunks
 }
 
 async function request_weather(rawArray, wi) {
+  console.log("Request Weather Running")
   // vectorSource.clear();
   let dataArray = rawArray.filter(is_in_extent);
   try {
@@ -618,6 +619,7 @@ function add_feature_safe(lonlatstr, feat) {
 }
 
 function call_coords(chunk, wi) {
+  console.log("Call Coords Running");
   return Promise.all(
     chunk.map((item) => {
       return new Promise((resolve, reject) => {
