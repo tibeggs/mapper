@@ -6,6 +6,8 @@ The database gets updated daily in the morning so values may be out of sync unti
 Data is based off of 
 </P> 
 
+Live version lives here (currently just east coast): [climbingweathermap.us](https://climbingweathermap.us/)
+
 [OpenBeta/climbing-data](https://github.com/OpenBeta/climbing-data)
  date grabbed: (2023-02-23)
 
