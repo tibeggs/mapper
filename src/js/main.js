@@ -353,6 +353,7 @@ function fill_crags(subjectObject) {
   });
 }
 function feature_maker(lonlat, image_path, date, tempf, forecast, areaname, url, isday, maxwind, totalprecip, pastrain, is_per) {
+  console.log("Feature Maker Running")
   var precip_unit = " in."
   if (is_per == 'true') {
     precip_unit = " %"
@@ -561,6 +562,7 @@ function chunkArray(a, s) { // a: array to chunk, s: size of chunks
 }
 
 async function request_weather(rawArray, wi) {
+  console.log("Request Weather Running")
   // vectorSource.clear();
   let dataArray = rawArray.filter(is_in_extent);
   try {
@@ -617,6 +619,7 @@ function add_feature_safe(lonlatstr, feat) {
 }
 
 function call_coords(chunk, wi) {
+  console.log("Call Coords Running");
   return Promise.all(
     chunk.map((item) => {
       return new Promise((resolve, reject) => {
